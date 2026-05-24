@@ -1,0 +1,30 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "My Mod BP",
+    "description": "Custom Bedrock Mod Behavior Pack",
+    "uuid": "8a2d2eb5-9429-4e4d-8eca-c7f4f5cf328e",
+    "version": [0, 0, 1],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "1632de0f-b493-49e0-964c-992053c84109",
+      "version": [0, 0, 1]
+    },
+    {
+      "description": "Script Module",
+      "type": "script",
+      "uuid": "60ffb3ad-e2d9-43c3-8854-3e91129f104d",
+      "version": [0, 0, 1],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "463194d3-2fac-4e13-bba2-7a1cc2bb7738",
+      "version": [0, 0, 1]
+    }
+  ]
+}
