@@ -1,8 +1,11 @@
 # Script to build and deploy Minecraft Bedrock Add-on to the server.
 
 # 1. Load environment variables from .env
-$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$rootPath = Split-Path -Parent $scriptPath
+# This script is located in .agent\skills\deploy.ps1, so the root path is two levels up.
+$scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path # .agent\skills
+$skillsPath = $scriptPath
+$agentPath = Split-Path -Parent $skillsPath                   # .agent
+$rootPath = Split-Path -Parent $agentPath                     # workspace root
 $envFile = Join-Path $rootPath ".env"
 
 if (-not (Test-Path $envFile)) {
