@@ -1,0 +1,13 @@
+{
+	"format_version": 1.1,
+	"minecraft:item": {
+		"description": {
+			"identifier": "bn:plant_2",
+			"category": "Equipment"
+		},
+		"components": {
+			"minecraft:render_offsets": "apple",
+			"minecraft:icon": "bn_plant_2"
+		}
+	}
+}

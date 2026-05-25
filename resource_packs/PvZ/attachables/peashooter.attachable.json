@@ -1,0 +1,36 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:attachable": {
+		"description": {
+			"identifier": "bn:plant_2",
+			"render_controllers": [
+				"controller.render.item_default"
+			],
+			"materials": {
+				"default": "entity_alphatest",
+				"enchanted": "entity_alphatest_glint"
+			},
+			"textures": {
+				"default": "textures/entity/plant_2",
+				"enchanted": "textures/misc/enchanted_item_glint"
+			},
+			"geometry": {
+				"default": "geometry.plant_2"
+			},
+			"animations": {
+				"fp": "animation.plant_2.ps_1p",
+				"tp": "animation.plant_2.ps_tp"
+			},
+			"scripts": {
+				"animate": [
+					{
+						"fp": "c.is_first_person"
+					},
+					{
+						"tp": "!c.is_first_person"
+					}
+				]
+			}
+		}
+	}
+}

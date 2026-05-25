@@ -1,0 +1,48 @@
+{
+	"resource_pack_name": "PvZ v1-0",
+	"texture_name": "atlas.items",
+	"texture_data": {
+		"bn_sun": {
+			"textures": "textures/items/sun"
+		},
+		"bn_plant_1": {
+			"textures": "textures/items/sunflower"
+		},
+		"bn_shovel": {
+			"textures": "textures/items/stone_shovel"
+		},
+		"bn_plant_2": {
+			"textures": [
+				"textures/items/pea_shooter"
+			]
+		},
+		"bn_shop": {
+			"textures": "textures/items/emerald"
+		},
+		"bn_pollen": {
+			"textures": "textures/items/pollen"
+		},
+		"bn_snow_pea": {
+			"textures": [
+				{
+					"path": "textures/items/snow_pea"
+				}
+			]
+		},
+		"bn_potato_mine": {
+			"textures": [
+				"textures/items/potato_mine"
+			]
+		},
+		"bn_cherry_bomb": {
+			"textures": [
+				"textures/items/cherry_bomb"
+			]
+		},
+		"bn_wallnut": {
+			"textures": [
+				"textures/items/wallnut"
+			]
+		}
+	}
+}

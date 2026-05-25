@@ -1,0 +1,25 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.wallnut.wn_fp": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"rotation": [8.8323, -39.99879, -141.04831],
+					"position": [18, 10, 20],
+					"scale": [0.9, 1, 1]
+				}
+			}
+		},
+		"animation.wallnut.wn_tp": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"rotation": [7.5, 0, 0],
+					"position": [0, 19, -5],
+					"scale": 0.6
+				}
+			}
+		}
+	}
+}

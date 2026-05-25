@@ -1,0 +1,14 @@
+{
+	"format_version": "1.20.10",
+	"minecraft:camera_preset": {
+		"identifier": "bn:test",
+		"player_effects": true,
+		"inherit_from": "minecraft:free",
+		"listener": "player",
+		"pos_x": 1,
+		"pos_y": 0,
+		"pos_z": 1,
+		"rot_x": 1,
+		"rot_y": 90
+	}
+}

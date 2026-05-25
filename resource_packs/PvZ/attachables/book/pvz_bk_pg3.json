@@ -1,0 +1,30 @@
+{
+	"format_version": "1.10.0",
+	"minecraft:attachable": {
+		"description": {
+			"identifier": "pvz_bn:bk_pg3",
+			"materials": {
+				"default": "entity_emissive_alpha"
+			},
+			"textures": {
+				"default": "textures/entity/book/bk_pg3"
+			},
+			"geometry": {
+				"default": "geometry.book"
+			},
+			"render_controllers": [
+				"controller.render.default"
+			],
+			"scripts": {
+				"animate": [
+					{
+						"book": "!c.is_first_person"
+					}
+				]
+			},
+			"animations": {
+				"book": "animation.book.pg_1"
+			}
+		}
+	}
+}

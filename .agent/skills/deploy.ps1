@@ -95,7 +95,8 @@ function Deploy-Packs {
 
             # Register in world configs
             Register-PackInWorld -uuid $uuid -version $version -packType $packType
-        } else {
+        }
+        else {
             Write-Warning "Warning: No manifest.json found in $packName."
         }
     }
@@ -112,7 +113,8 @@ function Register-PackInWorld {
     $jsonFile = ""
     if ($packType -eq "behavior") {
         $jsonFile = Join-Path $worldDir "world_behavior_packs.json"
-    } else {
+    }
+    else {
         $jsonFile = Join-Path $worldDir "world_resource_packs.json"
     }
 

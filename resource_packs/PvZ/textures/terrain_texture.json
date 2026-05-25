@@ -1,0 +1,22 @@
+{
+	"num_mip_levels": 4,
+	"padding": 8,
+	"resource_pack_name": "PvZ v1-0",
+	"texture_name": "atlas.terrain",
+	"texture_data": {
+		"bn_walk": {
+			"textures": "textures/blocks/walk"
+		},
+		"grill_0": {
+			"textures": [
+				"textures/blocks/grill_0"
+			]
+		},
+		"bn_fence": {
+			"textures": "textures/blocks/fence"
+		},
+		"bn_ngb": {
+			"textures": "textures/blocks/ngb"
+		}
+	}
+}

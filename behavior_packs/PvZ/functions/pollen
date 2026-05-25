@@ -1,0 +1,1 @@
+execute as @e[type=bn:pollen] at @s if entity @p[r=1] run scoreboard players add @p[c=1] pollen 1

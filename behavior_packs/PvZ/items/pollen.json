@@ -1,0 +1,18 @@
+{
+	"format_version": "1.16.0",
+	"minecraft:item": {
+		"description": {
+			"identifier": "bn:pollen",
+			"category": "nature"
+		},
+		"components": {
+			"minecraft:use_duration": 999,
+			"minecraft:food": {
+				"nutrition": 0,
+				"saturation_modifier": "low"
+			},
+			"minecraft:use_animation": "eat",
+			"minecraft:render_offsets": "apple"
+		}
+	}
+}

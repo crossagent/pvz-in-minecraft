@@ -1,0 +1,15 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.book.pg_1": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"rotation": [84.5925, 63.04342, -50.11715],
+					"position": [-7, -28, -5],
+					"scale": 0
+				}
+			}
+		}
+	}
+}

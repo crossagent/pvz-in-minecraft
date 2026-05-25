@@ -1,0 +1,25 @@
+{
+	"format_version": "1.20.80",
+	"render_controllers": {
+		"controller.render.wallnut": {
+			"geometry": "Geometry.default",
+			"materials": [
+				{
+					"*": "Material.default"
+				}
+			],
+			"textures": [
+				"Array.cracks[math.clamp(query.health / 15, 0, 2)]"
+			],
+			"arrays": {
+				"textures": {
+					"Array.cracks": [
+						"Texture.low",
+						"Texture.med",
+						"Texture.full"
+					]
+				}
+			}
+		}
+	}
+}

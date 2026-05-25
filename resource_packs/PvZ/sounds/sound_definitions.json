@@ -1,0 +1,83 @@
+{
+	"format_version": "1.14.0",
+	"sound_definitions": {
+		"z.kill": {
+			"sounds": [
+				{
+					"name": "sounds/killpop"
+				}
+			]
+		},
+		"z.hit": {
+			"sounds": [
+				{
+					"name": "sounds/pvz_hit"
+				}
+			]
+		},
+		"seed.packet": {
+			"sounds": [
+				{
+					"name": "sounds/seed_packet"
+				}
+			]
+		},
+		"sun.pickup": {
+			"sounds": [
+				{
+					"name": "sounds/sun_pickup"
+				}
+			]
+		},
+		"victory.jingle": {
+			"sounds": [
+				{
+					"name": "sounds/victory_jingle"
+				}
+			]
+		},
+		"zombie.groan": {
+			"sounds": [
+				{
+					"name": "sounds/zombie_groan"
+				}
+			]
+		},
+		"initial.wave": {
+			"sounds": [
+				{
+					"name": "sounds/zombie_initial_wave"
+				}
+			]
+		},
+		"second.wave": {
+			"sounds": [
+				{
+					"name": "sounds/zombie_wave"
+				}
+			]
+		},
+		"grass.walk": {
+			"sounds": [
+				{
+					"name": "sounds/grasswalk"
+				}
+			]
+		},
+		"cd.talk": {
+			"sounds": [
+				{
+					"name": "sounds/cd_1"
+				}
+			]
+		},
+		"bounce": {
+			"sounds": [
+				{
+					"name": "sounds/bounce",
+					"volume": 10
+				}
+			]
+		}
+	}
+}

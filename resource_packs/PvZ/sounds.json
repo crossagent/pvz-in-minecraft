@@ -1,0 +1,50 @@
+{
+	"entity_sounds": {
+		"entities": {
+			"bn:zombie": {
+				"events": {
+					"ambient": "zombie.groan",
+					"death": "z.kill",
+					"hurt": "z.hit",
+					"step": {
+						"pitch": 1,
+						"sound": "mob.zombie.step",
+						"volume": 0.45
+					}
+				},
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"volume": 1
+			},
+			"bn:zombie_cone": {
+				"events": {
+					"ambient": "zombie.groan",
+					"death": "z.kill",
+					"hurt": "z.hit",
+					"step": {
+						"pitch": 1,
+						"sound": "mob.zombie.step",
+						"volume": 0.45
+					}
+				},
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"volume": 1
+			},
+			"bn:wallnut": {
+				"events": {
+					"hurt": "block.sniffer_egg.crack"
+				},
+				"pitch": [
+					0.8,
+					1.2
+				],
+				"volume": 1
+			}
+		}
+	}
+}

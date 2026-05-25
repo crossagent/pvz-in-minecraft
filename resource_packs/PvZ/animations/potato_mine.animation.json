@@ -1,0 +1,24 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.potato_mine.pt_fp": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"rotation": [16.35284, -37.27694, -147.14496],
+					"position": [13, 14, 12]
+				}
+			}
+		},
+		"animation.potato_mine.pt_tp": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"rotation": [12.5, 0, 0],
+					"position": [0, 18, -5],
+					"scale": 0.7
+				}
+			}
+		}
+	}
+}

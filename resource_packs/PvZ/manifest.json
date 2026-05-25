@@ -1,0 +1,44 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"BONY162"
+		]
+	},
+	"header": {
+		"name": "pack.name",
+		"description": "pack.description",
+		"min_engine_version": [
+			1,
+			21,
+			80
+		],
+		"uuid": "1daccff2-4b9f-4bbd-8c2b-6156e4cbca5d",
+		"version": [
+			1,
+			0,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "6e5c930f-c55d-4396-aafc-29c57487dbda",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "4389a98d-c504-4ee3-a12c-81be1f8f7f21",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	]
+}

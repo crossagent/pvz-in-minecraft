@@ -1,0 +1,13 @@
+{
+	"format_version": 1.1,
+	"minecraft:item": {
+		"description": {
+			"identifier": "bn:pollen",
+			"category": "Equipment"
+		},
+		"components": {
+			"minecraft:render_offsets": "bow",
+			"minecraft:icon": "bn_pollen"
+		}
+	}
+}

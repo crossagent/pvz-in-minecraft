@@ -1,0 +1,17 @@
+{
+	"format_version": "1.20.80",
+	"minecraft:item": {
+		"description": {
+			"identifier": "pvz_bn:bk_pg3",
+			"menu_category": {
+				"category": "none"
+			}
+		},
+		"components": {
+			"minecraft:icon": "book_portfolio",
+			"minecraft:display_name": {
+				"value": "PvZ Plant Guide\n§eInteract to change page\n§dPage 3/6"
+			}
+		}
+	}
+}

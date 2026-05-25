@@ -1,0 +1,18 @@
+{
+	"format_version": [
+		1,
+		1,
+		0
+	],
+	"bn:walk": {
+		"sound": "stone",
+		"textures": "bn_walk"
+	},
+	"bn:fence": {
+		"sound": "stone"
+	},
+	"bn:ngb": {
+		"sound": "stone",
+		"textures": "bn_ngb"
+	}
+}
