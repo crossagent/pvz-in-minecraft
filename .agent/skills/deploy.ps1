@@ -148,8 +148,19 @@ function Register-PackInWorld {
         $entries += $newEntry
     }
 
+    # Reconstruct to prevent nesting and ensure correct array formatting
+    $cleanList = @()
+    foreach ($entry in $entries) {
+        $vArray = @()
+        foreach ($v in $entry.version) { $vArray += [int]$v }
+        $cleanList += [PSCustomObject]@{
+            pack_id = $entry.pack_id.ToString()
+            version = $vArray
+        }
+    }
+
     # Convert back to JSON and save
-    $jsonOut = ConvertTo-Json -InputObject $entries -Depth 5
+    $jsonOut = ConvertTo-Json -InputObject $cleanList -Depth 5
     $jsonOut | Out-File -FilePath $jsonFile -Encoding utf8
     Write-Host "Registered/updated $packType pack $uuid (v$($version -join '.')) in $jsonFile." -ForegroundColor Green
 }
