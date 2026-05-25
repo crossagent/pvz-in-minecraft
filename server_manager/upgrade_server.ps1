@@ -26,8 +26,25 @@ if (-not $serverPath -or -not (Test-Path $serverPath)) {
 
 Write-Host "Current Server Path: $serverPath" -ForegroundColor Cyan
 
+# Detect if local proxy (SOCKS5/HTTP on port 10808) is running, and if so, enable it for this process
+$proxyUrl = "http://127.0.0.1:10808"
+$tcp = New-Object System.Net.Sockets.TcpClient
+try {
+    $ar = $tcp.BeginConnect("127.0.0.1", 10808, $null, $null)
+    $wait = $ar.AsyncWaitHandle.WaitOne(250, $false)
+    if ($wait -and $tcp.Connected) {
+        [System.Net.WebRequest]::DefaultWebProxy = New-Object System.Net.WebProxy($proxyUrl)
+        $env:HTTP_PROXY = $proxyUrl
+        $env:HTTPS_PROXY = $proxyUrl
+        Write-Host "Detected active local proxy at 10808. Enabled proxy for download." -ForegroundColor Green
+    }
+} catch {}
+finally {
+    $tcp.Close()
+}
+
 # 2. Get target version from user
-$version = Read-Host "Enter the Minecraft Bedrock Server Version to download (e.g. 1.21.111.01)"
+$version = Read-Host "Enter the Minecraft Bedrock Server Version to download (e.g. 1.26.21.1)"
 $version = $version.Trim()
 
 if (-not $version) {
