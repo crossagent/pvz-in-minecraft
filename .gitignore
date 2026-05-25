@@ -1,6 +1,15 @@
 # Local Environment Settings
 .env
 
+# Downloaded mod files
+/mod/
+/temp_world_extract/
+
+# Server manager temporary directories
+/server_manager/temp_upgrade/
+/server_manager/backup_data/
+/server_manager/*.zip
+
 # Editor & OS files
 .vscode/
 .idea/
