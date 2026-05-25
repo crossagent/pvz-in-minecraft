@@ -54,10 +54,12 @@ foreach ($serverVer in $serverApiVersions) {
         
         # 3. Start server redirecting output to a file
         $logFile = Join-Path $scriptPath "test_run.log"
+        $errFile = Join-Path $scriptPath "test_err.log"
         if (Test-Path $logFile) { Remove-Item $logFile -Force }
+        if (Test-Path $errFile) { Remove-Item $errFile -Force }
         
         # Start server process using Start-Process with redirection
-        $p = Start-Process -FilePath $serverExe -WorkingDirectory $serverDir -NoNewWindow -RedirectStandardOutput $logFile -RedirectStandardError $logFile -PassThru
+        $p = Start-Process -FilePath $serverExe -WorkingDirectory $serverDir -NoNewWindow -RedirectStandardOutput $logFile -RedirectStandardError $errFile -PassThru
         
         # Wait 2.5 seconds for server initialization and script compilation
         Start-Sleep -Milliseconds 2500
@@ -70,8 +72,12 @@ foreach ($serverVer in $serverApiVersions) {
         # Read log content
         $consoleOutput = ""
         if (Test-Path $logFile) {
-            $consoleOutput = Get-Content $logFile -Raw
+            $consoleOutput += Get-Content $logFile -Raw
             Remove-Item $logFile -Force
+        }
+        if (Test-Path $errFile) {
+            $consoleOutput += Get-Content $errFile -Raw
+            Remove-Item $errFile -Force
         }
         
         # 4. Check if error is present in the output
