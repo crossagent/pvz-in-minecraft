@@ -1,0 +1,35 @@
+# ==============================================================================
+# Volcano Engine (火山引擎) Terraform Configuration Variables Example
+#
+# INSTRUCTIONS:
+# 1. Copy this file and rename it to 'terraform.tfvars' in the same directory.
+# 2. Fill in your Volcano Engine Access Key and Secret Key.
+# 3. Modify other variables according to your preferences.
+#
+# NOTE: 'terraform.tfvars' is added to .gitignore and will NOT be committed to git.
+# ==============================================================================
+
+# Volcano Engine API Access Credentials
+# You can generate these in the Volcano Engine Console -> Access Key Management
+volc_access_key = "YOUR_VOLCANO_ENGINE_ACCESS_KEY_ID"
+volc_secret_key = "YOUR_VOLCANO_ENGINE_SECRET_ACCESS_KEY"
+
+# Volcano Engine Region where you want to deploy the server
+# Examples: cn-beijing (Beijing), cn-shanghai (Shanghai), cn-guangzhou (Guangzhou)
+volc_region       = "cn-beijing"
+availability_zone = "cn-beijing-a"
+
+# Server Hostname/Name Tag in Volcano Engine Console
+instance_name = "minecraft-bedrock-server"
+
+# ECS Instance type
+# ecs.e-c1m2.large is 2 vCPUs and 4GB RAM (Volcano Engine Economic Sharing e-instance)
+# Adjust based on your workload and budget.
+instance_type = "ecs.e-c1m2.large"
+
+# SSH root password for your server
+# Requirements: 8-30 characters, must contain uppercase, lowercase, numbers, and special characters.
+server_password = "YourSecurePassword!2026"
+
+# Minecraft port (19132 is the standard default port for Bedrock Dedicated Server)
+minecraft_port = 19132

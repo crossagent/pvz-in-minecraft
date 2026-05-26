@@ -6,9 +6,9 @@
 /temp_world_extract/
 
 # Server manager temporary directories
-/server_manager/temp_upgrade/
-/server_manager/backup_data/
-/server_manager/*.zip
+/deployment/local/temp_upgrade/
+/deployment/local/backup_data/
+/deployment/local/*.zip
 
 # Editor & OS files
 .vscode/
@@ -27,3 +27,12 @@ Desktop.ini
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Terraform local state and credentials
+deployment/volcengine/.terraform/
+deployment/volcengine/.terraform.lock.hcl
+deployment/volcengine/*.tfstate
+deployment/volcengine/*.tfstate.backup
+deployment/volcengine/terraform.tfvars
+deployment/volcengine/terraform.tfvars.json
+
