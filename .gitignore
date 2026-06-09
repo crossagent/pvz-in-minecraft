@@ -5,6 +5,9 @@
 /mod/
 /temp_world_extract/
 
+# Local Bedrock Server
+/bedrock-server/
+
 # Server manager temporary directories
 /deployment/local/temp_upgrade/
 /deployment/local/backup_data/

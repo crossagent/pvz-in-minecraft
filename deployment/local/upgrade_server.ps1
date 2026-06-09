@@ -2,7 +2,8 @@
 
 # 1. Load .env path
 $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path
-$rootPath = Split-Path -Parent $scriptPath
+$deploymentPath = Split-Path -Parent $scriptPath
+$rootPath = Split-Path -Parent $deploymentPath
 $envFile = Join-Path $rootPath ".env"
 
 if (-not (Test-Path $envFile)) {

@@ -50,7 +50,7 @@ if (-not (Test-Path $worldDir)) {
 $sourceBPDir = Join-Path $rootPath "behavior_packs"
 $sourceRPDir = Join-Path $rootPath "resource_packs"
 
-# Target folders (deploying to development folders for hot reload support)
+# Target folders (deploying to development folders for Dedicated Server scripting compatibility)
 $targetBPDir = Join-Path $serverPath "development_behavior_packs"
 $targetRPDir = Join-Path $serverPath "development_resource_packs"
 

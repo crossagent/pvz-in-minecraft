@@ -10,8 +10,8 @@
 		"description": "pack.description",
 		"min_engine_version": [
 			1,
-			21,
-			80
+			26,
+			21
 		],
 		"uuid": "1daccff2-4b9f-4bbd-8c2b-6156e4cbca5d",
 		"version": [

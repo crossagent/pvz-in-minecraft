@@ -1,63 +1,55 @@
 {
-    "format_version":  2,
-    "metadata":  {
-                     "authors":  [
-                                     "BONY162"
-                                 ]
-                 },
-    "header":  {
-                   "name":  "pack.name",
-                   "description":  "pack.description",
-                   "min_engine_version":  [
-                                              1,
-                                              21,
-                                              80
-                                          ],
-                   "uuid":  "4389a98d-c504-4ee3-a12c-81be1f8f7f21",
-                   "version":  [
-                                   1,
-                                   0,
-                                   0
-                               ]
-               },
-    "modules":  [
-                    {
-                        "type":  "data",
-                        "uuid":  "0882a5cb-b9e6-449a-bc92-4f5bd866ffd8",
-                        "version":  [
-                                        1,
-                                        0,
-                                        0
-                                    ]
-                    },
-                    {
-                        "type":  "script",
-                        "language":  "javascript",
-                        "uuid":  "6dda53d1-e24e-4ca0-943e-3cf067fa88ab",
-                        "entry":  "scripts/main.js",
-                        "version":  [
-                                        1,
-                                        0,
-                                        0
-                                    ]
-                    }
-                ],
-    "dependencies":  [
-                         {
-                             "uuid":  "1daccff2-4b9f-4bbd-8c2b-6156e4cbca5d",
-                             "version":  [
-                                             1,
-                                             0,
-                                             0
-                                         ]
-                         },
-                         {
-                             "module_name":  "@minecraft/server",
-                             "version":  "1.16.0"
-                         },
-                         {
-                             "module_name":  "@minecraft/server-ui",
-                             "version":  "1.3.0"
-                         }
-                     ]
+    "format_version": 2,
+    "metadata": {
+        "authors": [
+            "BONY162"
+        ]
+    },
+    "header": {
+        "name": "pack.name",
+        "description": "pack.description",
+        "min_engine_version": [
+            1,
+            21,
+            0
+        ],
+        "uuid": "4389a98d-c504-4ee3-a12c-81be1f8f7f21",
+        "version": [
+            1,
+            0,
+            0
+        ]
+    },
+    "modules": [
+        {
+            "type": "data",
+            "uuid": "0882a5cb-b9e6-449a-bc92-4f5bd866ffd8",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        },
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "6dda53d1-e24e-4ca0-943e-3cf067fa88ab",
+            "entry": "scripts/main.js",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.21.0"
+        },
+        {
+            "module_name": "@minecraft/server-ui",
+            "version": "1.3.0"
+        }
+    ]
 }

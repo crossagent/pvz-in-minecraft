@@ -2,8 +2,6 @@
 data "volcengine_images" "ubuntu" {
   os_type  = "Linux"
   platform = "Ubuntu"
-  # Volcano Engine Ubuntu 22.04 LTS images typically contain "ubuntu_22_04" in their name
-  name_regex = "ubuntu_22_04"
 }
 
 # Create the ECS Instance

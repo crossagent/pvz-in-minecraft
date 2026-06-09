@@ -3,7 +3,7 @@ title Minecraft Bedrock Server Launcher
 setlocal enabledelayedexpansion
 
 :: Check if .env exists in the parent directory
-if not exist "%~dp0..\.env" (
+if not exist "%~dp0..\..\.env" (
     echo [ERROR] .env file not found in parent directory.
     echo Please create a .env file at the project root with: MINECRAFT_SERVER_PATH=C:\your\server\path
     pause
@@ -12,7 +12,7 @@ if not exist "%~dp0..\.env" (
 
 :: Read MINECRAFT_SERVER_PATH from .env
 set SERVER_PATH=
-for /f "usebackq tokens=1,2 delims==" %%i in ("%~dp0..\.env") do (
+for /f "usebackq tokens=1,2 delims==" %%i in ("%~dp0..\..\.env") do (
     set "key=%%i"
     set "val=%%j"
     
