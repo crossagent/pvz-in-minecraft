@@ -1,51 +1,60 @@
-import { world, system, ItemStack } from "@minecraft/server";
+import { world, ItemStack } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { LanguageManager } from "./LanguageManager.js";
+
 export class ShopManager {
   static shopItems = [
-    { nameKey: "plant.peashooter.name", itemId: "bn:plant_2", cost: 0x64 },
-    { nameKey: "plant.wallnut.name", itemId: "bn:plant_1", cost: 0x32 },
-    { nameKey: "plant.cherry_bomb.name", itemId: "bn:plant_3", cost: 0x96 },
-    { nameKey: "plant.big_walnut.name", itemId: "bn:plant_4", cost: 0x7d },
-    { nameKey: "plant.potato_mine.name", itemId: "bn:plant_5", cost: 0x19 },
-    { nameKey: "plant.snow_pea.name", itemId: "bn:plant_6", cost: 0xaf },
+    { nameKey: "plant.peashooter.name", itemId: "bn:plant_2", cost: 100 },
+    { nameKey: "plant.wallnut.name", itemId: "bn:plant_1", cost: 50 },
+    { nameKey: "plant.cherry_bomb.name", itemId: "bn:plant_3", cost: 150 },
+    { nameKey: "plant.big_walnut.name", itemId: "bn:plant_4", cost: 125 },
+    { nameKey: "plant.potato_mine.name", itemId: "bn:plant_5", cost: 25 },
+    { nameKey: "plant.snow_pea.name", itemId: "bn:plant_6", cost: 175 },
   ];
-  static showShop(_0x163177) {
-    const _0x493871 = world.scoreboard.getObjective("pollen");
-    const _0x15b107 =
-      _0x493871?.["getScore"](_0x163177.scoreboardIdentity) ?? 0;
-    const _0x14efd5 = new ActionFormData()
-      ["title"](LanguageManager.get(_0x163177, "shop.title"))
-      ["body"](LanguageManager.get(_0x163177, "shop.body", _0x15b107));
-    for (const _0x1ff33f of this.shopItems) {
-      const _0x71ec48 = LanguageManager.get(_0x163177, _0x1ff33f.nameKey);
-      _0x14efd5.button(
-        LanguageManager.get(
-          _0x163177,
-          "shop.item_button",
-          _0x71ec48,
-          _0x1ff33f.cost,
-        ),
+
+  static showShop(player) {
+    const pollenObjective = world.scoreboard.getObjective("pollen");
+    const currentPollen =
+      pollenObjective?.getScore(player.scoreboardIdentity) ?? 0;
+
+    const form = new ActionFormData()
+      .title(LanguageManager.get(player, "shop.title"))
+      .body(LanguageManager.get(player, "shop.body", currentPollen));
+
+    for (const item of this.shopItems) {
+      const itemName = LanguageManager.get(player, item.nameKey);
+      form.button(
+        LanguageManager.get(player, "shop.item_button", itemName, item.cost),
       );
     }
-    _0x14efd5.show(_0x163177)["then"]((_0x57ef42) => {
-      if (_0x57ef42.canceled) return;
-      const _0x4c03db = this.shopItems[_0x57ef42.selection];
-      if (!_0x4c03db) return;
-      if (_0x15b107 >= _0x4c03db.cost) {
-        _0x493871.addScore(_0x163177.scoreboardIdentity, -_0x4c03db.cost);
-        const _0x4555c7 = new ItemStack(_0x4c03db.itemId, 1);
-        _0x163177.getComponent("inventory")["container"]["addItem"](_0x4555c7);
-        const _0x396701 = LanguageManager.get(_0x163177, _0x4c03db.nameKey);
-        _0x163177.sendMessage(
-          LanguageManager.get(_0x163177, "shop.purchase_success", _0x396701),
+
+    form.show(player).then((response) => {
+      if (response.canceled) return;
+      const selectedItem = this.shopItems[response.selection];
+      if (!selectedItem) return;
+
+      if (currentPollen >= selectedItem.cost) {
+        pollenObjective.addScore(player.scoreboardIdentity, -selectedItem.cost);
+        const itemStack = new ItemStack(selectedItem.itemId, 1);
+        player.getComponent("inventory").container.addItem(itemStack);
+
+        const purchasedItemName = LanguageManager.get(
+          player,
+          selectedItem.nameKey,
         );
-        _0x163177.playSound("random.levelup");
+        player.sendMessage(
+          LanguageManager.get(
+            player,
+            "shop.purchase_success",
+            purchasedItemName,
+          ),
+        );
+        player.playSound("random.levelup");
       } else {
-        _0x163177.sendMessage(
-          LanguageManager.get(_0x163177, "shop.not_enough_pollen"),
+        player.sendMessage(
+          LanguageManager.get(player, "shop.not_enough_pollen"),
         );
-        _0x163177.playSound("note.bass");
+        player.playSound("note.bass");
       }
     });
   }

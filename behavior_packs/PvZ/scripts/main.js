@@ -17,206 +17,227 @@ import { LanguageManager } from "./game/LanguageManager.js";
 import { DialogueManager } from "./game/DialogueManager.js";
 import { TutorialManager } from "./game/TutorialManager.js";
 import { LevelManager } from "./game/LevelManager.js";
+
 system.run(() => {
   ScoreboardManager.initializeScoreboards();
   SettingsManager.initializeSettings();
   GameManager.initialize();
   PlantManager.initialize();
+
   world.afterEvents.worldInitialize.subscribe(() => {
     GameManager.resumeGameOnLoad();
   });
-  world.afterEvents.playerSpawn.subscribe((_0x24c534) => {
-    const { player: _0x52d021, initialSpawn: _0x24a701 } = _0x24c534;
-    SettingsManager.initializePlayerSettings(_0x52d021);
-    if (_0x24a701) {
+
+  world.afterEvents.playerSpawn.subscribe((eventData) => {
+    const { player, initialSpawn } = eventData;
+    SettingsManager.initializePlayerSettings(player);
+    if (initialSpawn) {
       system.run(() => {
         try {
-          _0x52d021.onScreenDisplay.setHudVisibility(HudVisibility.Hide, [
+          player.onScreenDisplay.setHudVisibility(HudVisibility.Hide, [
             HudElement.Health,
             HudElement.Hunger,
             HudElement.Armor,
             HudElement.StatusEffects,
             HudElement.ProgressBar,
           ]);
-        } catch (_0x23dd44) {
+        } catch (err) {
           console.warn(
-            "Could not hide HUD elements for " +
-              _0x52d021.name +
-              ": " +
-              _0x23dd44,
+            `Could not hide HUD elements for ${player.name}: ${err}`,
           );
         }
       });
     }
   });
-  world.beforeEvents.itemUse.subscribe((_0x4c93e7) => {
-    const { source: _0x56a4b8, itemStack: _0x2f9b79 } = _0x4c93e7;
-    if (world.getDynamicProperty("tutorialActive") && !_0x2f9b79) {
+
+  world.beforeEvents.itemUse.subscribe((eventData) => {
+    const { source: player, itemStack } = eventData;
+    if (world.getDynamicProperty("tutorialActive") && !itemStack) {
       return;
     }
     system.run(() => {
-      switch (_0x2f9b79?.["typeId"]) {
+      switch (itemStack?.typeId) {
         case "minecraft:compass":
-          _0x4c93e7.cancel = !![];
+          eventData.cancel = true;
           MenuManager.showMainMenu(
-            _0x56a4b8,
-            LanguageManager.get(_0x56a4b8, "menu.category.settings"),
+            player,
+            LanguageManager.get(player, "menu.category.settings"),
           );
           break;
         default:
-          if (_0x2f9b79 && PlantManager.handleItemUse(_0x56a4b8, _0x2f9b79)) {
-            _0x4c93e7.cancel = !![];
+          if (itemStack && PlantManager.handleItemUse(player, itemStack)) {
+            eventData.cancel = true;
           }
           break;
       }
     });
   });
-  world.afterEvents.entityHitEntity.subscribe((_0x29c179) => {
-    const { damagingEntity: _0x39f303, hitEntity: _0xba3c0b } = _0x29c179;
-    if (_0x39f303.typeId === "minecraft:player") {
-      const _0xf29f5f = Array.from(world.getPlayers())["find"](
-        (_0x2938f5) => _0x2938f5.id === _0x39f303.id,
+
+  world.afterEvents.entityHitEntity.subscribe((eventData) => {
+    const { damagingEntity, hitEntity } = eventData;
+    if (damagingEntity.typeId === "minecraft:player") {
+      const player = Array.from(world.getPlayers()).find(
+        (p) => p.id === damagingEntity.id,
       );
-      if (!_0xf29f5f) return;
-      if (_0xba3c0b.typeId === "bn:crazy_steve") {
+      if (!player) return;
+      if (hitEntity.typeId === "bn:crazy_steve") {
         system.run(() => {
-          _0xf29f5f.setDynamicProperty("hasInteractedWithSteve", !![]);
-          _0xf29f5f.runCommandAsync("playsound cd.talk");
+          player.setDynamicProperty("hasInteractedWithSteve", true);
+          player.runCommandAsync("playsound cd.talk");
           MenuManager.showMainMenu(
-            _0xf29f5f,
-            LanguageManager.get(_0xf29f5f, "menu.category.levels"),
+            player,
+            LanguageManager.get(player, "menu.category.levels"),
           );
         });
       }
-      if (_0xba3c0b.typeId === "bn:pollen") {
-        system.run(() => PlantManager.collectPollen(_0xf29f5f));
+      if (hitEntity.typeId === "bn:pollen") {
+        system.run(() => PlantManager.collectPollen(player));
       }
-      GameManager.handleUnlockedPlantCollection(_0xba3c0b);
+      GameManager.handleUnlockedPlantCollection(hitEntity);
     }
   });
-  world.beforeEvents.playerInteractWithEntity.subscribe((_0x2b5410) => {
-    const { player: _0x12652d, target: _0x3a1db3 } = _0x2b5410;
-    const _0x53a4fe = world.getDynamicProperty("awaitingPlantCollection");
-    if (_0x53a4fe) {
-      GameManager.handleUnlockedPlantCollection(_0x3a1db3);
+
+  world.beforeEvents.playerInteractWithEntity.subscribe((eventData) => {
+    const { player, target } = eventData;
+    const awaitingPlantCollection = world.getDynamicProperty(
+      "awaitingPlantCollection",
+    );
+    if (awaitingPlantCollection) {
+      GameManager.handleUnlockedPlantCollection(target);
       return;
     }
-    if (_0x3a1db3.typeId === "bn:crazy_steve") {
+    if (target.typeId === "bn:crazy_steve") {
       system.run(() => {
-        _0x12652d.setDynamicProperty("hasInteractedWithSteve", !![]);
-        _0x12652d.runCommandAsync("playsound cd.talk");
+        player.setDynamicProperty("hasInteractedWithSteve", true);
+        player.runCommandAsync("playsound cd.talk");
         MenuManager.showMainMenu(
-          _0x12652d,
-          LanguageManager.get(_0x12652d, "menu.category.levels"),
+          player,
+          LanguageManager.get(player, "menu.category.levels"),
         );
       });
     }
   });
 });
+
 system.runInterval(() => {
-  const _0x1138cb = world.getDynamicProperty("gameActive");
-  const _0x3ad5d4 = world.getDynamicProperty("tutorialActive");
-  const _0x103994 = world.getDynamicProperty("awaitingPlantCollection");
-  if (_0x1138cb) {
+  const gameActive = world.getDynamicProperty("gameActive");
+  const tutorialActive = world.getDynamicProperty("tutorialActive");
+  const awaitingPlantCollection = world.getDynamicProperty(
+    "awaitingPlantCollection",
+  );
+
+  if (gameActive) {
     GameManager.onTick();
     LevelManager.onTick();
   }
-  if (_0x3ad5d4) {
+  if (tutorialActive) {
     TutorialManager.onTick();
   }
-  if (!_0x1138cb && !_0x3ad5d4 && !_0x103994) {
-    for (const _0x1584e0 of world.getAllPlayers()) {
-      const _0x161ea0 = _0x1584e0.getDynamicProperty("hasInteractedWithSteve");
-      if (!_0x161ea0) {
-        _0x1584e0.onScreenDisplay.setActionBar(
-          LanguageManager.get(_0x1584e0, "misc.interact_prompt"),
+
+  if (!gameActive && !tutorialActive && !awaitingPlantCollection) {
+    for (const player of world.getAllPlayers()) {
+      const hasInteracted = player.getDynamicProperty("hasInteractedWithSteve");
+      if (!hasInteracted) {
+        player.onScreenDisplay.setActionBar(
+          LanguageManager.get(player, "misc.interact_prompt"),
         );
       } else {
-        _0x1584e0.onScreenDisplay.setActionBar("");
+        player.onScreenDisplay.setActionBar("");
       }
     }
     return;
   }
-  if (_0x1138cb && !_0x3ad5d4) {
+
+  if (gameActive && !tutorialActive) {
     PlantManager.updatePlants();
   }
-  const _0x423381 = world.getAllPlayers();
-  for (const _0x3869d7 of _0x423381) {
-    if (_0x1138cb || _0x3ad5d4) {
-      PlayerManager.handleLookingAt(_0x3869d7);
+
+  const allPlayers = world.getAllPlayers();
+  for (const player of allPlayers) {
+    if (gameActive || tutorialActive) {
+      PlayerManager.handleLookingAt(player);
     }
-    if (_0x3869d7.hasTag("collect")) {
-      const _0xff72ee = PlantManager.collectPollen(_0x3869d7);
-      if (!_0xff72ee) {
-        const _0x3bc741 = world.getDynamicProperty("awaitingPlantCollection");
-        if (_0x3bc741) {
+    if (player.hasTag("collect")) {
+      const collected = PlantManager.collectPollen(player);
+      if (!collected) {
+        const awaitingPlantCollection = world.getDynamicProperty(
+          "awaitingPlantCollection",
+        );
+        if (awaitingPlantCollection) {
           try {
-            const _0x3732d9 = _0x3869d7.getBlockFromViewDirection({
-              maxDistance: 0x96,
+            const raycastResult = player.getBlockFromViewDirection({
+              maxDistance: 150,
             });
-            if (_0x3732d9) {
-              const _0x3d69f7 = world.getDynamicProperty("unlockedPlantId");
-              const _0x20ab1c = {
-                location: _0x3732d9.block.location,
-                maxDistance: 0x4,
-                type: _0x3d69f7,
+            if (raycastResult) {
+              const unlockedPlantId =
+                world.getDynamicProperty("unlockedPlantId");
+              const filterOptions = {
+                location: raycastResult.block.location,
+                maxDistance: 4,
+                type: unlockedPlantId,
               };
-              const _0x162353 = _0x3869d7.dimension.getEntities(_0x20ab1c);
-              if (_0x162353.length > 0) {
-                GameManager.handleUnlockedPlantCollection(_0x162353[0]);
+              const entities = player.dimension.getEntities(filterOptions);
+              if (entities.length > 0) {
+                GameManager.handleUnlockedPlantCollection(entities[0]);
               }
             }
-          } catch (_0x3c267b) {}
+          } catch (err) {}
         }
       }
-      _0x3869d7.removeTag("collect");
+      player.removeTag("collect");
     }
-    if (_0x1138cb && !_0x3ad5d4) {
+
+    if (gameActive && !tutorialActive) {
       try {
-        const _0x290c1c = LanguageManager.get(_0x3869d7, "game.title");
-        const _0x2a6473 = world.scoreboard.getObjective("pollen");
-        const _0x192ce0 =
-          _0x2a6473?.["getScore"](_0x3869d7.scoreboardIdentity) ?? 0;
-        let _0x304869 =
-          _0x290c1c +
-          "\x0a" +
-          LanguageManager.get(_0x3869d7, "game.sun_counter", _0x192ce0);
-        for (const [, _0x109e3d] of PlantManager.plantData) {
-          const _0x391033 = _0x3869d7.getItemCooldown(
-            _0x109e3d.cooldownCategory,
+        const gameTitle = LanguageManager.get(player, "game.title");
+        const pollenObjective = world.scoreboard.getObjective("pollen");
+        const currentPollen =
+          pollenObjective?.getScore(player.scoreboardIdentity) ?? 0;
+
+        let actionBarText =
+          gameTitle +
+          "\n" +
+          LanguageManager.get(player, "game.sun_counter", currentPollen);
+
+        for (const [, plantDef] of PlantManager.plantData) {
+          const cooldownTicks = player.getItemCooldown(
+            plantDef.cooldownCategory,
           );
-          if (_0x391033 > 0) {
-            const _0x2e9f9d = (_0x391033 / 20)["toFixed"](1);
-            const _0x17b4a1 = LanguageManager.get(_0x3869d7, _0x109e3d.nameKey);
-            _0x304869 +=
-              "\x0a" +
+          if (cooldownTicks > 0) {
+            const cooldownSeconds = (cooldownTicks / 20).toFixed(1);
+            const plantName = LanguageManager.get(player, plantDef.nameKey);
+            actionBarText +=
+              "\n" +
               LanguageManager.get(
-                _0x3869d7,
+                player,
                 "game.plant_cooldown",
-                _0x17b4a1,
-                _0x2e9f9d,
+                plantName,
+                cooldownSeconds,
               );
           }
         }
-        _0x3869d7.onScreenDisplay.setActionBar(_0x304869);
-      } catch (_0x5d94e3) {
-        console.warn("[PvZ] Action bar update failed: " + _0x5d94e3);
+        player.onScreenDisplay.setActionBar(actionBarText);
+      } catch (err) {
+        console.warn(`[PvZ] Action bar update failed: ${err}`);
       }
     }
   }
 });
+
 system.runInterval(() => {
-  const _0xc7655b = world.getDynamicProperty("gameActive");
-  const _0x163701 = world.getDynamicProperty("tutorialActive");
-  if (_0xc7655b || _0x163701) {
+  const gameActive = world.getDynamicProperty("gameActive");
+  const tutorialActive = world.getDynamicProperty("tutorialActive");
+  if (gameActive || tutorialActive) {
     HealthDisplayManager.updateHealthDisplays();
   } else {
     HealthDisplayManager.clearAllHealthDisplays();
   }
 }, 10);
+
 system.runInterval(() => {
   DialogueManager.updateDialogue();
 }, 20);
+
 const BOOKS = {
   book1: [
     "pvz_bn:bk_pg1",
@@ -227,67 +248,63 @@ const BOOKS = {
     "pvz_bn:bk_pg6",
   ],
 };
-world.beforeEvents.itemUse.subscribe((_0x3af29a) => {
-  const _0xbb369b = _0x3af29a.itemStack;
-  const _0x50a2f4 = _0x3af29a.source;
-  const _0x7fb432 = _0x50a2f4.getComponent("minecraft:equippable");
-  const _0x3d6531 = _0x50a2f4.isSneaking;
+
+world.beforeEvents.itemUse.subscribe((eventData) => {
+  const itemStack = eventData.itemStack;
+  const player = eventData.source;
+  const equippable = player.getComponent("minecraft:equippable");
+  const isSneaking = player.isSneaking;
+
   system.run(() => {
-    let _0x12fcb6 = null;
-    let _0x1cd151 = -1;
-    for (const [_0x4995ff, _0x283ad7] of Object.entries(BOOKS)) {
-      const _0x74c978 = _0x283ad7.indexOf(_0xbb369b.typeId);
-      if (_0x74c978 !== -1) {
-        _0x12fcb6 = _0x283ad7;
-        _0x1cd151 = _0x74c978;
+    let bookList = null;
+    let bookIndex = -1;
+    for (const [bookKey, list] of Object.entries(BOOKS)) {
+      const idx = list.indexOf(itemStack.typeId);
+      if (idx !== -1) {
+        bookList = list;
+        bookIndex = idx;
         break;
       }
     }
-    if (_0x12fcb6 && _0x1cd151 !== -1) {
-      let _0x1c2b6b;
-      if (_0x3d6531) {
-        _0x1c2b6b = (_0x1cd151 - 1 + _0x12fcb6.length) % _0x12fcb6.length;
+    if (bookList && bookIndex !== -1) {
+      let nextIndex;
+      if (isSneaking) {
+        nextIndex = (bookIndex - 1 + bookList.length) % bookList.length;
       } else {
-        _0x1c2b6b = (_0x1cd151 + 1) % _0x12fcb6.length;
+        nextIndex = (bookIndex + 1) % bookList.length;
       }
-      const _0x5c3426 = new ItemStack(_0x12fcb6[_0x1c2b6b]);
-      _0x7fb432.setEquipment(EquipmentSlot.Mainhand, _0x5c3426);
-      _0x50a2f4.playSound("item.book.page_turn");
+      const nextBookStack = new ItemStack(bookList[nextIndex]);
+      equippable.setEquipment(EquipmentSlot.Mainhand, nextBookStack);
+      player.playSound("item.book.page_turn");
     }
   });
 });
+
 const TAG_TO_CHECK = "pvz_bn_1_0";
 const ITEM_ID_1 = "pvz_bn:bk_pg1";
-world.afterEvents.playerSpawn.subscribe((_0x442ed9) => {
-  const { player: _0x48cc02, initialSpawn: _0x1e6753 } = _0x442ed9;
+
+world.afterEvents.playerSpawn.subscribe((eventData) => {
+  const { player, initialSpawn } = eventData;
   system.run(() => {
     try {
-      const _0x1fdb94 = _0x48cc02.hasTag(TAG_TO_CHECK);
-      if (!_0x1fdb94) {
-        const _0x1a7dc0 = new ItemStack(ITEM_ID_1, 1);
-        const _0x1cfbfc = _0x48cc02.getComponent("inventory");
-        if (_0x1cfbfc) {
-          _0x1cfbfc.container.addItem(_0x1a7dc0);
+      const hasTag = player.hasTag(TAG_TO_CHECK);
+      if (!hasTag) {
+        const itemStack = new ItemStack(ITEM_ID_1, 1);
+        const inventory = player.getComponent("inventory");
+        if (inventory) {
+          inventory.container.addItem(itemStack);
         } else {
           console.error(
-            "Could not get inventory for player " +
-              _0x48cc02.name +
-              ". Trying command fallback.",
+            `Could not get inventory for player ${player.name}. Trying command fallback.`,
           );
-          _0x48cc02.runCommandAsync("give @s " + ITEM_ID_1 + " 1");
+          player.runCommandAsync(`give @s ${ITEM_ID_1} 1`);
         }
-        _0x48cc02.addTag(TAG_TO_CHECK);
-      } else {
+        player.addTag(TAG_TO_CHECK);
       }
-    } catch (_0x2f3716) {
-      console.error(
-        "Error processing player spawn for " +
-          _0x48cc02.name +
-          ": " +
-          _0x2f3716,
-      );
-      if (_0x2f3716.stack) {
-        console.error(_0x2f3716.stack);
+    } catch (err) {
+      console.error(`Error processing player spawn for ${player.name}: ${err}`);
+      if (err.stack) {
+        console.error(err.stack);
       }
     }
   });

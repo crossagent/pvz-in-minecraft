@@ -1,52 +1,62 @@
 import { EasingType, system } from "@minecraft/server";
+
 export class CutsceneManager {
-  static _calculateRotation(_0x28ec2d, _0x262118) {
-    const _0xfc621 = _0x262118.x - _0x28ec2d.x;
-    const _0x721acf = _0x262118.y - _0x28ec2d.y;
-    const _0x20f316 = _0x262118.z - _0x28ec2d.z;
-    const _0x15c55a = Math.sqrt(_0xfc621 * _0xfc621 + _0x20f316 * _0x20f316);
-    const _0x19213c = -Math.atan2(_0x721acf, _0x15c55a) * (180 / Math.PI);
-    let _0xad871e = Math.atan2(_0x20f316, _0xfc621) * (180 / Math.PI) - 90;
-    if (_0xad871e < -180) _0xad871e += 360;
-    return { x: _0x19213c, y: _0xad871e };
+  static _calculateRotation(fromLocation, toLocation) {
+    const dx = toLocation.x - fromLocation.x;
+    const dy = toLocation.y - fromLocation.y;
+    const dz = toLocation.z - fromLocation.z;
+    const horizontalDistance = Math.sqrt(dx * dx + dz * dz);
+    const pitch = -Math.atan2(dy, horizontalDistance) * (180 / Math.PI);
+    let yaw = Math.atan2(dz, dx) * (180 / Math.PI) - 90;
+
+    if (yaw < -180) {
+      yaw += 360;
+    }
+    return { x: pitch, y: yaw };
   }
-  static playStartCutscene(_0x3003bc, _0xe3ed38) {
-    return new Promise((_0x209da0) => {
-      _0x3003bc.runCommandAsync("inputpermission set @s camera disabled");
-      _0x3003bc.runCommandAsync("inputpermission set @s movement disabled");
-      _0x3003bc.camera.setCamera("minecraft:free", {
-        location: _0x3003bc.getHeadLocation(),
-        rotation: _0x3003bc.getRotation(),
+
+  static playStartCutscene(player, points) {
+    return new Promise((resolve) => {
+      player.runCommandAsync("inputpermission set @s camera disabled");
+      player.runCommandAsync("inputpermission set @s movement disabled");
+      player.camera.setCamera("minecraft:free", {
+        location: player.getHeadLocation(),
+        rotation: player.getRotation(),
       });
-      const _0x231078 = (_0x131a63) => {
-        if (_0x131a63 >= _0xe3ed38.length) {
-          _0x3003bc.camera.clear();
-          _0x3003bc.runCommandAsync("inputpermission set @s camera enabled");
-          _0x3003bc.runCommandAsync("inputpermission set @s movement enabled");
-          _0x209da0();
+
+      const playPoint = (index) => {
+        if (index >= points.length) {
+          player.camera.clear();
+          player.runCommandAsync("inputpermission set @s camera enabled");
+          player.runCommandAsync("inputpermission set @s movement enabled");
+          resolve();
           return;
         }
-        const _0x3f80f6 = _0xe3ed38[_0x131a63];
-        const _0xfab2fc = this._calculateRotation(
-          _0x3f80f6.location,
-          _0x3f80f6.lookAtPoint,
+
+        const currentPoint = points[index];
+        const rotation = this._calculateRotation(
+          currentPoint.location,
+          currentPoint.lookAtPoint,
         );
-        _0x3003bc.camera.setCamera("minecraft:free", {
-          location: _0x3f80f6.location,
-          rotation: _0xfab2fc,
+
+        player.camera.setCamera("minecraft:free", {
+          location: currentPoint.location,
+          rotation: rotation,
           easeOptions: {
-            easeTime: _0x3f80f6.easeTime || 1.5,
+            easeTime: currentPoint.easeTime || 1.5,
             easeType: EasingType.InOutSine,
           },
         });
-        const _0x51b4ee =
-          ((_0x3f80f6.easeTime || 1.5) + (_0x3f80f6.holdTime || 4)) * 20;
+
+        const totalTicks =
+          ((currentPoint.easeTime || 1.5) + (currentPoint.holdTime || 4)) * 20;
         system.runTimeout(() => {
-          _0x231078(_0x131a63 + 1);
-        }, _0x51b4ee);
+          playPoint(index + 1);
+        }, totalTicks);
       };
+
       system.runTimeout(() => {
-        _0x231078(0);
+        playPoint(0);
       }, 1);
     });
   }

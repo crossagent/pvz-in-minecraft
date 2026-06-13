@@ -5,8 +5,8 @@ import subprocess
 import pytest
 
 # Paths
-SCRATCH_DIR = os.path.dirname(__file__)
-WORKSPACE_ROOT = os.path.abspath(os.path.join(SCRATCH_DIR, ".."))
+TESTS_DIR = os.path.dirname(__file__)
+WORKSPACE_ROOT = os.path.abspath(os.path.join(TESTS_DIR, ".."))
 LEVELS_JS = os.path.join(WORKSPACE_ROOT, "behavior_packs", "PvZ", "scripts", "levels.js")
 PLANT_MANAGER_JS = os.path.join(WORKSPACE_ROOT, "behavior_packs", "PvZ", "scripts", "game", "PlantManager.js")
 
@@ -30,41 +30,41 @@ def export_js_data():
     pm_clean = pm_clean.replace("import { LanguageManager } from \"./LanguageManager.js\";", "")
     
     # Write temp files with .mjs extension to force ES Module loading in Node
-    temp_levels = os.path.join(SCRATCH_DIR, "temp_levels.mjs")
-    temp_pm = os.path.join(SCRATCH_DIR, "temp_pm.mjs")
+    temp_levels = os.path.join(TESTS_DIR, "temp_levels.mjs")
+    temp_pm = os.path.join(TESTS_DIR, "temp_pm.mjs")
     
     with open(temp_levels, 'w', encoding='utf-8') as f:
         f.write(levels_clean)
     with open(temp_pm, 'w', encoding='utf-8') as f:
         f.write(pm_clean)
         
-    # Write export script
-    export_script_content = f"""
-    import {{ levelData }} from "./temp_levels.mjs";
-    import {{ PlantManager }} from "./temp_pm.mjs";
+    # Write export script (uses same-folder relative imports)
+    export_script_content = """
+    import { levelData } from "./temp_levels.mjs";
+    import { PlantManager } from "./temp_pm.mjs";
     import * as fs from "fs";
     import * as path from "path";
     
-    const exportData = {{
+    const exportData = {
         levels: Object.fromEntries(levelData),
         plants: Object.fromEntries(PlantManager.plantData)
-    }};
+    };
     
     fs.writeFileSync(
-        "./scratch/levels.json",
+        "./tests/levels.json",
         JSON.stringify(exportData, null, 2),
         "utf-8"
     );
     """
     
-    export_js = os.path.join(SCRATCH_DIR, "export_temp.mjs")
+    export_js = os.path.join(TESTS_DIR, "export_temp.mjs")
     with open(export_js, 'w', encoding='utf-8') as f:
         f.write(export_script_content)
         
     # Run Node to export the data
     try:
         subprocess.run(
-            ["node", "scratch/export_temp.mjs"],
+            ["node", "tests/export_temp.mjs"],
             cwd=WORKSPACE_ROOT,
             check=True,
             capture_output=True,
@@ -83,12 +83,12 @@ def export_js_data():
     yield
     
     # Cleanup exported json
-    json_path = os.path.join(SCRATCH_DIR, "levels.json")
+    json_path = os.path.join(TESTS_DIR, "levels.json")
     if os.path.exists(json_path):
          os.remove(json_path)
 
 def load_exported_data():
-    json_path = os.path.join(SCRATCH_DIR, "levels.json")
+    json_path = os.path.join(TESTS_DIR, "levels.json")
     with open(json_path, 'r', encoding='utf-8') as f:
         return json.load(f)
 

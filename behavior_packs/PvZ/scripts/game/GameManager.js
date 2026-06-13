@@ -4,180 +4,204 @@ import { LevelManager } from "./LevelManager.js";
 import { AudioManager } from "./AudioManager.js";
 import { CutsceneManager } from "./CutsceneManager.js";
 import { LanguageManager } from "./LanguageManager.js";
+
 export class GameManager {
   static initialize() {
-    world.afterEvents.entityDie.subscribe((_0x48f295) => {
-      this.handleEntityDeath(_0x48f295);
+    world.afterEvents.entityDie.subscribe((event) => {
+      this.handleEntityDeath(event);
     });
-    world.afterEvents.entityHitEntity.subscribe((_0x55dbab) => {
-      this.handleEntityHit(_0x55dbab);
+    world.afterEvents.entityHitEntity.subscribe((event) => {
+      this.handleEntityHit(event);
     });
   }
+
   static resumeGameOnLoad() {
-    const _0xbf0105 = world.getDynamicProperty("gameActive");
-    if (_0xbf0105) {
-      for (const _0x2a070e of world.getAllPlayers()) {
-        AudioManager.playRandomLevelMusic(_0x2a070e);
+    const isGameActive = world.getDynamicProperty("gameActive");
+    if (isGameActive) {
+      for (const player of world.getAllPlayers()) {
+        AudioManager.playRandomLevelMusic(player);
       }
     }
   }
+
   static onTick() {
-    const _0x2fd35c = world.getDynamicProperty("nextWaveStartTick");
-    if (_0x2fd35c && system.currentTick >= _0x2fd35c) {
+    const nextWaveStartTick = world.getDynamicProperty("nextWaveStartTick");
+    if (nextWaveStartTick && system.currentTick >= nextWaveStartTick) {
       world.setDynamicProperty("nextWaveStartTick", 0);
-      for (const _0x2bb18e of world.getAllPlayers()) {
-        LevelManager.startCurrentWave(_0x2bb18e);
+      for (const player of world.getAllPlayers()) {
+        LevelManager.startCurrentWave(player);
       }
     }
   }
-  static handleEntityHit(_0x3574ec) {
+
+  static handleEntityHit(event) {
     if (!world.getDynamicProperty("gameActive")) return;
-    const { damagingEntity: _0x5cb16f, hitEntity: _0x375ef9 } = _0x3574ec;
+    const { damagingEntity, hitEntity } = event;
     if (
-      _0x5cb16f &&
-      _0x375ef9 &&
-      _0x5cb16f.typeId.startsWith("bn:zombie") &&
-      _0x375ef9.typeId === "bn:dummy"
+      damagingEntity &&
+      hitEntity &&
+      damagingEntity.typeId.startsWith("bn:zombie") &&
+      hitEntity.typeId === "bn:dummy"
     ) {
-      this.endLevel(![]);
+      this.endLevel(false);
     }
   }
-  static handleEntityDeath(_0x31340f) {
+
+  static handleEntityDeath(event) {
     if (!world.getDynamicProperty("gameActive")) return;
-    const { deadEntity: _0x5deab2 } = _0x31340f;
-    if (_0x5deab2.typeId.startsWith("bn:zombie")) {
-      const _0x322a08 = world.getDynamicProperty("currentLevelId");
-      const _0x37fbe6 = levelData.get(_0x322a08);
-      if (!_0x37fbe6) return;
-      const _0x414c95 = world.scoreboard.getObjective("points");
-      if (_0x414c95) {
-        for (const _0x1fffc8 of world.getAllPlayers()) {
-          _0x414c95.addScore(
-            _0x1fffc8.scoreboardIdentity,
-            _0x37fbe6.zombieKillPoints || 10,
+    const { deadEntity } = event;
+    if (deadEntity.typeId.startsWith("bn:zombie")) {
+      const currentLevelId = world.getDynamicProperty("currentLevelId");
+      const level = levelData.get(currentLevelId);
+      if (!level) return;
+
+      const pointsObjective = world.scoreboard.getObjective("points");
+      if (pointsObjective) {
+        for (const player of world.getAllPlayers()) {
+          pointsObjective.addScore(
+            player.scoreboardIdentity,
+            level.zombieKillPoints || 10,
           );
         }
       }
-      const _0x3d8e1f = world.getDynamicProperty("currentWave");
-      const _0x5ea9ee = _0x37fbe6.zombieSpawning.waves[_0x3d8e1f];
-      let _0x1c4911 = world.getDynamicProperty("zombiesKilledThisWave");
-      _0x1c4911++;
-      world.setDynamicProperty("zombiesKilledThisWave", _0x1c4911);
-      if (_0x1c4911 >= _0x5ea9ee.zombieCount) {
-        const _0x17d90a =
-          _0x3d8e1f >= _0x37fbe6.zombieSpawning.waves.length - 1;
-        if (_0x17d90a) {
-          this.endLevel(!![]);
+
+      const currentWave = world.getDynamicProperty("currentWave");
+      const waveConfig = level.zombieSpawning.waves[currentWave];
+      let zombiesKilled = world.getDynamicProperty("zombiesKilledThisWave");
+      zombiesKilled++;
+      world.setDynamicProperty("zombiesKilledThisWave", zombiesKilled);
+
+      if (zombiesKilled >= waveConfig.zombieCount) {
+        const isLastWave = currentWave >= level.zombieSpawning.waves.length - 1;
+        if (isLastWave) {
+          this.endLevel(true);
         } else {
           world.setDynamicProperty("nextZombieSpawnTick", 0);
-          const _0x1c96c7 = _0x3d8e1f + 1;
-          world.setDynamicProperty("currentWave", _0x1c96c7);
+          const nextWave = currentWave + 1;
+          world.setDynamicProperty("currentWave", nextWave);
           world.setDynamicProperty("zombiesKilledThisWave", 0);
           world.setDynamicProperty("zombiesSpawnedThisWave", 0);
-          const _0x1bfee2 = _0x37fbe6.zombieSpawning.intermission;
-          for (const _0x99f487 of world.getAllPlayers()) {
-            _0x99f487.onScreenDisplay.setTitle(
-              LanguageManager.get(_0x99f487, "game.wave_cleared"),
+          const intermission = level.zombieSpawning.intermission;
+
+          for (const player of world.getAllPlayers()) {
+            player.onScreenDisplay.setTitle(
+              LanguageManager.get(player, "game.wave_cleared"),
               {
                 subtitle: LanguageManager.get(
-                  _0x99f487,
+                  player,
                   "game.next_wave_in",
-                  _0x1bfee2,
+                  intermission,
                 ),
-                fadeInDuration: 0x14,
-                stayDuration: _0x1bfee2 * 20 - 40,
-                fadeOutDuration: 0x14,
+                fadeInDuration: 20,
+                stayDuration: intermission * 20 - 40,
+                fadeOutDuration: 20,
               },
             );
           }
           world.setDynamicProperty(
             "nextWaveStartTick",
-            system.currentTick + _0x1bfee2 * 20,
+            system.currentTick + intermission * 20,
           );
         }
       }
     }
   }
-  static endLevel(_0x5b2a2d) {
+
+  static endLevel(isWin) {
     if (!world.getDynamicProperty("gameActive")) return;
     AudioManager.stopMusic();
-    const _0x164f72 = world.getDynamicProperty("currentLevelId");
-    const _0x31db91 = levelData.get(_0x164f72);
-    if (_0x5b2a2d) {
-      const _0x1d817b = world.getDynamicProperty("completedLevels") || "[]";
-      const _0x5f366b = JSON.parse(_0x1d817b);
-      if (!_0x5f366b.includes(_0x164f72)) {
-        _0x5f366b.push(_0x164f72);
-        world.setDynamicProperty("completedLevels", JSON.stringify(_0x5f366b));
+    const currentLevelId = world.getDynamicProperty("currentLevelId");
+    const level = levelData.get(currentLevelId);
+
+    if (isWin) {
+      const completedLevelsStr =
+        world.getDynamicProperty("completedLevels") || "[]";
+      const completedLevels = JSON.parse(completedLevelsStr);
+      if (!completedLevels.includes(currentLevelId)) {
+        completedLevels.push(currentLevelId);
+        world.setDynamicProperty(
+          "completedLevels",
+          JSON.stringify(completedLevels),
+        );
       }
-      if (_0x31db91.unlocksPlant) {
-        this.startPlantUnlockSequence(_0x31db91.unlocksPlant);
+      if (level.unlocksPlant) {
+        this.startPlantUnlockSequence(level.unlocksPlant);
         return;
       }
     }
-    this.finalizeLevelEnd(_0x5b2a2d);
+    this.finalizeLevelEnd(isWin);
   }
-  static async startPlantUnlockSequence(_0x45b3ba) {
-    world.setDynamicProperty("awaitingPlantCollection", !![]);
-    world.setDynamicProperty("unlockedPlantId", _0x45b3ba.entityId);
-    const _0x45431f = world.getDimension("overworld");
-    const _0x5a368b = _0x45431f.spawnEntity(
-      _0x45b3ba.entityId,
-      _0x45b3ba.spawnLocation,
+
+  static async startPlantUnlockSequence(unlockConfig) {
+    world.setDynamicProperty("awaitingPlantCollection", true);
+    world.setDynamicProperty("unlockedPlantId", unlockConfig.entityId);
+    const overworld = world.getDimension("overworld");
+    const spawnedPlant = overworld.spawnEntity(
+      unlockConfig.entityId,
+      unlockConfig.spawnLocation,
     );
-    AudioManager.playSoundAtLocation("random.levelup", _0x45b3ba.spawnLocation);
+
+    AudioManager.playSoundAtLocation(
+      "random.levelup",
+      unlockConfig.spawnLocation,
+    );
     try {
-      if (_0x45b3ba.scale) {
-        const _0x3c2822 = _0x5a368b.getComponent("minecraft:scale");
-        if (_0x3c2822) {
-          _0x3c2822.value = _0x45b3ba.scale;
+      if (unlockConfig.scale) {
+        const scaleComponent = spawnedPlant.getComponent("minecraft:scale");
+        if (scaleComponent) {
+          scaleComponent.value = unlockConfig.scale;
         }
       }
-      if (_0x45b3ba.onSpawnEvents && Array.isArray(_0x45b3ba.onSpawnEvents)) {
-        for (const _0x22406d of _0x45b3ba.onSpawnEvents) {
-          _0x5a368b.triggerEvent(_0x22406d);
+      if (
+        unlockConfig.onSpawnEvents &&
+        Array.isArray(unlockConfig.onSpawnEvents)
+      ) {
+        for (const spawnEvent of unlockConfig.onSpawnEvents) {
+          spawnedPlant.triggerEvent(spawnEvent);
         }
       }
-    } catch (_0x2f05ce) {
+    } catch (err) {
       console.warn(
-        "[PvZ] Could not apply unlock effects to " +
-          _0x45b3ba.name +
-          ": " +
-          _0x2f05ce,
+        `[PvZ] Could not apply unlock effects to ${unlockConfig.name}: ${err}`,
       );
     }
-    for (const _0x3f39c6 of world.getAllPlayers()) {
-      const _0x5edb5e = LanguageManager.get(_0x3f39c6, _0x45b3ba.name);
-      _0x3f39c6.onScreenDisplay.setTitle(
-        LanguageManager.get(_0x3f39c6, "game.plant_unlocked"),
+
+    for (const player of world.getAllPlayers()) {
+      const plantName = LanguageManager.get(player, unlockConfig.name);
+      player.onScreenDisplay.setTitle(
+        LanguageManager.get(player, "game.plant_unlocked"),
         {
           subtitle: LanguageManager.get(
-            _0x3f39c6,
+            player,
             "game.collect_plant_prompt",
-            _0x5edb5e,
+            plantName,
           ),
-          fadeInDuration: 0x14,
-          stayDuration: 0x64,
-          fadeOutDuration: 0x14,
+          fadeInDuration: 20,
+          stayDuration: 100,
+          fadeOutDuration: 20,
         },
       );
-      await CutsceneManager.playStartCutscene(_0x3f39c6, _0x45b3ba.cutscene);
+      await CutsceneManager.playStartCutscene(player, unlockConfig.cutscene);
     }
   }
-  static handleUnlockedPlantCollection(_0x555be9) {
-    const _0x30dd20 = world.getDynamicProperty("awaitingPlantCollection");
-    if (!_0x30dd20) return;
-    const _0x4774ad = world.getDynamicProperty("unlockedPlantId");
-    if (_0x555be9.typeId === _0x4774ad) {
+
+  static handleUnlockedPlantCollection(entity) {
+    const awaitingCollection = world.getDynamicProperty(
+      "awaitingPlantCollection",
+    );
+    if (!awaitingCollection) return;
+    const unlockedPlantId = world.getDynamicProperty("unlockedPlantId");
+    if (entity.typeId === unlockedPlantId) {
       system.run(() => {
-        _0x555be9.remove();
-        this.finalizeLevelEnd(!![]);
+        entity.remove();
+        this.finalizeLevelEnd(true);
       });
     }
   }
-  static finalizeLevelEnd(_0x48778b) {
-    world.setDynamicProperty("gameActive", ![]);
-    world.setDynamicProperty("awaitingPlantCollection", ![]);
+
+  static finalizeLevelEnd(isWin) {
+    world.setDynamicProperty("gameActive", false);
+    world.setDynamicProperty("awaitingPlantCollection", false);
     world.setDynamicProperty("currentLevelId", "");
     world.setDynamicProperty("currentWave", 0);
     world.setDynamicProperty("zombiesKilledThisWave", 0);
@@ -186,43 +210,40 @@ export class GameManager {
     world.setDynamicProperty("nextZombieSpawnTick", 0);
     world.setDynamicProperty("nextWaveStartTick", 0);
     world.setDynamicProperty("waveSpawnDeck", "[]");
-    world.setDynamicProperty(
-      "waveLocationDeck",
-      "][".split("").reverse().join(""),
-    );
-    const _0x2c5ab0 = { x: -33, y: 0x3a, z: 0xb4 };
+    world.setDynamicProperty("waveLocationDeck", "[]");
+
+    const lobbySpawn = { x: -33, y: 58, z: 180 };
     system.run(() => {
-      for (const _0x1bb46a of world.getAllPlayers()) {
-        const _0x208e68 = _0x48778b
-          ? LanguageManager.get(_0x1bb46a, "game.level_complete")
-          : LanguageManager.get(_0x1bb46a, "game.game_over");
-        const _0x57fe7b = _0x48778b
-          ? LanguageManager.get(_0x1bb46a, "game.win_message")
-          : LanguageManager.get(_0x1bb46a, "game.lose_message");
-        const _0x842bf3 = world.scoreboard.getObjective("pollen");
-        if (_0x48778b) {
-          _0x1bb46a.runCommandAsync(
-            "playsound victory.jingle @s " +
-              _0x2c5ab0.x +
-              " " +
-              _0x2c5ab0.y +
-              " " +
-              _0x2c5ab0.z,
+      for (const player of world.getAllPlayers()) {
+        const titleText = isWin
+          ? LanguageManager.get(player, "game.level_complete")
+          : LanguageManager.get(player, "game.game_over");
+        const subtitleText = isWin
+          ? LanguageManager.get(player, "game.win_message")
+          : LanguageManager.get(player, "game.lose_message");
+        const pollenScoreboard = world.scoreboard.getObjective("pollen");
+
+        if (isWin) {
+          player.runCommandAsync(
+            `playsound victory.jingle @s ${lobbySpawn.x} ${lobbySpawn.y} ${lobbySpawn.z}`,
           );
         }
-        _0x1bb46a.onScreenDisplay.setTitle(_0x208e68, {
-          subtitle: _0x57fe7b,
-          fadeInDuration: 0x14,
-          stayDuration: 0x64,
-          fadeOutDuration: 0x14,
+
+        player.onScreenDisplay.setTitle(titleText, {
+          subtitle: subtitleText,
+          fadeInDuration: 20,
+          stayDuration: 100,
+          fadeOutDuration: 20,
         });
-        _0x1bb46a.getComponent("inventory")["container"]["clearAll"]();
-        _0x1bb46a.teleport(_0x2c5ab0, { rotation: { x: 0x0, y: 0xb4 } });
-        if (_0x842bf3) {
-          _0x842bf3.setScore(_0x1bb46a.scoreboardIdentity, 0);
+
+        player.getComponent("inventory").container.clearAll();
+        player.teleport(lobbySpawn, { rotation: { x: 0, y: 180 } });
+        if (pollenScoreboard) {
+          pollenScoreboard.setScore(player.scoreboardIdentity, 0);
         }
       }
-      const _0x30c7e4 = [
+
+      const pvzEntityPrefixes = [
         "bn:plant_",
         "bn:pollen",
         "bn:lawnmower",
@@ -236,18 +257,18 @@ export class GameManager {
         "bn:sunflower",
         "bn:peashooter",
       ];
-      const _0x551b8f = world.getDimension("overworld")["getEntities"]();
-      for (const _0x2ad3e8 of _0x551b8f) {
+
+      const allEntities = world.getDimension("overworld").getEntities();
+      for (const entity of allEntities) {
         if (
-          _0x30c7e4.some(
-            (_0x2f0939) =>
-              _0x2ad3e8.typeId.startsWith(_0x2f0939) ||
-              _0x2ad3e8.typeId === _0x2f0939,
+          pvzEntityPrefixes.some(
+            (prefix) =>
+              entity.typeId.startsWith(prefix) || entity.typeId === prefix,
           )
         ) {
           try {
-            _0x2ad3e8.remove();
-          } catch (_0x2984bc) {}
+            entity.remove();
+          } catch (err) {}
         }
       }
     });
