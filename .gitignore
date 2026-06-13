@@ -39,3 +39,6 @@ deployment/volcengine/*.tfstate.backup
 deployment/volcengine/terraform.tfvars
 deployment/volcengine/terraform.tfvars.json
 
+# Python cache
+__pycache__/
+*.pyc

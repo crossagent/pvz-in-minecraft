@@ -1,1 +1,79 @@
-import{world}from"@minecraft/server";export class PlayerManager{static["\u0068\u0061\u006e\u0064\u006c\u0065\u004c\u006f\u006f\u006b\u0069\u006e\u0067\u0041\u0074"](_0x8bc4a0){try{const _0x5c5de8=_0x8bc4a0["\u0067\u0065\u0074\u0042\u006c\u006f\u0063\u006b\u0046\u0072\u006f\u006d\u0056\u0069\u0065\u0077\u0044\u0069\u0072\u0065\u0063\u0074\u0069\u006f\u006e"]({'maxDistance':0x96});if(!_0x5c5de8)return;const _0x283be5=_0x5c5de8['block'];const _0x5995f7=_0x283be5["\u0062\u0065\u006c\u006f\u0077"]();const _0x5759f9=["kcolb_dlog:tfarcenim".split("").reverse().join(""),"\u006d\u0069\u006e\u0065\u0063\u0072\u0061\u0066\u0074\u003a\u0069\u0072\u006f\u006e\u005f\u0062\u006c\u006f\u0063\u006b"];if(!_0x5995f7||!_0x5759f9["\u0069\u006e\u0063\u006c\u0075\u0064\u0065\u0073"](_0x5995f7["\u0074\u0079\u0070\u0065\u0049\u0064"])){return;}const _0x5da467=_0x5995f7["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u0079"];const _0x3ca224=_0x5995f7['typeId'];const _0x2f91bd=_0x5995f7['location']["\u0078"];const _0x300f11=_0x5995f7['location']["\u007a"];const _0x3415f2=[{"\u0078":0x0,"\u007a":0x0},{"\u0078":-(0x41948^0x41949),"\u007a":0x0},{"\u0078":-(0x61150^0x61152),"\u007a":0x0},{"\u0078":0x0,"\u007a":-(0xf3f29^0xf3f28)},{"\u0078":-(0x19fcc^0x19fcd),"\u007a":-(0x46453^0x46452)},{"\u0078":-(0xb8869^0xb886b),"\u007a":-(0x609c7^0x609c6)}];let _0x2beccf=![];let _0x499b71=0x6d3be^0x6d3be,_0x367539=0xbe161^0xbe161;for(const _0x247d33 of _0x3415f2){const _0x318eac=_0x2f91bd+_0x247d33["\u0078"];const _0x30d459=_0x300f11+_0x247d33["\u007a"];let _0x306490=!![];for(let _0x4b3f69=0x4b954^0x4b954;_0x4b3f69<(0x79524^0x79527);_0x4b3f69++){for(let _0x3055dc=0x83360^0x83360;_0x3055dc<(0xd6cd4^0xd6cd6);_0x3055dc++){const _0x2a731a=_0x8bc4a0['dimension']["\u0067\u0065\u0074\u0042\u006c\u006f\u0063\u006b"]({"\u0078":_0x318eac+_0x4b3f69,"\u0079":_0x5da467,"\u007a":_0x30d459+_0x3055dc});if(_0x2a731a?.["\u0074\u0079\u0070\u0065\u0049\u0064"]!==_0x3ca224){_0x306490=![];break;}}if(!_0x306490)break;}if(_0x306490){_0x2beccf=!![];_0x499b71=_0x318eac;_0x367539=_0x30d459;break;}}if(_0x2beccf){const _0x41eeff=_0x5da467+(0xb6646^0xb6647);const _0x442d60="\u0062\u006e\u005f\u0077\u0065\u003a\u006f\u0075\u0074\u005f\u006c\u0069\u006e\u0065";const _0x9bbc44=[{"\u0078":-0.1,"\u0079":-0.1,"\u007a":-0.1},{"\u0078":3.1,"\u0079":-0.1,"\u007a":-0.1},{"\u0078":-0.1,"\u0079":-0.1,"\u007a":2.1},{"\u0078":3.1,"\u0079":-0.1,"\u007a":2.1},{"\u0078":-0.1,"\u0079":1.1,"\u007a":-0.1},{"\u0078":3.1,"\u0079":1.1,"\u007a":-0.1},{"\u0078":-0.1,"\u0079":1.1,"\u007a":2.1},{"\u0078":3.1,"\u0079":1.1,"\u007a":2.1}];for(const _0x575df0 of _0x9bbc44){const _0x31b789={"\u0078":_0x499b71+_0x575df0["\u0078"],"\u0079":_0x41eeff+_0x575df0["\u0079"],"\u007a":_0x367539+_0x575df0["\u007a"]};_0x8bc4a0['dimension']['spawnParticle'](_0x442d60,_0x31b789);}}}catch(_0x26e9a2){}}}
+import { world } from "@minecraft/server";
+export class PlayerManager {
+  static handleLookingAt(_0x8bc4a0) {
+    try {
+      const _0x5c5de8 = _0x8bc4a0.getBlockFromViewDirection({
+        maxDistance: 0x96,
+      });
+      if (!_0x5c5de8) return;
+      const _0x283be5 = _0x5c5de8.block;
+      const _0x5995f7 = _0x283be5.below();
+      const _0x5759f9 = ["minecraft:gold_block", "minecraft:iron_block"];
+      if (!_0x5995f7 || !_0x5759f9.includes(_0x5995f7.typeId)) {
+        return;
+      }
+      const _0x5da467 = _0x5995f7.location.y;
+      const _0x3ca224 = _0x5995f7.typeId;
+      const _0x2f91bd = _0x5995f7.location.x;
+      const _0x300f11 = _0x5995f7.location.z;
+      const _0x3415f2 = [
+        { x: 0x0, z: 0x0 },
+        { x: -1, z: 0x0 },
+        { x: -2, z: 0x0 },
+        { x: 0x0, z: -1 },
+        { x: -1, z: -1 },
+        { x: -2, z: -1 },
+      ];
+      let _0x2beccf = ![];
+      let _0x499b71 = 0,
+        _0x367539 = 0;
+      for (const _0x247d33 of _0x3415f2) {
+        const _0x318eac = _0x2f91bd + _0x247d33.x;
+        const _0x30d459 = _0x300f11 + _0x247d33.z;
+        let _0x306490 = !![];
+        for (let _0x4b3f69 = 0; _0x4b3f69 < 3; _0x4b3f69++) {
+          for (let _0x3055dc = 0; _0x3055dc < 2; _0x3055dc++) {
+            const _0x2a731a = _0x8bc4a0.dimension.getBlock({
+              x: _0x318eac + _0x4b3f69,
+              y: _0x5da467,
+              z: _0x30d459 + _0x3055dc,
+            });
+            if (_0x2a731a?.["typeId"] !== _0x3ca224) {
+              _0x306490 = ![];
+              break;
+            }
+          }
+          if (!_0x306490) break;
+        }
+        if (_0x306490) {
+          _0x2beccf = !![];
+          _0x499b71 = _0x318eac;
+          _0x367539 = _0x30d459;
+          break;
+        }
+      }
+      if (_0x2beccf) {
+        const _0x41eeff = _0x5da467 + 1;
+        const _0x442d60 = "bn_we:out_line";
+        const _0x9bbc44 = [
+          { x: -0.1, y: -0.1, z: -0.1 },
+          { x: 3.1, y: -0.1, z: -0.1 },
+          { x: -0.1, y: -0.1, z: 2.1 },
+          { x: 3.1, y: -0.1, z: 2.1 },
+          { x: -0.1, y: 1.1, z: -0.1 },
+          { x: 3.1, y: 1.1, z: -0.1 },
+          { x: -0.1, y: 1.1, z: 2.1 },
+          { x: 3.1, y: 1.1, z: 2.1 },
+        ];
+        for (const _0x575df0 of _0x9bbc44) {
+          const _0x31b789 = {
+            x: _0x499b71 + _0x575df0.x,
+            y: _0x41eeff + _0x575df0.y,
+            z: _0x367539 + _0x575df0.z,
+          };
+          _0x8bc4a0.dimension.spawnParticle(_0x442d60, _0x31b789);
+        }
+      }
+    } catch (_0x26e9a2) {}
+  }
+}

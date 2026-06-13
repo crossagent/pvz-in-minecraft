@@ -1,1 +1,44 @@
-import{world,EntityHealthComponent}from"@minecraft/server";import{SettingsManager}from"./SettingsManager.js";import{PlantManager}from"./PlantManager.js";export class HealthDisplayManager{static["syalpsiDhtlaeHetadpu".split("").reverse().join("")](){const _0x3e2742=SettingsManager["\u0067\u0065\u0074\u0053\u0068\u006f\u0077\u0050\u006c\u0061\u006e\u0074\u0048\u0065\u0061\u006c\u0074\u0068"]();const _0x197871=SettingsManager["\u0067\u0065\u0074\u0053\u0068\u006f\u0077\u005a\u006f\u006d\u0062\u0069\u0065\u0048\u0065\u0061\u006c\u0074\u0068"]();const _0x464f2f=world['getDimension']("dlrowrevo".split("").reverse().join(""))["\u0067\u0065\u0074\u0045\u006e\u0074\u0069\u0074\u0069\u0065\u0073"]();for(const _0x404c58 of _0x464f2f){const _0x4ee59c=PlantManager['allPlantEntityIds']['has'](_0x404c58["\u0074\u0079\u0070\u0065\u0049\u0064"]);const _0x3ec3de=_0x404c58['typeId']["\u0073\u0074\u0061\u0072\u0074\u0073\u0057\u0069\u0074\u0068"]("eibmoz:nb".split("").reverse().join(""));if(!_0x4ee59c&&!_0x3ec3de)continue;const _0x15e526=_0x4ee59c&&_0x3e2742||_0x3ec3de&&_0x197871;if(_0x15e526){const _0x23801a=_0x404c58["\u0067\u0065\u0074\u0043\u006f\u006d\u0070\u006f\u006e\u0065\u006e\u0074"](EntityHealthComponent["\u0063\u006f\u006d\u0070\u006f\u006e\u0065\u006e\u0074\u0049\u0064"]);if(_0x23801a){const _0x5803ed=Math["\u0072\u006f\u0075\u006e\u0064"](_0x23801a["\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0056\u0061\u006c\u0075\u0065"]);const _0x1cefd8=Math["\u0072\u006f\u0075\u006e\u0064"](_0x23801a['defaultValue']);const _0x249560=Math["\u0072\u006f\u0075\u006e\u0064"](_0x5803ed/_0x1cefd8*(0xc54a5^0xc54c1));let _0x18ed10;if(_0x249560>(0xe641c^0xe6457))_0x18ed10="a\xA7".split("").reverse().join("");else if(_0x249560>(0xd4e4d^0xd4e7f))_0x18ed10="e\xA7".split("").reverse().join("");else if(_0x249560>(0x463d1^0x463c8))_0x18ed10="6\xA7".split("").reverse().join("");else _0x18ed10="c\xA7".split("").reverse().join("");_0x404c58["\u006e\u0061\u006d\u0065\u0054\u0061\u0067"]=_0x18ed10+"\u00a7\u006c"+_0x5803ed+'\x20/\x20'+_0x1cefd8;}}else{_0x404c58["\u006e\u0061\u006d\u0065\u0054\u0061\u0067"]='';}}}static["syalpsiDhtlaeHllAraelc".split("").reverse().join("")](){const _0x295a85=world['getDimension']("\u006f\u0076\u0065\u0072\u0077\u006f\u0072\u006c\u0064")["\u0067\u0065\u0074\u0045\u006e\u0074\u0069\u0074\u0069\u0065\u0073"]();for(const _0x35bc26 of _0x295a85){const _0x45a625=PlantManager["\u0061\u006c\u006c\u0050\u006c\u0061\u006e\u0074\u0045\u006e\u0074\u0069\u0074\u0079\u0049\u0064\u0073"]['has'](_0x35bc26['typeId']);const _0x40b61d=_0x35bc26["\u0074\u0079\u0070\u0065\u0049\u0064"]['startsWith']("\u0062\u006e\u003a\u007a\u006f\u006d\u0062\u0069\u0065");if(_0x45a625||_0x40b61d){_0x35bc26["\u006e\u0061\u006d\u0065\u0054\u0061\u0067"]='';}}}}
+import { world, EntityHealthComponent } from "@minecraft/server";
+import { SettingsManager } from "./SettingsManager.js";
+import { PlantManager } from "./PlantManager.js";
+export class HealthDisplayManager {
+  static updateHealthDisplays() {
+    const _0x3e2742 = SettingsManager.getShowPlantHealth();
+    const _0x197871 = SettingsManager.getShowZombieHealth();
+    const _0x464f2f = world.getDimension("overworld")["getEntities"]();
+    for (const _0x404c58 of _0x464f2f) {
+      const _0x4ee59c = PlantManager.allPlantEntityIds.has(_0x404c58.typeId);
+      const _0x3ec3de = _0x404c58.typeId.startsWith("bn:zombie");
+      if (!_0x4ee59c && !_0x3ec3de) continue;
+      const _0x15e526 = (_0x4ee59c && _0x3e2742) || (_0x3ec3de && _0x197871);
+      if (_0x15e526) {
+        const _0x23801a = _0x404c58.getComponent(
+          EntityHealthComponent.componentId,
+        );
+        if (_0x23801a) {
+          const _0x5803ed = Math.round(_0x23801a.currentValue);
+          const _0x1cefd8 = Math.round(_0x23801a.defaultValue);
+          const _0x249560 = Math.round((_0x5803ed / _0x1cefd8) * 100);
+          let _0x18ed10;
+          if (_0x249560 > 75) _0x18ed10 = "§a";
+          else if (_0x249560 > 50) _0x18ed10 = "§e";
+          else if (_0x249560 > 25) _0x18ed10 = "§6";
+          else _0x18ed10 = "§c";
+          _0x404c58.nameTag = _0x18ed10 + "§l" + _0x5803ed + " / " + _0x1cefd8;
+        }
+      } else {
+        _0x404c58.nameTag = "";
+      }
+    }
+  }
+  static clearAllHealthDisplays() {
+    const _0x295a85 = world.getDimension("overworld")["getEntities"]();
+    for (const _0x35bc26 of _0x295a85) {
+      const _0x45a625 = PlantManager.allPlantEntityIds.has(_0x35bc26.typeId);
+      const _0x40b61d = _0x35bc26.typeId.startsWith("bn:zombie");
+      if (_0x45a625 || _0x40b61d) {
+        _0x35bc26.nameTag = "";
+      }
+    }
+  }
+}

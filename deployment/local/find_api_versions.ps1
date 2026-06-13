@@ -1,4 +1,4 @@
-$exePath = "C:\bedrock-server-1.21.111.1\bedrock_server.exe"
+$exePath = "d:\MyProject\minecraft_mod\bedrock-server\bedrock_server.exe"
 if (-not (Test-Path $exePath)) {
     Write-Error "Server exe not found at $exePath"
     exit 1

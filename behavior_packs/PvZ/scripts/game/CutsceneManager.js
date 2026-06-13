@@ -1,1 +1,53 @@
-import{EasingType,system}from"@minecraft/server";export class CutsceneManager{static["\u005f\u0063\u0061\u006c\u0063\u0075\u006c\u0061\u0074\u0065\u0052\u006f\u0074\u0061\u0074\u0069\u006f\u006e"](_0x28ec2d,_0x262118){const _0xfc621=_0x262118["\u0078"]-_0x28ec2d["\u0078"];const _0x721acf=_0x262118["\u0079"]-_0x28ec2d["\u0079"];const _0x20f316=_0x262118["\u007a"]-_0x28ec2d["\u007a"];const _0x15c55a=Math['sqrt'](_0xfc621*_0xfc621+_0x20f316*_0x20f316);const _0x19213c=-Math["\u0061\u0074\u0061\u006e\u0032"](_0x721acf,_0x15c55a)*((0x65f99^0x65f2d)/Math["\u0050\u0049"]);let _0xad871e=Math["\u0061\u0074\u0061\u006e\u0032"](_0x20f316,_0xfc621)*((0x77e1a^0x77eae)/Math['PI'])-(0xc0557^0xc050d);if(_0xad871e<-(0x549ed^0x54959))_0xad871e+=0xd1c9a^0xd1df2;return{"\u0078":_0x19213c,"\u0079":_0xad871e};}static["enecstuCtratSyalp".split("").reverse().join("")](_0x3003bc,_0xe3ed38){return new Promise(_0x209da0=>{_0x3003bc["\u0072\u0075\u006e\u0043\u006f\u006d\u006d\u0061\u006e\u0064\u0041\u0073\u0079\u006e\u0063"]('inputpermission\x20set\x20@s\x20camera\x20disabled');_0x3003bc["\u0072\u0075\u006e\u0043\u006f\u006d\u006d\u0061\u006e\u0064\u0041\u0073\u0079\u006e\u0063"]('inputpermission\x20set\x20@s\x20movement\x20disabled');_0x3003bc['camera']["\u0073\u0065\u0074\u0043\u0061\u006d\u0065\u0072\u0061"]("eerf:tfarcenim".split("").reverse().join(""),{"\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e":_0x3003bc['getHeadLocation'](),'rotation':_0x3003bc['getRotation']()});const _0x231078=_0x131a63=>{if(_0x131a63>=_0xe3ed38['length']){_0x3003bc['camera']["\u0063\u006c\u0065\u0061\u0072"]();_0x3003bc["\u0072\u0075\u006e\u0043\u006f\u006d\u006d\u0061\u006e\u0064\u0041\u0073\u0079\u006e\u0063"]('inputpermission\x20set\x20@s\x20camera\x20enabled');_0x3003bc['runCommandAsync']('inputpermission\x20set\x20@s\x20movement\x20enabled');_0x209da0();return;}const _0x3f80f6=_0xe3ed38[_0x131a63];const _0xfab2fc=this["\u005f\u0063\u0061\u006c\u0063\u0075\u006c\u0061\u0074\u0065\u0052\u006f\u0074\u0061\u0074\u0069\u006f\u006e"](_0x3f80f6['location'],_0x3f80f6["\u006c\u006f\u006f\u006b\u0041\u0074\u0050\u006f\u0069\u006e\u0074"]);_0x3003bc['camera']["\u0073\u0065\u0074\u0043\u0061\u006d\u0065\u0072\u0061"]("\u006d\u0069\u006e\u0065\u0063\u0072\u0061\u0066\u0074\u003a\u0066\u0072\u0065\u0065",{'location':_0x3f80f6["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"],'rotation':_0xfab2fc,"\u0065\u0061\u0073\u0065\u004f\u0070\u0074\u0069\u006f\u006e\u0073":{'easeTime':_0x3f80f6['easeTime']||1.5,"\u0065\u0061\u0073\u0065\u0054\u0079\u0070\u0065":EasingType['InOutSine']}});const _0x51b4ee=((_0x3f80f6["\u0065\u0061\u0073\u0065\u0054\u0069\u006d\u0065"]||1.5)+(_0x3f80f6['holdTime']||0x871a3^0x871a7))*(0xa1aba^0xa1aae);system["\u0072\u0075\u006e\u0054\u0069\u006d\u0065\u006f\u0075\u0074"](()=>{_0x231078(_0x131a63+(0xc6451^0xc6450));},_0x51b4ee);};system["\u0072\u0075\u006e\u0054\u0069\u006d\u0065\u006f\u0075\u0074"](()=>{_0x231078(0xe06d8^0xe06d8);},0xa355e^0xa355f);});}}
+import { EasingType, system } from "@minecraft/server";
+export class CutsceneManager {
+  static _calculateRotation(_0x28ec2d, _0x262118) {
+    const _0xfc621 = _0x262118.x - _0x28ec2d.x;
+    const _0x721acf = _0x262118.y - _0x28ec2d.y;
+    const _0x20f316 = _0x262118.z - _0x28ec2d.z;
+    const _0x15c55a = Math.sqrt(_0xfc621 * _0xfc621 + _0x20f316 * _0x20f316);
+    const _0x19213c = -Math.atan2(_0x721acf, _0x15c55a) * (180 / Math.PI);
+    let _0xad871e = Math.atan2(_0x20f316, _0xfc621) * (180 / Math.PI) - 90;
+    if (_0xad871e < -180) _0xad871e += 360;
+    return { x: _0x19213c, y: _0xad871e };
+  }
+  static playStartCutscene(_0x3003bc, _0xe3ed38) {
+    return new Promise((_0x209da0) => {
+      _0x3003bc.runCommandAsync("inputpermission set @s camera disabled");
+      _0x3003bc.runCommandAsync("inputpermission set @s movement disabled");
+      _0x3003bc.camera.setCamera("minecraft:free", {
+        location: _0x3003bc.getHeadLocation(),
+        rotation: _0x3003bc.getRotation(),
+      });
+      const _0x231078 = (_0x131a63) => {
+        if (_0x131a63 >= _0xe3ed38.length) {
+          _0x3003bc.camera.clear();
+          _0x3003bc.runCommandAsync("inputpermission set @s camera enabled");
+          _0x3003bc.runCommandAsync("inputpermission set @s movement enabled");
+          _0x209da0();
+          return;
+        }
+        const _0x3f80f6 = _0xe3ed38[_0x131a63];
+        const _0xfab2fc = this._calculateRotation(
+          _0x3f80f6.location,
+          _0x3f80f6.lookAtPoint,
+        );
+        _0x3003bc.camera.setCamera("minecraft:free", {
+          location: _0x3f80f6.location,
+          rotation: _0xfab2fc,
+          easeOptions: {
+            easeTime: _0x3f80f6.easeTime || 1.5,
+            easeType: EasingType.InOutSine,
+          },
+        });
+        const _0x51b4ee =
+          ((_0x3f80f6.easeTime || 1.5) + (_0x3f80f6.holdTime || 4)) * 20;
+        system.runTimeout(() => {
+          _0x231078(_0x131a63 + 1);
+        }, _0x51b4ee);
+      };
+      system.runTimeout(() => {
+        _0x231078(0);
+      }, 1);
+    });
+  }
+}

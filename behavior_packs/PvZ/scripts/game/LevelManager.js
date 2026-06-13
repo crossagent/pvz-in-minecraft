@@ -1,1 +1,224 @@
-import{world,system,ItemStack}from"@minecraft/server";import{levelData}from"../levels.js";import{PlantManager}from"./PlantManager.js";import{CutsceneManager}from"./CutsceneManager.js";import{AudioManager}from"./AudioManager.js";import{TutorialManager}from"./TutorialManager.js";import{LanguageManager}from"./LanguageManager.js";export class LevelManager{static async["leveLtrats".split("").reverse().join("")](_0xb9a3d7,_0x43e37f){const _0x11a0a7=levelData['get'](_0x43e37f);if(!_0x11a0a7){console['error']('Attempted\x20to\x20start\x20a\x20level\x20with\x20an\x20invalid\x20ID:\x20'+_0x43e37f);return;}PlantManager['resetCooldowns']();world['setDynamicProperty']("evitcAemag".split("").reverse().join(""),!![]);world['setDynamicProperty']("\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u004c\u0065\u0076\u0065\u006c\u0049\u0064",_0x43e37f);world['setDynamicProperty']("\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0057\u0061\u0076\u0065",0x96d5f^0x96d5f);world['setDynamicProperty']("evaWsihTdelliKseibmoz".split("").reverse().join(""),0x81fcb^0x81fcb);world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("evaWsihTdenwapSseibmoz".split("").reverse().join(""),0xd3ca8^0xd3ca8);world['setDynamicProperty']("kciTtratSevaWtxen".split("").reverse().join(""),0xbd774^0xbd774);world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u0077\u0061\u0076\u0065\u0053\u0070\u0061\u0077\u006e\u0044\u0065\u0063\u006b","][".split("").reverse().join(""));world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u0077\u0061\u0076\u0065\u004c\u006f\u0063\u0061\u0074\u0069\u006f\u006e\u0044\u0065\u0063\u006b","\u005b\u005d");_0xb9a3d7['teleport'](_0x11a0a7['playerStartLocation'],{'rotation':{"\u0078":0x0,"\u0079":0x0}});if(_0x11a0a7['structure']&&_0x11a0a7['structure']["\u006e\u0061\u006d\u0065"]&&_0x11a0a7["\u0073\u0074\u0072\u0075\u0063\u0074\u0075\u0072\u0065"]["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]){try{world['structureManager']["\u0070\u006c\u0061\u0063\u0065"](_0x11a0a7['structure']["\u006e\u0061\u006d\u0065"],_0xb9a3d7["\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e"],_0x11a0a7["\u0073\u0074\u0072\u0075\u0063\u0074\u0075\u0072\u0065"]["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]);}catch(_0xffde20){console["\u0065\u0072\u0072\u006f\u0072"]('Failed\x20to\x20place\x20structure\x20\x27'+_0x11a0a7["\u0073\u0074\u0072\u0075\u0063\u0074\u0075\u0072\u0065"]["\u006e\u0061\u006d\u0065"]+'\x27:\x20'+_0xffde20);}}for(const _0x1b3822 of _0x11a0a7['lawnmowers']){_0xb9a3d7['dimension']['spawnEntity']("\u0062\u006e\u003a\u006c\u0061\u0077\u006e\u006d\u006f\u0077\u0065\u0072",_0x1b3822);}if(_0x11a0a7['cutscene']&&_0x11a0a7["\u0063\u0075\u0074\u0073\u0063\u0065\u006e\u0065"]["\u006c\u0065\u006e\u0067\u0074\u0068"]>(0x4e474^0x4e474)){await CutsceneManager["\u0070\u006c\u0061\u0079\u0053\u0074\u0061\u0072\u0074\u0043\u0075\u0074\u0073\u0063\u0065\u006e\u0065"](_0xb9a3d7,_0x11a0a7['cutscene']);}const _0x148b94=_0xb9a3d7["\u0067\u0065\u0074\u0043\u006f\u006d\u0070\u006f\u006e\u0065\u006e\u0074"]("yrotnevni".split("").reverse().join(""))["\u0063\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072"];_0x148b94["\u0063\u006c\u0065\u0061\u0072\u0041\u006c\u006c"]();for(const _0x1df6be of _0x11a0a7['startItems']){const _0x34e3f2=new ItemStack(_0x1df6be["\u0074\u0079\u0070\u0065\u0049\u0064"],_0x1df6be["\u0061\u006d\u006f\u0075\u006e\u0074"]);_0x148b94["\u0073\u0065\u0074\u0049\u0074\u0065\u006d"](_0x1df6be['slot'],_0x34e3f2);}for(const _0x354cd9 of _0x11a0a7["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064\u0073\u0054\u006f\u0052\u0065\u0073\u0065\u0074"]){const _0x15ebbd=world["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064"]['getObjective'](_0x354cd9);if(_0x15ebbd){if(_0x354cd9==="\u0070\u006f\u006c\u006c\u0065\u006e"){_0x15ebbd['setScore'](_0xb9a3d7,_0x11a0a7['startingPollen']??0x20377^0x20377);}else{_0x15ebbd["\u0073\u0065\u0074\u0053\u0063\u006f\u0072\u0065"](_0xb9a3d7,0xa2877^0xa2877);}}}const _0x242326=LanguageManager['get'](_0xb9a3d7,_0x11a0a7['name']);_0xb9a3d7["\u0073\u0065\u006e\u0064\u004d\u0065\u0073\u0073\u0061\u0067\u0065"](LanguageManager["\u0067\u0065\u0074"](_0xb9a3d7,"trats_level.emag".split("").reverse().join(""),_0x242326));if(_0x11a0a7["\u0069\u0073\u0054\u0075\u0074\u006f\u0072\u0069\u0061\u006c"]){TutorialManager["\u0073\u0074\u0061\u0072\u0074\u0054\u0075\u0074\u006f\u0072\u0069\u0061\u006c"](_0xb9a3d7,_0x11a0a7);}else{this["\u0073\u0074\u0061\u0072\u0074\u004c\u0065\u0076\u0065\u006c\u0047\u0061\u006d\u0065\u0070\u006c\u0061\u0079"](_0xb9a3d7,_0x43e37f);}}static["yalpemaGleveLtrats".split("").reverse().join("")](_0x3644dc,_0x38420e){const _0x27d051=levelData["\u0067\u0065\u0074"](_0x38420e);if(!_0x27d051)return;AudioManager['playRandomLevelMusic'](_0x3644dc);if(_0x27d051["\u0070\u006f\u006c\u006c\u0065\u006e\u0053\u0070\u0061\u0077\u006e\u0069\u006e\u0067"]){const _0x410b9c=system["\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0054\u0069\u0063\u006b"]+_0x27d051["\u0070\u006f\u006c\u006c\u0065\u006e\u0053\u0070\u0061\u0077\u006e\u0069\u006e\u0067"]["\u0073\u0070\u0061\u0077\u006e\u0049\u006e\u0074\u0065\u0072\u0076\u0061\u006c"]*(0xc31ee^0xc31fa);world['setDynamicProperty']("kciTnwapSnelloPtxen".split("").reverse().join(""),_0x410b9c);}if(_0x27d051["\u007a\u006f\u006d\u0062\u0069\u0065\u0053\u0070\u0061\u0077\u006e\u0069\u006e\u0067"]){const _0x25ffa1=system["\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0054\u0069\u0063\u006b"]+(_0x27d051["\u007a\u006f\u006d\u0062\u0069\u0065\u0053\u0070\u0061\u0077\u006e\u0069\u006e\u0067"]['initialDelay']||0x21b3d^0x21b37)*(0x9b4ef^0x9b4fb);world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u006e\u0065\u0078\u0074\u0057\u0061\u0076\u0065\u0053\u0074\u0061\u0072\u0074\u0054\u0069\u0063\u006b",_0x25ffa1);}}static["kciTno".split("").reverse().join("")](){const _0x465402=system["\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0054\u0069\u0063\u006b"];const _0x4b1c53=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u006e\u0065\u0078\u0074\u0050\u006f\u006c\u006c\u0065\u006e\u0053\u0070\u0061\u0077\u006e\u0054\u0069\u0063\u006b");if(_0x4b1c53&&_0x465402>=_0x4b1c53){const _0x503c48=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("dIleveLtnerruc".split("").reverse().join(""));const _0xdcd8a3=levelData['get'](_0x503c48);if(_0xdcd8a3&&_0xdcd8a3["\u0070\u006f\u006c\u006c\u0065\u006e\u0053\u0070\u0061\u0077\u006e\u0069\u006e\u0067"]){const _0x48e6fb=_0xdcd8a3["\u0070\u006f\u006c\u006c\u0065\u006e\u0053\u0070\u0061\u0077\u006e\u0069\u006e\u0067"];const _0x43e989=_0x48e6fb["\u0063\u0065\u006e\u0074\u0065\u0072\u004c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"];const _0x5a5445=_0x48e6fb["\u0072\u0061\u0064\u0069\u0075\u0073"];const _0x1ba541=Math['random']()*(0x922b8^0x922ba)*Math["\u0050\u0049"];const _0x36dd03=Math["\u0072\u0061\u006e\u0064\u006f\u006d"]()*_0x5a5445;const _0x7e61a=_0x43e989["\u0078"]+_0x36dd03*Math["\u0063\u006f\u0073"](_0x1ba541);const _0x4bba94=_0x43e989["\u007a"]+_0x36dd03*Math['sin'](_0x1ba541);const _0x4e0331={"\u0078":_0x7e61a,"\u0079":_0x43e989["\u0079"],"\u007a":_0x4bba94};world["\u0067\u0065\u0074\u0044\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e"]("dlrowrevo".split("").reverse().join(""))["\u0073\u0070\u0061\u0077\u006e\u0045\u006e\u0074\u0069\u0074\u0079"]("\u0062\u006e\u003a\u0070\u006f\u006c\u006c\u0065\u006e",_0x4e0331);const _0xdb9ee5=_0x465402+_0x48e6fb["\u0073\u0070\u0061\u0077\u006e\u0049\u006e\u0074\u0065\u0072\u0076\u0061\u006c"]*(0x5c45e^0x5c44a);world['setDynamicProperty']("\u006e\u0065\u0078\u0074\u0050\u006f\u006c\u006c\u0065\u006e\u0053\u0070\u0061\u0077\u006e\u0054\u0069\u0063\u006b",_0xdb9ee5);}}const _0x1fe1bc=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u006e\u0065\u0078\u0074\u005a\u006f\u006d\u0062\u0069\u0065\u0053\u0070\u0061\u0077\u006e\u0054\u0069\u0063\u006b");if(_0x1fe1bc&&_0x465402>=_0x1fe1bc){this["\u0073\u0070\u0061\u0077\u006e\u004e\u0065\u0078\u0074\u005a\u006f\u006d\u0062\u0069\u0065"]();}}static["\u0073\u0074\u0061\u0072\u0074\u0043\u0075\u0072\u0072\u0065\u006e\u0074\u0057\u0061\u0076\u0065"](_0x1514bb){if(!world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u0067\u0061\u006d\u0065\u0041\u0063\u0074\u0069\u0076\u0065"))return;const _0x1bc9e3=world['getDynamicProperty']("dIleveLtnerruc".split("").reverse().join(""));const _0x16b3ea=levelData["\u0067\u0065\u0074"](_0x1bc9e3);const _0x59db56=world['getDynamicProperty']("\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0057\u0061\u0076\u0065");const _0x4dfdcb=_0x16b3ea["\u007a\u006f\u006d\u0062\u0069\u0065\u0053\u0070\u0061\u0077\u006e\u0069\u006e\u0067"]["\u0077\u0061\u0076\u0065\u0073"][_0x59db56];if(!_0x4dfdcb){console["\u0065\u0072\u0072\u006f\u0072"]('Attempted\x20to\x20start\x20a\x20non-existent\x20wave.');return;}const _0x2515b0=[];let _0x2346cf=_0x4dfdcb['zombieCount'];if(_0x4dfdcb["\u0073\u0070\u0065\u0063\u0069\u0061\u006c\u005a\u006f\u006d\u0062\u0069\u0065\u0073"]){for(const _0xc121ff of _0x4dfdcb["\u0073\u0070\u0065\u0063\u0069\u0061\u006c\u005a\u006f\u006d\u0062\u0069\u0065\u0073"]){for(let _0x1cbb5a=0x33bbc^0x33bbc;_0x1cbb5a<_0xc121ff["\u0063\u006f\u0075\u006e\u0074"];_0x1cbb5a++){_0x2515b0["\u0070\u0075\u0073\u0068"](_0xc121ff["\u0074\u0079\u0070\u0065\u0049\u0064"]);}_0x2346cf-=_0xc121ff["\u0063\u006f\u0075\u006e\u0074"];}}for(let _0x33de69=0x18dcf^0x18dcf;_0x33de69<_0x2346cf;_0x33de69++){const _0x2c9487=_0x4dfdcb["\u006d\u006f\u0062\u0073"][Math["\u0066\u006c\u006f\u006f\u0072"](Math["\u0072\u0061\u006e\u0064\u006f\u006d"]()*_0x4dfdcb["\u006d\u006f\u0062\u0073"]["\u006c\u0065\u006e\u0067\u0074\u0068"])];_0x2515b0["\u0070\u0075\u0073\u0068"](_0x2c9487);}for(let _0x58815c=_0x2515b0['length']-(0x1a02e^0x1a02f);_0x58815c>(0x67f99^0x67f99);_0x58815c--){const _0x6c730=Math["\u0066\u006c\u006f\u006f\u0072"](Math['random']()*(_0x58815c+(0xa0555^0xa0554)));[_0x2515b0[_0x58815c],_0x2515b0[_0x6c730]]=[_0x2515b0[_0x6c730],_0x2515b0[_0x58815c]];}world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u0077\u0061\u0076\u0065\u0053\u0070\u0061\u0077\u006e\u0044\u0065\u0063\u006b",JSON["\u0073\u0074\u0072\u0069\u006e\u0067\u0069\u0066\u0079"](_0x2515b0));const _0x701bee=[..._0x16b3ea['zombieSpawning']['locations']];let _0x2fa7a6=[];for(let _0x2b1c14=_0x701bee["\u006c\u0065\u006e\u0067\u0074\u0068"]-(0xe3b30^0xe3b31);_0x2b1c14>(0x9b305^0x9b305);_0x2b1c14--){const _0x4e9529=Math["\u0066\u006c\u006f\u006f\u0072"](Math["\u0072\u0061\u006e\u0064\u006f\u006d"]()*(_0x2b1c14+(0x5f5b1^0x5f5b0)));[_0x701bee[_0x2b1c14],_0x701bee[_0x4e9529]]=[_0x701bee[_0x4e9529],_0x701bee[_0x2b1c14]];}for(let _0x1c127a=0x29253^0x29253;_0x1c127a<_0x4dfdcb["\u007a\u006f\u006d\u0062\u0069\u0065\u0043\u006f\u0075\u006e\u0074"];_0x1c127a++){_0x2fa7a6['push'](_0x701bee[_0x1c127a%_0x701bee["\u006c\u0065\u006e\u0067\u0074\u0068"]]);}for(let _0x3b2fa4=_0x2fa7a6["\u006c\u0065\u006e\u0067\u0074\u0068"]-(0x3a529^0x3a528);_0x3b2fa4>(0x7191c^0x7191c);_0x3b2fa4--){const _0x8ee6cb=Math['floor'](Math["\u0072\u0061\u006e\u0064\u006f\u006d"]()*(_0x3b2fa4+(0xbb8f6^0xbb8f7)));[_0x2fa7a6[_0x3b2fa4],_0x2fa7a6[_0x8ee6cb]]=[_0x2fa7a6[_0x8ee6cb],_0x2fa7a6[_0x3b2fa4]];}world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("kceDnoitacoLevaw".split("").reverse().join(""),JSON["\u0073\u0074\u0072\u0069\u006e\u0067\u0069\u0066\u0079"](_0x2fa7a6));world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("kciTnwapSeibmoZtxen".split("").reverse().join(""),system['currentTick']+(0xef784^0xef785));if(_0x59db56===(0x4f0af^0x4f0af))AudioManager['playSound']("\u0069\u006e\u0069\u0074\u0069\u0061\u006c\u002e\u0077\u0061\u0076\u0065",_0x1514bb);else if(_0x59db56===(0x6e8b6^0x6e8b7))AudioManager["\u0070\u006c\u0061\u0079\u0053\u006f\u0075\u006e\u0064"]("\u0073\u0065\u0063\u006f\u006e\u0064\u002e\u0077\u0061\u0076\u0065",_0x1514bb);const _0x382676=LanguageManager['get'](_0x1514bb,_0x4dfdcb['waveName']);_0x1514bb["\u006f\u006e\u0053\u0063\u0072\u0065\u0065\u006e\u0044\u0069\u0073\u0070\u006c\u0061\u0079"]['setTitle'](_0x382676,{"\u0073\u0075\u0062\u0074\u0069\u0074\u006c\u0065":LanguageManager['get'](_0x1514bb,"\u0067\u0061\u006d\u0065\u002e\u0077\u0061\u0076\u0065\u005f\u0061\u0070\u0070\u0072\u006f\u0061\u0063\u0068\u0069\u006e\u0067"),'fadeInDuration':0x14,"\u0073\u0074\u0061\u0079\u0044\u0075\u0072\u0061\u0074\u0069\u006f\u006e":0x3c,'fadeOutDuration':0x14});}static["\u0073\u0070\u0061\u0077\u006e\u004e\u0065\u0078\u0074\u005a\u006f\u006d\u0062\u0069\u0065"](){const _0x37f765=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u004c\u0065\u0076\u0065\u006c\u0049\u0064");const _0x470f14=levelData['get'](_0x37f765);const _0x39413b=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("evaWtnerruc".split("").reverse().join(""));const _0x37ade7=_0x470f14['zombieSpawning']['waves'][_0x39413b];let _0x425505=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("evaWsihTdenwapSseibmoz".split("").reverse().join(""));if(_0x425505>=_0x37ade7["\u007a\u006f\u006d\u0062\u0069\u0065\u0043\u006f\u0075\u006e\u0074"]){world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u006e\u0065\u0078\u0074\u005a\u006f\u006d\u0062\u0069\u0065\u0053\u0070\u0061\u0077\u006e\u0054\u0069\u0063\u006b",0xe9ac3^0xe9ac3);return;}const _0x479fc5=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("kceDnwapSevaw".split("").reverse().join(""));const _0x546996=JSON['parse'](_0x479fc5);const _0x41ff68=_0x546996[_0x425505];const _0x1bce25=world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("kceDnoitacoLevaw".split("").reverse().join(""));const _0x55cbf0=JSON['parse'](_0x1bce25);const _0x59448b=_0x55cbf0[_0x425505];if(_0x41ff68&&_0x59448b){world['getDimension']("\u006f\u0076\u0065\u0072\u0077\u006f\u0072\u006c\u0064")['spawnEntity'](_0x41ff68,_0x59448b);world['setDynamicProperty']("\u007a\u006f\u006d\u0062\u0069\u0065\u0073\u0053\u0070\u0061\u0077\u006e\u0065\u0064\u0054\u0068\u0069\u0073\u0057\u0061\u0076\u0065",_0x425505+(0xc2e59^0xc2e58));}else{console["\u0077\u0061\u0072\u006e"]('Spawn\x20deck\x20or\x20location\x20deck\x20is\x20missing\x20an\x20entry\x20for\x20wave\x20'+_0x39413b+'\x20at\x20index\x20'+_0x425505+"\u002e");}const{minSpawnInterval:_0x9369c2,maxSpawnInterval:_0x2cc7d3}=_0x37ade7;const _0x1945d0=Math['random']()*(_0x2cc7d3-_0x9369c2)+_0x9369c2;world['setDynamicProperty']("kciTnwapSeibmoZtxen".split("").reverse().join(""),system['currentTick']+_0x1945d0*(0x59447^0x59453));}}
+import { world, system, ItemStack } from "@minecraft/server";
+import { levelData } from "../levels.js";
+import { PlantManager } from "./PlantManager.js";
+import { CutsceneManager } from "./CutsceneManager.js";
+import { AudioManager } from "./AudioManager.js";
+import { TutorialManager } from "./TutorialManager.js";
+import { LanguageManager } from "./LanguageManager.js";
+export class LevelManager {
+  static async startLevel(_0xb9a3d7, _0x43e37f) {
+    const _0x11a0a7 = levelData.get(_0x43e37f);
+    if (!_0x11a0a7) {
+      console.error(
+        "Attempted to start a level with an invalid ID: " + _0x43e37f,
+      );
+      return;
+    }
+    PlantManager.resetCooldowns();
+    world.setDynamicProperty("gameActive", !![]);
+    world.setDynamicProperty("currentLevelId", _0x43e37f);
+    world.setDynamicProperty("currentWave", 0);
+    world.setDynamicProperty("zombiesKilledThisWave", 0);
+    world.setDynamicProperty("zombiesSpawnedThisWave", 0);
+    world.setDynamicProperty("nextWaveStartTick", 0);
+    world.setDynamicProperty(
+      "waveSpawnDeck",
+      "][".split("").reverse().join(""),
+    );
+    world.setDynamicProperty("waveLocationDeck", "[]");
+    _0xb9a3d7.teleport(_0x11a0a7.playerStartLocation, {
+      rotation: { x: 0x0, y: 0x0 },
+    });
+    if (
+      _0x11a0a7.structure &&
+      _0x11a0a7.structure.name &&
+      _0x11a0a7.structure.location
+    ) {
+      try {
+        world.structureManager.place(
+          _0x11a0a7.structure.name,
+          _0xb9a3d7.dimension,
+          _0x11a0a7.structure.location,
+        );
+      } catch (_0xffde20) {
+        console.error(
+          "Failed to place structure \x27" +
+            _0x11a0a7.structure.name +
+            "\x27: " +
+            _0xffde20,
+        );
+      }
+    }
+    for (const _0x1b3822 of _0x11a0a7.lawnmowers) {
+      _0xb9a3d7.dimension.spawnEntity("bn:lawnmower", _0x1b3822);
+    }
+    if (_0x11a0a7.cutscene && _0x11a0a7.cutscene.length > 0) {
+      await CutsceneManager.playStartCutscene(_0xb9a3d7, _0x11a0a7.cutscene);
+    }
+    const _0x148b94 = _0xb9a3d7.getComponent("inventory")["container"];
+    _0x148b94.clearAll();
+    for (const _0x1df6be of _0x11a0a7.startItems) {
+      const _0x34e3f2 = new ItemStack(_0x1df6be.typeId, _0x1df6be.amount);
+      _0x148b94.setItem(_0x1df6be.slot, _0x34e3f2);
+    }
+    for (const _0x354cd9 of _0x11a0a7.scoreboardsToReset) {
+      const _0x15ebbd = world.scoreboard.getObjective(_0x354cd9);
+      if (_0x15ebbd) {
+        if (_0x354cd9 === "pollen") {
+          _0x15ebbd.setScore(_0xb9a3d7, _0x11a0a7.startingPollen ?? 0);
+        } else {
+          _0x15ebbd.setScore(_0xb9a3d7, 0);
+        }
+      }
+    }
+    const _0x242326 = LanguageManager.get(_0xb9a3d7, _0x11a0a7.name);
+    _0xb9a3d7.sendMessage(
+      LanguageManager.get(_0xb9a3d7, "game.level_start", _0x242326),
+    );
+    if (_0x11a0a7.isTutorial) {
+      TutorialManager.startTutorial(_0xb9a3d7, _0x11a0a7);
+    } else {
+      this.startLevelGameplay(_0xb9a3d7, _0x43e37f);
+    }
+  }
+  static startLevelGameplay(_0x3644dc, _0x38420e) {
+    const _0x27d051 = levelData.get(_0x38420e);
+    if (!_0x27d051) return;
+    AudioManager.playRandomLevelMusic(_0x3644dc);
+    if (_0x27d051.pollenSpawning) {
+      const _0x410b9c =
+        system.currentTick + _0x27d051.pollenSpawning.spawnInterval * 20;
+      world.setDynamicProperty("nextPollenSpawnTick", _0x410b9c);
+    }
+    if (_0x27d051.zombieSpawning) {
+      const _0x25ffa1 =
+        system.currentTick + (_0x27d051.zombieSpawning.initialDelay || 10) * 20;
+      world.setDynamicProperty("nextWaveStartTick", _0x25ffa1);
+    }
+  }
+  static onTick() {
+    const _0x465402 = system.currentTick;
+    const _0x4b1c53 = world.getDynamicProperty("nextPollenSpawnTick");
+    if (_0x4b1c53 && _0x465402 >= _0x4b1c53) {
+      const _0x503c48 = world.getDynamicProperty("currentLevelId");
+      const _0xdcd8a3 = levelData.get(_0x503c48);
+      if (_0xdcd8a3 && _0xdcd8a3.pollenSpawning) {
+        const _0x48e6fb = _0xdcd8a3.pollenSpawning;
+        const _0x43e989 = _0x48e6fb.centerLocation;
+        const _0x5a5445 = _0x48e6fb.radius;
+        const _0x1ba541 = Math.random() * 2 * Math.PI;
+        const _0x36dd03 = Math.random() * _0x5a5445;
+        const _0x7e61a = _0x43e989.x + _0x36dd03 * Math.cos(_0x1ba541);
+        const _0x4bba94 = _0x43e989.z + _0x36dd03 * Math.sin(_0x1ba541);
+        const _0x4e0331 = { x: _0x7e61a, y: _0x43e989.y, z: _0x4bba94 };
+        world.getDimension("overworld")["spawnEntity"]("bn:pollen", _0x4e0331);
+        const _0xdb9ee5 = _0x465402 + _0x48e6fb.spawnInterval * 20;
+        world.setDynamicProperty("nextPollenSpawnTick", _0xdb9ee5);
+      }
+    }
+    const _0x1fe1bc = world.getDynamicProperty("nextZombieSpawnTick");
+    if (_0x1fe1bc && _0x465402 >= _0x1fe1bc) {
+      this.spawnNextZombie();
+    }
+  }
+  static startCurrentWave(_0x1514bb) {
+    if (!world.getDynamicProperty("gameActive")) return;
+    const _0x1bc9e3 = world.getDynamicProperty("currentLevelId");
+    const _0x16b3ea = levelData.get(_0x1bc9e3);
+    const _0x59db56 = world.getDynamicProperty("currentWave");
+    const _0x4dfdcb = _0x16b3ea.zombieSpawning.waves[_0x59db56];
+    if (!_0x4dfdcb) {
+      console.error("Attempted to start a non-existent wave.");
+      return;
+    }
+    const _0x2515b0 = [];
+    let _0x2346cf = _0x4dfdcb.zombieCount;
+    if (_0x4dfdcb.specialZombies) {
+      for (const _0xc121ff of _0x4dfdcb.specialZombies) {
+        for (let _0x1cbb5a = 0; _0x1cbb5a < _0xc121ff.count; _0x1cbb5a++) {
+          _0x2515b0.push(_0xc121ff.typeId);
+        }
+        _0x2346cf -= _0xc121ff.count;
+      }
+    }
+    for (let _0x33de69 = 0; _0x33de69 < _0x2346cf; _0x33de69++) {
+      const _0x2c9487 =
+        _0x4dfdcb.mobs[Math.floor(Math.random() * _0x4dfdcb.mobs.length)];
+      _0x2515b0.push(_0x2c9487);
+    }
+    for (let _0x58815c = _0x2515b0.length - 1; _0x58815c > 0; _0x58815c--) {
+      const _0x6c730 = Math.floor(Math.random() * (_0x58815c + 1));
+      [_0x2515b0[_0x58815c], _0x2515b0[_0x6c730]] = [
+        _0x2515b0[_0x6c730],
+        _0x2515b0[_0x58815c],
+      ];
+    }
+    world.setDynamicProperty("waveSpawnDeck", JSON.stringify(_0x2515b0));
+    const _0x701bee = [..._0x16b3ea.zombieSpawning.locations];
+    let _0x2fa7a6 = [];
+    for (let _0x2b1c14 = _0x701bee.length - 1; _0x2b1c14 > 0; _0x2b1c14--) {
+      const _0x4e9529 = Math.floor(Math.random() * (_0x2b1c14 + 1));
+      [_0x701bee[_0x2b1c14], _0x701bee[_0x4e9529]] = [
+        _0x701bee[_0x4e9529],
+        _0x701bee[_0x2b1c14],
+      ];
+    }
+    for (let _0x1c127a = 0; _0x1c127a < _0x4dfdcb.zombieCount; _0x1c127a++) {
+      _0x2fa7a6.push(_0x701bee[_0x1c127a % _0x701bee.length]);
+    }
+    for (let _0x3b2fa4 = _0x2fa7a6.length - 1; _0x3b2fa4 > 0; _0x3b2fa4--) {
+      const _0x8ee6cb = Math.floor(Math.random() * (_0x3b2fa4 + 1));
+      [_0x2fa7a6[_0x3b2fa4], _0x2fa7a6[_0x8ee6cb]] = [
+        _0x2fa7a6[_0x8ee6cb],
+        _0x2fa7a6[_0x3b2fa4],
+      ];
+    }
+    world.setDynamicProperty("waveLocationDeck", JSON.stringify(_0x2fa7a6));
+    world.setDynamicProperty("nextZombieSpawnTick", system.currentTick + 1);
+    if (_0x59db56 === 0) AudioManager.playSound("initial.wave", _0x1514bb);
+    else if (_0x59db56 === 1) AudioManager.playSound("second.wave", _0x1514bb);
+    const _0x382676 = LanguageManager.get(_0x1514bb, _0x4dfdcb.waveName);
+    _0x1514bb.onScreenDisplay.setTitle(_0x382676, {
+      subtitle: LanguageManager.get(_0x1514bb, "game.wave_approaching"),
+      fadeInDuration: 0x14,
+      stayDuration: 0x3c,
+      fadeOutDuration: 0x14,
+    });
+  }
+  static spawnNextZombie() {
+    const _0x37f765 = world.getDynamicProperty("currentLevelId");
+    const _0x470f14 = levelData.get(_0x37f765);
+    const _0x39413b = world.getDynamicProperty("currentWave");
+    const _0x37ade7 = _0x470f14.zombieSpawning.waves[_0x39413b];
+    let _0x425505 = world.getDynamicProperty("zombiesSpawnedThisWave");
+    if (_0x425505 >= _0x37ade7.zombieCount) {
+      world.setDynamicProperty("nextZombieSpawnTick", 0);
+      return;
+    }
+    const _0x479fc5 = world.getDynamicProperty("waveSpawnDeck");
+    const _0x546996 = JSON.parse(_0x479fc5);
+    const _0x41ff68 = _0x546996[_0x425505];
+    const _0x1bce25 = world.getDynamicProperty("waveLocationDeck");
+    const _0x55cbf0 = JSON.parse(_0x1bce25);
+    const _0x59448b = _0x55cbf0[_0x425505];
+    if (_0x41ff68 && _0x59448b) {
+      world.getDimension("overworld")["spawnEntity"](_0x41ff68, _0x59448b);
+      world.setDynamicProperty("zombiesSpawnedThisWave", _0x425505 + 1);
+    } else {
+      console.warn(
+        "Spawn deck or location deck is missing an entry for wave " +
+          _0x39413b +
+          " at index " +
+          _0x425505 +
+          ".",
+      );
+    }
+    const { minSpawnInterval: _0x9369c2, maxSpawnInterval: _0x2cc7d3 } =
+      _0x37ade7;
+    const _0x1945d0 = Math.random() * (_0x2cc7d3 - _0x9369c2) + _0x9369c2;
+    world.setDynamicProperty(
+      "nextZombieSpawnTick",
+      system.currentTick + _0x1945d0 * 20,
+    );
+  }
+}

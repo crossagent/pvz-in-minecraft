@@ -1,1 +1,403 @@
-import{system,world}from"@minecraft/server";import{LanguageManager}from"./LanguageManager.js";const laneCooldowns=new Map();const LANE_COOLDOWN_DURATION=0xc6029^0xc6024;export class PlantManager{static["ezilaitini".split("").reverse().join("")](){world["\u0061\u0066\u0074\u0065\u0072\u0045\u0076\u0065\u006e\u0074\u0073"]['projectileHitEntity']["\u0073\u0075\u0062\u0073\u0063\u0072\u0069\u0062\u0065"](_0x5c5a07=>{const _0x1e5de0=_0x5c5a07["\u0067\u0065\u0074\u0045\u006e\u0074\u0069\u0074\u0079\u0048\u0069\u0074"]();if(!_0x1e5de0)return;const _0x3230a7=_0x1e5de0["\u0065\u006e\u0074\u0069\u0074\u0079"];const _0x272b1b=_0x5c5a07['projectile'];if(_0x272b1b['typeId']==="\u0062\u006e\u003a\u0070\u0072\u006f\u006a\u0065\u0063\u0074\u0069\u006c\u0065\u005f\u0032"&&_0x3230a7['typeId']["\u0073\u0074\u0061\u0072\u0074\u0073\u0057\u0069\u0074\u0068"]("\u0062\u006e\u003a\u007a\u006f\u006d\u0062\u0069\u0065")){_0x3230a7["\u0061\u0064\u0064\u0045\u0066\u0066\u0065\u0063\u0074"]("\u0073\u006c\u006f\u0077\u006e\u0065\u0073\u0073",0x441be^0x44182,{'amplifier':0x3});}});}static["\u0072\u0065\u0073\u0065\u0074\u0043\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0073"](){laneCooldowns["\u0063\u006c\u0065\u0061\u0072"]();}static["\u0070\u006c\u0061\u006e\u0074\u0044\u0061\u0074\u0061"]=new Map([["1_tnalp:nb".split("").reverse().join(""),{'nameKey':'plant.sunflower.name','entityId':"\u0062\u006e\u003a\u0073\u0075\u006e\u0066\u006c\u006f\u0077\u0065\u0072",'cost':0x32,"\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0043\u0061\u0074\u0065\u0067\u006f\u0072\u0079":'plant_1','cooldownTicks':0x64}],["\u0062\u006e\u003a\u0070\u006c\u0061\u006e\u0074\u005f\u0032",{'nameKey':"\u0070\u006c\u0061\u006e\u0074\u002e\u0070\u0065\u0061\u0073\u0068\u006f\u006f\u0074\u0065\u0072\u002e\u006e\u0061\u006d\u0065","\u0065\u006e\u0074\u0069\u0074\u0079\u0049\u0064":'bn:peashooter','cost':0x64,"\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0043\u0061\u0074\u0065\u0067\u006f\u0072\u0079":"\u0070\u006c\u0061\u006e\u0074\u005f\u0032","\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0054\u0069\u0063\u006b\u0073":0x96}],["\u0062\u006e\u003a\u0070\u006c\u0061\u006e\u0074\u005f\u0033",{"\u006e\u0061\u006d\u0065\u004b\u0065\u0079":'plant.cherry_bomb.name',"\u0065\u006e\u0074\u0069\u0074\u0079\u0049\u0064":'bn:cherry_tnt',"\u0063\u006f\u0073\u0074":0x96,"\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0043\u0061\u0074\u0065\u0067\u006f\u0072\u0079":"\u0070\u006c\u0061\u006e\u0074\u005f\u0033","\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0054\u0069\u0063\u006b\u0073":0x1f4}],["\u0062\u006e\u003a\u0070\u006c\u0061\u006e\u0074\u005f\u0034",{"\u006e\u0061\u006d\u0065\u004b\u0065\u0079":"\u0070\u006c\u0061\u006e\u0074\u002e\u0077\u0061\u006c\u006c\u006e\u0075\u0074\u002e\u006e\u0061\u006d\u0065","\u0065\u006e\u0074\u0069\u0074\u0079\u0049\u0064":"\u0062\u006e\u003a\u0077\u0061\u006c\u006c\u006e\u0075\u0074",'cost':0x32,"\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0043\u0061\u0074\u0065\u0067\u006f\u0072\u0079":'plant_4',"\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0054\u0069\u0063\u006b\u0073":0x258}],["5_tnalp:nb".split("").reverse().join(""),{'nameKey':"\u0070\u006c\u0061\u006e\u0074\u002e\u0070\u006f\u0074\u0061\u0074\u006f\u005f\u006d\u0069\u006e\u0065\u002e\u006e\u0061\u006d\u0065",'entityId':'bn:potato_mine',"\u0063\u006f\u0073\u0074":0x19,'cooldownCategory':"\u0070\u006c\u0061\u006e\u0074\u005f\u0035","\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0054\u0069\u0063\u006b\u0073":0x258}],["\u0062\u006e\u003a\u0070\u006c\u0061\u006e\u0074\u005f\u0036",{'nameKey':"\u0070\u006c\u0061\u006e\u0074\u002e\u0073\u006e\u006f\u0077\u005f\u0070\u0065\u0061\u002e\u006e\u0061\u006d\u0065","\u0065\u006e\u0074\u0069\u0074\u0079\u0049\u0064":'bn:snow_pea','cost':0xaf,"\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0043\u0061\u0074\u0065\u0067\u006f\u0072\u0079":'plant_6',"\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0054\u0069\u0063\u006b\u0073":0x96}]]);static["\u0061\u006c\u006c\u0050\u006c\u0061\u006e\u0074\u0045\u006e\u0074\u0069\u0074\u0079\u0049\u0064\u0073"]=new Set(Array["\u0066\u0072\u006f\u006d"](this["\u0070\u006c\u0061\u006e\u0074\u0044\u0061\u0074\u0061"]["\u0076\u0061\u006c\u0075\u0065\u0073"]())['map'](p=>p['entityId']));static["\u0070\u006c\u0061\u006e\u0074\u0053\u0068\u006f\u006f\u0074\u0044\u0061\u0074\u0061"]=new Map([["\u0062\u006e\u003a\u0070\u0065\u0061\u0073\u0068\u006f\u006f\u0074\u0065\u0072",{"\u0070\u0072\u006f\u006a\u0065\u0063\u0074\u0069\u006c\u0065":"\u0062\u006e\u003a\u0070\u0072\u006f\u006a\u0065\u0063\u0074\u0069\u006c\u0065\u005f\u0031",'cooldown':0x28,"\u0076\u0065\u006c\u006f\u0063\u0069\u0074\u0079":1.2}],["\u0062\u006e\u003a\u0073\u006e\u006f\u0077\u005f\u0070\u0065\u0061",{'projectile':"\u0062\u006e\u003a\u0070\u0072\u006f\u006a\u0065\u0063\u0074\u0069\u006c\u0065\u005f\u0032",'cooldown':0x28,"\u0076\u0065\u006c\u006f\u0063\u0069\u0074\u0079":1.2}]]);static["\u0063\u006f\u006c\u006c\u0065\u0063\u0074\u0050\u006f\u006c\u006c\u0065\u006e"](_0x30123a){try{const _0x423494=_0x30123a['getBlockFromViewDirection']({"\u006d\u0061\u0078\u0044\u0069\u0073\u0074\u0061\u006e\u0063\u0065":0x96});if(!_0x423494)return![];const _0x412c8c={"\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e":_0x423494['block']["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"],"\u006d\u0061\u0078\u0044\u0069\u0073\u0074\u0061\u006e\u0063\u0065":0x2,"\u0074\u0079\u0070\u0065":'bn:pollen'};const _0x34cf17=_0x30123a["\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e"]['getEntities'](_0x412c8c);if(_0x34cf17["\u006c\u0065\u006e\u0067\u0074\u0068"]>(0xce8b6^0xce8b6)){const _0x33e437=_0x34cf17[0xa8ba4^0xa8ba4];system['run'](()=>{_0x33e437["\u0072\u0065\u006d\u006f\u0076\u0065"]();world["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064"]["\u0067\u0065\u0074\u004f\u0062\u006a\u0065\u0063\u0074\u0069\u0076\u0065"]("nellop".split("").reverse().join(""))?.["erocSdda".split("").reverse().join("")](_0x30123a['scoreboardIdentity'],0x3bf69^0x3bf70);_0x30123a['playSound']("\u0073\u0075\u006e\u002e\u0070\u0069\u0063\u006b\u0075\u0070",{"\u0076\u006f\u006c\u0075\u006d\u0065":0.8,"\u0070\u0069\u0074\u0063\u0068":1.5});});return!![];}}catch(_0x5418c0){console['error']('[PvZ]\x20Error\x20collecting\x20pollen:\x20'+_0x5418c0);}return![];}static["stnalPetadpu".split("").reverse().join("")](){const _0x39d13e=world["\u0067\u0065\u0074\u0044\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e"]("dlrowrevo".split("").reverse().join(""));const _0x24a69d=[];const _0x311603=[];for(const _0x37a808 of _0x39d13e["\u0067\u0065\u0074\u0045\u006e\u0074\u0069\u0074\u0069\u0065\u0073"]()){if(this['allPlantEntityIds']["\u0068\u0061\u0073"](_0x37a808['typeId'])){_0x24a69d["\u0070\u0075\u0073\u0068"](_0x37a808);}else if(_0x37a808["\u0074\u0079\u0070\u0065\u0049\u0064"]['startsWith']("eibmoz:nb".split("").reverse().join(""))){_0x311603["\u0070\u0075\u0073\u0068"](_0x37a808);}}if(_0x24a69d["\u006c\u0065\u006e\u0067\u0074\u0068"]===(0xe4585^0xe4585))return;const _0x24003e=_0x39d13e["\u0067\u0065\u0074\u0045\u006e\u0074\u0069\u0074\u0069\u0065\u0073"]({"\u0066\u0061\u006d\u0069\u006c\u0069\u0065\u0073":["\u007a\u006f\u006d\u0062\u0069\u0065"],'excludeTypes':["\u0062\u006e\u003a\u007a\u006f\u006d\u0062\u0069\u0065","\u0062\u006e\u003a\u007a\u006f\u006d\u0062\u0069\u0065\u005f\u0063\u006f\u006e\u0065"]});const _0x6d7ad3=[...new Set([..._0x311603,..._0x24003e])];if(_0x6d7ad3['length']===(0xbed48^0xbed48))return;const _0x274c20=system['currentTick'];for(const _0x198789 of _0x24a69d){const _0x8814aa=_0x198789['getDynamicProperty']("\u0073\u0068\u006f\u0074\u0043\u006f\u006f\u006c\u0064\u006f\u0077\u006e")??0xecaa3^0xecaa3;if(_0x8814aa>(0xbee7f^0xbee7f)){_0x198789["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("\u0073\u0068\u006f\u0074\u0043\u006f\u006f\u006c\u0064\u006f\u0077\u006e",_0x8814aa-(0xe5690^0xe5691));}}for(const _0x1be6d1 of _0x24a69d){const _0x17aef4=this["\u0070\u006c\u0061\u006e\u0074\u0053\u0068\u006f\u006f\u0074\u0044\u0061\u0074\u0061"]['get'](_0x1be6d1['typeId']);if(!_0x17aef4)continue;const _0x926a0=_0x1be6d1['getDynamicProperty']("\u0073\u0068\u006f\u0074\u0043\u006f\u006f\u006c\u0064\u006f\u0077\u006e")??0xdc52e^0xdc52e;if(_0x926a0>(0x8d00d^0x8d00d))continue;const _0x1ec76b=Math["\u0066\u006c\u006f\u006f\u0072"](_0x1be6d1['location']["\u0078"]);const _0x488c26=laneCooldowns["\u0067\u0065\u0074"](_0x1ec76b)||0x1e372^0x1e372;if(_0x274c20<_0x488c26)continue;for(const _0xe60fc7 of _0x6d7ad3){if(_0x1be6d1["\u0069\u0064"]===_0xe60fc7["\u0069\u0064"])continue;const _0x6f5070=Math['floor'](_0xe60fc7["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u0078"])===_0x1ec76b;const _0x50461e=Math["\u0061\u0062\u0073"](_0x1be6d1["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u0079"]-_0xe60fc7["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u0079"])<(0xd9df7^0xd9df6);const _0x1e31cf=_0xe60fc7['location']["\u007a"]>_0x1be6d1['location']["\u007a"];const _0x1b0688=_0xe60fc7["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u007a"]-_0x1be6d1['location']["\u007a"]<(0x477bf^0x477b0);if(_0x6f5070&&_0x50461e&&_0x1e31cf&&_0x1b0688){const _0x692909={"\u0078":_0x1be6d1['location']["\u0078"],"\u0079":_0x1be6d1['location']["\u0079"]+(0x696cd^0x696cc),"\u007a":_0x1be6d1["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u007a"]+0.7};const _0x14291e=_0x39d13e["\u0073\u0070\u0061\u0077\u006e\u0045\u006e\u0074\u0069\u0074\u0079"](_0x17aef4['projectile'],_0x692909);_0x1be6d1["\u0072\u0075\u006e\u0043\u006f\u006d\u006d\u0061\u006e\u0064\u0041\u0073\u0079\u006e\u0063"]('playanimation\x20@s\x20animation.plant_2.attack');const _0xf1bb10={"\u0078":_0xe60fc7['location']["\u0078"]-_0x1be6d1['location']["\u0078"],"\u0079":_0xe60fc7["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u0079"]-_0x1be6d1['location']["\u0079"],"\u007a":_0xe60fc7["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u007a"]-_0x1be6d1["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u007a"]};const _0x22e86d=Math["\u0073\u0071\u0072\u0074"](_0xf1bb10["\u0078"]**(0x72a53^0x72a51)+_0xf1bb10["\u0079"]**(0xd11a0^0xd11a2)+_0xf1bb10["\u007a"]**(0x36a74^0x36a76));_0xf1bb10["\u0078"]/=_0x22e86d;_0xf1bb10["\u0079"]/=_0x22e86d;_0xf1bb10["\u007a"]/=_0x22e86d;_0x14291e["\u0061\u0070\u0070\u006c\u0079\u0049\u006d\u0070\u0075\u006c\u0073\u0065"]({"\u0078":_0xf1bb10["\u0078"]*_0x17aef4["\u0076\u0065\u006c\u006f\u0063\u0069\u0074\u0079"],"\u0079":_0xf1bb10["\u0079"]*_0x17aef4["\u0076\u0065\u006c\u006f\u0063\u0069\u0074\u0079"],"\u007a":_0xf1bb10["\u007a"]*_0x17aef4["\u0076\u0065\u006c\u006f\u0063\u0069\u0074\u0079"]});_0x1be6d1["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("nwodlooCtohs".split("").reverse().join(""),_0x17aef4['cooldown']);laneCooldowns["\u0073\u0065\u0074"](_0x1ec76b,_0x274c20+LANE_COOLDOWN_DURATION);break;}}}}static["esUmetIeldnah".split("").reverse().join("")](_0x24f21e,_0x4656a0){if(_0x4656a0["\u0074\u0079\u0070\u0065\u0049\u0064"]==="nellop:nb".split("").reverse().join("")){return this['collectPollen'](_0x24f21e);}if(_0x4656a0['typeId']==="\u0062\u006e\u003a\u0073\u0068\u006f\u0076\u0065\u006c"){try{const _0x1bbcb2=_0x24f21e["\u0067\u0065\u0074\u0042\u006c\u006f\u0063\u006b\u0046\u0072\u006f\u006d\u0056\u0069\u0065\u0077\u0044\u0069\u0072\u0065\u0063\u0074\u0069\u006f\u006e"]({"\u006d\u0061\u0078\u0044\u0069\u0073\u0074\u0061\u006e\u0063\u0065":0x96});if(!_0x1bbcb2)return![];const _0x6670fe=_0x1bbcb2["\u0062\u006c\u006f\u0063\u006b"];const _0xb38dfc=_0x6670fe["\u0062\u0065\u006c\u006f\u0077"]();const _0x528025=["\u006d\u0069\u006e\u0065\u0063\u0072\u0061\u0066\u0074\u003a\u0067\u006f\u006c\u0064\u005f\u0062\u006c\u006f\u0063\u006b","\u006d\u0069\u006e\u0065\u0063\u0072\u0061\u0066\u0074\u003a\u0069\u0072\u006f\u006e\u005f\u0062\u006c\u006f\u0063\u006b"];if(!_0xb38dfc||!_0x528025["\u0069\u006e\u0063\u006c\u0075\u0064\u0065\u0073"](_0xb38dfc["\u0074\u0079\u0070\u0065\u0049\u0064"])){return![];}const _0x4170c5=_0xb38dfc['location']["\u0079"];const _0x5ca731=_0xb38dfc["\u0074\u0079\u0070\u0065\u0049\u0064"];const _0x270385=_0xb38dfc["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u0078"];const _0x488d35=_0xb38dfc['location']["\u007a"];const _0x3357d4=[{"\u0078":0x0,"\u007a":0x0},{"\u0078":-(0x5148a^0x5148b),"\u007a":0x0},{"\u0078":-(0x9b56a^0x9b568),"\u007a":0x0},{"\u0078":0x0,"\u007a":-(0xd0b84^0xd0b85)},{"\u0078":-(0x379c2^0x379c3),"\u007a":-(0xec5c1^0xec5c0)},{"\u0078":-(0x46b32^0x46b30),"\u007a":-(0xad104^0xad105)}];let _0x268a8d=![];let _0x2607bf={"\u0078":0x0,"\u0079":0x0,"\u007a":0x0};for(const _0x5bd31e of _0x3357d4){const _0x1d238e=_0x270385+_0x5bd31e["\u0078"];const _0x1b2eb3=_0x488d35+_0x5bd31e["\u007a"];let _0x28c2b2=!![];for(let _0x2d8eac=0x422c6^0x422c6;_0x2d8eac<(0xe706e^0xe706d);_0x2d8eac++){for(let _0x547c90=0x2829a^0x2829a;_0x547c90<(0xc8b83^0xc8b81);_0x547c90++){const _0x526c7f=_0x24f21e["\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e"]["\u0067\u0065\u0074\u0042\u006c\u006f\u0063\u006b"]({"\u0078":_0x1d238e+_0x2d8eac,"\u0079":_0x4170c5,"\u007a":_0x1b2eb3+_0x547c90});if(_0x526c7f?.["dIepyt".split("").reverse().join("")]!==_0x5ca731){_0x28c2b2=![];break;}}if(!_0x28c2b2)break;}if(_0x28c2b2){_0x268a8d=!![];_0x2607bf={"\u0078":_0x1d238e+1.5,"\u0079":_0x4170c5+(0x58727^0x58725),"\u007a":_0x1b2eb3+(0xc0199^0xc0198)};break;}}if(_0x268a8d){const _0x5481d0={"\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e":_0x2607bf,"\u006d\u0061\u0078\u0044\u0069\u0073\u0074\u0061\u006e\u0063\u0065":1.8,'families':["tnalp".split("").reverse().join("")]};const _0x6ed2e0=_0x24f21e["\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e"]["\u0067\u0065\u0074\u0045\u006e\u0074\u0069\u0074\u0069\u0065\u0073"](_0x5481d0);if(_0x6ed2e0["\u006c\u0065\u006e\u0067\u0074\u0068"]>(0xb2caa^0xb2caa)){const _0x57f9fb=_0x6ed2e0[0xadad7^0xadad7];system["\u0072\u0075\u006e"](()=>{_0x57f9fb['remove']();_0x24f21e['playSound']("\u0064\u0069\u0067\u002e\u0067\u0072\u0061\u0073\u0073");});return!![];}}}catch(_0x463177){console['error']('[PvZ]\x20Error\x20removing\x20plant:\x20'+_0x463177);}return![];}const _0x39b0e2=this["\u0070\u006c\u0061\u006e\u0074\u0044\u0061\u0074\u0061"]['get'](_0x4656a0['typeId']);if(!_0x39b0e2)return![];try{const _0x4023a5=_0x24f21e["\u0067\u0065\u0074\u0049\u0074\u0065\u006d\u0043\u006f\u006f\u006c\u0064\u006f\u0077\u006e"](_0x39b0e2["\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0043\u0061\u0074\u0065\u0067\u006f\u0072\u0079"]);if(_0x4023a5>(0x8dc3f^0x8dc3f)){const _0x3884b2=Math['ceil'](_0x4023a5/(0x993c9^0x993dd));const _0x546f2a=LanguageManager['get'](_0x24f21e,_0x39b0e2['nameKey']);_0x24f21e["\u0073\u0065\u006e\u0064\u004d\u0065\u0073\u0073\u0061\u0067\u0065"](LanguageManager['get'](_0x24f21e,"nwodlooc_no.tnalp".split("").reverse().join(""),_0x546f2a,_0x3884b2));_0x24f21e['playSound']("\u006e\u006f\u0074\u0065\u002e\u0062\u0061\u0073\u0073",{"\u0070\u0069\u0074\u0063\u0068":0.5});return!![];}const _0x2effe5=world["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064"]["\u0067\u0065\u0074\u004f\u0062\u006a\u0065\u0063\u0074\u0069\u0076\u0065"]("nellop".split("").reverse().join(""));const _0x3b1ae3=_0x2effe5?.["\u0067\u0065\u0074\u0053\u0063\u006f\u0072\u0065"](_0x24f21e["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064\u0049\u0064\u0065\u006e\u0074\u0069\u0074\u0079"])??0x269b4^0x269b4;if(_0x3b1ae3<_0x39b0e2["\u0063\u006f\u0073\u0074"]){const _0x38da0f=LanguageManager["\u0067\u0065\u0074"](_0x24f21e,_0x39b0e2["\u006e\u0061\u006d\u0065\u004b\u0065\u0079"]);_0x24f21e['sendMessage'](LanguageManager["\u0067\u0065\u0074"](_0x24f21e,"\u0070\u006c\u0061\u006e\u0074\u002e\u006e\u006f\u0074\u005f\u0065\u006e\u006f\u0075\u0067\u0068\u005f\u0070\u006f\u006c\u006c\u0065\u006e",_0x38da0f,_0x39b0e2["\u0063\u006f\u0073\u0074"]));_0x24f21e['playSound']("\u006e\u006f\u0074\u0065\u002e\u0062\u0061\u0073\u0073",{"\u0070\u0069\u0074\u0063\u0068":0.5});return!![];}const _0x3a4883=_0x24f21e['getBlockFromViewDirection']({'maxDistance':0x96});if(!_0x3a4883)return![];const _0x268331=_0x3a4883["\u0062\u006c\u006f\u0063\u006b"];const _0x3789df=_0x268331["\u0062\u0065\u006c\u006f\u0077"]();const _0x4b287a=["\u006d\u0069\u006e\u0065\u0063\u0072\u0061\u0066\u0074\u003a\u0067\u006f\u006c\u0064\u005f\u0062\u006c\u006f\u0063\u006b","\u006d\u0069\u006e\u0065\u0063\u0072\u0061\u0066\u0074\u003a\u0069\u0072\u006f\u006e\u005f\u0062\u006c\u006f\u0063\u006b"];if(!_0x3789df||!_0x4b287a["\u0069\u006e\u0063\u006c\u0075\u0064\u0065\u0073"](_0x3789df["\u0074\u0079\u0070\u0065\u0049\u0064"])){_0x24f21e["\u0073\u0065\u006e\u0064\u004d\u0065\u0073\u0073\u0061\u0067\u0065"](LanguageManager["\u0067\u0065\u0074"](_0x24f21e,"\u0070\u006c\u0061\u006e\u0074\u002e\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u005f\u0073\u0075\u0072\u0066\u0061\u0063\u0065"));return![];}const _0x371192=_0x3789df['location']["\u0079"];const _0x182259=_0x3789df['typeId'];const _0x4306b5=_0x3789df["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u0078"];const _0xbeaec5=_0x3789df["\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e"]["\u007a"];const _0x2f9f66=[{"\u0078":0x0,"\u007a":0x0},{"\u0078":-(0x9e734^0x9e735),"\u007a":0x0},{"\u0078":-(0x332fb^0x332f9),"\u007a":0x0},{"\u0078":0x0,"\u007a":-(0x2dbc0^0x2dbc1)},{"\u0078":-(0xf2b82^0xf2b83),"\u007a":-(0x53a0d^0x53a0c)},{"\u0078":-(0xdb105^0xdb107),"\u007a":-(0x44784^0x44785)}];let _0x1ff3aa=![];let _0x1e8f17={"\u0078":0x0,"\u0079":0x0,"\u007a":0x0};for(const _0x257a24 of _0x2f9f66){const _0x338701=_0x4306b5+_0x257a24["\u0078"];const _0x2d0263=_0xbeaec5+_0x257a24["\u007a"];let _0x1bc1ef=!![];for(let _0x3a794e=0x5388c^0x5388c;_0x3a794e<(0x9754d^0x9754e);_0x3a794e++){for(let _0x193b2f=0xf0fea^0xf0fea;_0x193b2f<(0xa9974^0xa9976);_0x193b2f++){const _0x2f5662=_0x24f21e['dimension']["\u0067\u0065\u0074\u0042\u006c\u006f\u0063\u006b"]({"\u0078":_0x338701+_0x3a794e,"\u0079":_0x371192,"\u007a":_0x2d0263+_0x193b2f});if(_0x2f5662?.["\u0074\u0079\u0070\u0065\u0049\u0064"]!==_0x182259){_0x1bc1ef=![];break;}}if(!_0x1bc1ef)break;}if(_0x1bc1ef){_0x1ff3aa=!![];_0x1e8f17={"\u0078":_0x338701+1.5,"\u0079":_0x371192+(0x43004^0x43006),"\u007a":_0x2d0263+(0x4c476^0x4c477)};break;}}if(!_0x1ff3aa){_0x24f21e["\u0073\u0065\u006e\u0064\u004d\u0065\u0073\u0073\u0061\u0067\u0065"](LanguageManager["\u0067\u0065\u0074"](_0x24f21e,"\u0070\u006c\u0061\u006e\u0074\u002e\u006e\u006f\u005f\u0066\u006f\u0075\u006e\u0064\u0061\u0074\u0069\u006f\u006e"));return![];}const _0x5be511={"\u006c\u006f\u0063\u0061\u0074\u0069\u006f\u006e":_0x1e8f17,"\u006d\u0061\u0078\u0044\u0069\u0073\u0074\u0061\u006e\u0063\u0065":1.8,"\u0066\u0061\u006d\u0069\u006c\u0069\u0065\u0073":["\u0070\u006c\u0061\u006e\u0074"]};const _0x5f5321=_0x24f21e["\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e"]['getEntities'](_0x5be511);if(_0x5f5321['length']>(0xb3b33^0xb3b33)){_0x24f21e['sendMessage'](LanguageManager["\u0067\u0065\u0074"](_0x24f21e,"\u0070\u006c\u0061\u006e\u0074\u002e\u0073\u0070\u0061\u0063\u0065\u005f\u006f\u0063\u0063\u0075\u0070\u0069\u0065\u0064"));return![];}system["\u0072\u0075\u006e"](()=>{_0x24f21e['dimension']['spawnEntity'](_0x39b0e2['entityId'],_0x1e8f17);_0x24f21e["\u0070\u006c\u0061\u0079\u0053\u006f\u0075\u006e\u0064"]("ssarg.gid".split("").reverse().join(""));_0x2effe5["\u0061\u0064\u0064\u0053\u0063\u006f\u0072\u0065"](_0x24f21e["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064\u0049\u0064\u0065\u006e\u0074\u0069\u0074\u0079"],-_0x39b0e2["\u0063\u006f\u0073\u0074"]);_0x24f21e["\u0073\u0074\u0061\u0072\u0074\u0049\u0074\u0065\u006d\u0043\u006f\u006f\u006c\u0064\u006f\u0077\u006e"](_0x39b0e2['cooldownCategory'],_0x39b0e2["\u0063\u006f\u006f\u006c\u0064\u006f\u0077\u006e\u0054\u0069\u0063\u006b\u0073"]);});return!![];}catch(_0x46dd1b){console['error']('[PvZ]\x20Error\x20in\x20placePlant:\x20'+_0x46dd1b);}return![];}}
+import { system, world } from "@minecraft/server";
+import { LanguageManager } from "./LanguageManager.js";
+const laneCooldowns = new Map();
+const LANE_COOLDOWN_DURATION = 13;
+export class PlantManager {
+  static initialize() {
+    world.afterEvents.projectileHitEntity.subscribe((_0x5c5a07) => {
+      const _0x1e5de0 = _0x5c5a07.getEntityHit();
+      if (!_0x1e5de0) return;
+      const _0x3230a7 = _0x1e5de0.entity;
+      const _0x272b1b = _0x5c5a07.projectile;
+      if (
+        _0x272b1b.typeId === "bn:projectile_2" &&
+        _0x3230a7.typeId.startsWith("bn:zombie")
+      ) {
+        _0x3230a7.addEffect("slowness", 60, { amplifier: 0x3 });
+      }
+    });
+  }
+  static resetCooldowns() {
+    laneCooldowns.clear();
+  }
+  static plantData = new Map([
+    [
+      "bn:plant_1",
+      {
+        nameKey: "plant.sunflower.name",
+        entityId: "bn:sunflower",
+        cost: 0x32,
+        cooldownCategory: "plant_1",
+        cooldownTicks: 0x64,
+      },
+    ],
+    [
+      "bn:plant_2",
+      {
+        nameKey: "plant.peashooter.name",
+        entityId: "bn:peashooter",
+        cost: 0x64,
+        cooldownCategory: "plant_2",
+        cooldownTicks: 0x96,
+      },
+    ],
+    [
+      "bn:plant_3",
+      {
+        nameKey: "plant.cherry_bomb.name",
+        entityId: "bn:cherry_tnt",
+        cost: 0x96,
+        cooldownCategory: "plant_3",
+        cooldownTicks: 0x1f4,
+      },
+    ],
+    [
+      "bn:plant_4",
+      {
+        nameKey: "plant.wallnut.name",
+        entityId: "bn:wallnut",
+        cost: 0x32,
+        cooldownCategory: "plant_4",
+        cooldownTicks: 0x258,
+      },
+    ],
+    [
+      "bn:plant_5",
+      {
+        nameKey: "plant.potato_mine.name",
+        entityId: "bn:potato_mine",
+        cost: 0x19,
+        cooldownCategory: "plant_5",
+        cooldownTicks: 0x258,
+      },
+    ],
+    [
+      "bn:plant_6",
+      {
+        nameKey: "plant.snow_pea.name",
+        entityId: "bn:snow_pea",
+        cost: 0xaf,
+        cooldownCategory: "plant_6",
+        cooldownTicks: 0x96,
+      },
+    ],
+  ]);
+  static allPlantEntityIds = new Set(
+    Array.from(this.plantData.values())["map"]((p) => p.entityId),
+  );
+  static plantShootData = new Map([
+    [
+      "bn:peashooter",
+      { projectile: "bn:projectile_1", cooldown: 0x28, velocity: 1.2 },
+    ],
+    [
+      "bn:snow_pea",
+      { projectile: "bn:projectile_2", cooldown: 0x28, velocity: 1.2 },
+    ],
+  ]);
+  static collectPollen(_0x30123a) {
+    try {
+      const _0x423494 = _0x30123a.getBlockFromViewDirection({
+        maxDistance: 0x96,
+      });
+      if (!_0x423494) return ![];
+      const _0x412c8c = {
+        location: _0x423494.block.location,
+        maxDistance: 0x2,
+        type: "bn:pollen",
+      };
+      const _0x34cf17 = _0x30123a.dimension.getEntities(_0x412c8c);
+      if (_0x34cf17.length > 0) {
+        const _0x33e437 = _0x34cf17[0];
+        system.run(() => {
+          _0x33e437.remove();
+          world.scoreboard
+            .getObjective("pollen")
+            ?.["addScore"](_0x30123a.scoreboardIdentity, 25);
+          _0x30123a.playSound("sun.pickup", { volume: 0.8, pitch: 1.5 });
+        });
+        return !![];
+      }
+    } catch (_0x5418c0) {
+      console.error("[PvZ] Error collecting pollen: " + _0x5418c0);
+    }
+    return ![];
+  }
+  static updatePlants() {
+    const _0x39d13e = world.getDimension("overworld");
+    const _0x24a69d = [];
+    const _0x311603 = [];
+    for (const _0x37a808 of _0x39d13e.getEntities()) {
+      if (this.allPlantEntityIds.has(_0x37a808.typeId)) {
+        _0x24a69d.push(_0x37a808);
+      } else if (_0x37a808.typeId.startsWith("bn:zombie")) {
+        _0x311603.push(_0x37a808);
+      }
+    }
+    if (_0x24a69d.length === 0) return;
+    const _0x24003e = _0x39d13e.getEntities({
+      families: ["zombie"],
+      excludeTypes: ["bn:zombie", "bn:zombie_cone"],
+    });
+    const _0x6d7ad3 = [...new Set([..._0x311603, ..._0x24003e])];
+    if (_0x6d7ad3.length === 0) return;
+    const _0x274c20 = system.currentTick;
+    for (const _0x198789 of _0x24a69d) {
+      const _0x8814aa = _0x198789.getDynamicProperty("shotCooldown") ?? 0;
+      if (_0x8814aa > 0) {
+        _0x198789.setDynamicProperty("shotCooldown", _0x8814aa - 1);
+      }
+    }
+    for (const _0x1be6d1 of _0x24a69d) {
+      const _0x17aef4 = this.plantShootData.get(_0x1be6d1.typeId);
+      if (!_0x17aef4) continue;
+      const _0x926a0 = _0x1be6d1.getDynamicProperty("shotCooldown") ?? 0;
+      if (_0x926a0 > 0) continue;
+      const _0x1ec76b = Math.floor(_0x1be6d1.location.x);
+      const _0x488c26 = laneCooldowns.get(_0x1ec76b) || 0;
+      if (_0x274c20 < _0x488c26) continue;
+      for (const _0xe60fc7 of _0x6d7ad3) {
+        if (_0x1be6d1.id === _0xe60fc7.id) continue;
+        const _0x6f5070 = Math.floor(_0xe60fc7.location.x) === _0x1ec76b;
+        const _0x50461e =
+          Math.abs(_0x1be6d1.location.y - _0xe60fc7.location.y) < 1;
+        const _0x1e31cf = _0xe60fc7.location.z > _0x1be6d1.location.z;
+        const _0x1b0688 = _0xe60fc7.location.z - _0x1be6d1.location.z < 15;
+        if (_0x6f5070 && _0x50461e && _0x1e31cf && _0x1b0688) {
+          const _0x692909 = {
+            x: _0x1be6d1.location.x,
+            y: _0x1be6d1.location.y + 1,
+            z: _0x1be6d1.location.z + 0.7,
+          };
+          const _0x14291e = _0x39d13e.spawnEntity(
+            _0x17aef4.projectile,
+            _0x692909,
+          );
+          _0x1be6d1.runCommandAsync(
+            "playanimation @s animation.plant_2.attack",
+          );
+          const _0xf1bb10 = {
+            x: _0xe60fc7.location.x - _0x1be6d1.location.x,
+            y: _0xe60fc7.location.y - _0x1be6d1.location.y,
+            z: _0xe60fc7.location.z - _0x1be6d1.location.z,
+          };
+          const _0x22e86d = Math.sqrt(
+            _0xf1bb10.x ** 2 + _0xf1bb10.y ** 2 + _0xf1bb10.z ** 2,
+          );
+          _0xf1bb10.x /= _0x22e86d;
+          _0xf1bb10.y /= _0x22e86d;
+          _0xf1bb10.z /= _0x22e86d;
+          _0x14291e.applyImpulse({
+            x: _0xf1bb10.x * _0x17aef4.velocity,
+            y: _0xf1bb10.y * _0x17aef4.velocity,
+            z: _0xf1bb10.z * _0x17aef4.velocity,
+          });
+          _0x1be6d1.setDynamicProperty("shotCooldown", _0x17aef4.cooldown);
+          laneCooldowns.set(_0x1ec76b, _0x274c20 + LANE_COOLDOWN_DURATION);
+          break;
+        }
+      }
+    }
+  }
+  static handleItemUse(_0x24f21e, _0x4656a0) {
+    if (_0x4656a0.typeId === "bn:pollen") {
+      return this.collectPollen(_0x24f21e);
+    }
+    if (_0x4656a0.typeId === "bn:shovel") {
+      try {
+        const _0x1bbcb2 = _0x24f21e.getBlockFromViewDirection({
+          maxDistance: 0x96,
+        });
+        if (!_0x1bbcb2) return ![];
+        const _0x6670fe = _0x1bbcb2.block;
+        const _0xb38dfc = _0x6670fe.below();
+        const _0x528025 = ["minecraft:gold_block", "minecraft:iron_block"];
+        if (!_0xb38dfc || !_0x528025.includes(_0xb38dfc.typeId)) {
+          return ![];
+        }
+        const _0x4170c5 = _0xb38dfc.location.y;
+        const _0x5ca731 = _0xb38dfc.typeId;
+        const _0x270385 = _0xb38dfc.location.x;
+        const _0x488d35 = _0xb38dfc.location.z;
+        const _0x3357d4 = [
+          { x: 0x0, z: 0x0 },
+          { x: -1, z: 0x0 },
+          { x: -2, z: 0x0 },
+          { x: 0x0, z: -1 },
+          { x: -1, z: -1 },
+          { x: -2, z: -1 },
+        ];
+        let _0x268a8d = ![];
+        let _0x2607bf = { x: 0x0, y: 0x0, z: 0x0 };
+        for (const _0x5bd31e of _0x3357d4) {
+          const _0x1d238e = _0x270385 + _0x5bd31e.x;
+          const _0x1b2eb3 = _0x488d35 + _0x5bd31e.z;
+          let _0x28c2b2 = !![];
+          for (let _0x2d8eac = 0; _0x2d8eac < 3; _0x2d8eac++) {
+            for (let _0x547c90 = 0; _0x547c90 < 2; _0x547c90++) {
+              const _0x526c7f = _0x24f21e.dimension.getBlock({
+                x: _0x1d238e + _0x2d8eac,
+                y: _0x4170c5,
+                z: _0x1b2eb3 + _0x547c90,
+              });
+              if (_0x526c7f?.["typeId"] !== _0x5ca731) {
+                _0x28c2b2 = ![];
+                break;
+              }
+            }
+            if (!_0x28c2b2) break;
+          }
+          if (_0x28c2b2) {
+            _0x268a8d = !![];
+            _0x2607bf = {
+              x: _0x1d238e + 1.5,
+              y: _0x4170c5 + 2,
+              z: _0x1b2eb3 + 1,
+            };
+            break;
+          }
+        }
+        if (_0x268a8d) {
+          const _0x5481d0 = {
+            location: _0x2607bf,
+            maxDistance: 1.8,
+            families: ["plant"],
+          };
+          const _0x6ed2e0 = _0x24f21e.dimension.getEntities(_0x5481d0);
+          if (_0x6ed2e0.length > 0) {
+            const _0x57f9fb = _0x6ed2e0[0];
+            system.run(() => {
+              _0x57f9fb.remove();
+              _0x24f21e.playSound("dig.grass");
+            });
+            return !![];
+          }
+        }
+      } catch (_0x463177) {
+        console.error("[PvZ] Error removing plant: " + _0x463177);
+      }
+      return ![];
+    }
+    const _0x39b0e2 = this.plantData.get(_0x4656a0.typeId);
+    if (!_0x39b0e2) return ![];
+    try {
+      const _0x4023a5 = _0x24f21e.getItemCooldown(_0x39b0e2.cooldownCategory);
+      if (_0x4023a5 > 0) {
+        const _0x3884b2 = Math.ceil(_0x4023a5 / 20);
+        const _0x546f2a = LanguageManager.get(_0x24f21e, _0x39b0e2.nameKey);
+        _0x24f21e.sendMessage(
+          LanguageManager.get(
+            _0x24f21e,
+            "plant.on_cooldown",
+            _0x546f2a,
+            _0x3884b2,
+          ),
+        );
+        _0x24f21e.playSound("note.bass", { pitch: 0.5 });
+        return !![];
+      }
+      const _0x2effe5 = world.scoreboard.getObjective("pollen");
+      const _0x3b1ae3 =
+        _0x2effe5?.["getScore"](_0x24f21e.scoreboardIdentity) ?? 0;
+      if (_0x3b1ae3 < _0x39b0e2.cost) {
+        const _0x38da0f = LanguageManager.get(_0x24f21e, _0x39b0e2.nameKey);
+        _0x24f21e.sendMessage(
+          LanguageManager.get(
+            _0x24f21e,
+            "plant.not_enough_pollen",
+            _0x38da0f,
+            _0x39b0e2.cost,
+          ),
+        );
+        _0x24f21e.playSound("note.bass", { pitch: 0.5 });
+        return !![];
+      }
+      const _0x3a4883 = _0x24f21e.getBlockFromViewDirection({
+        maxDistance: 0x96,
+      });
+      if (!_0x3a4883) return ![];
+      const _0x268331 = _0x3a4883.block;
+      const _0x3789df = _0x268331.below();
+      const _0x4b287a = ["minecraft:gold_block", "minecraft:iron_block"];
+      if (!_0x3789df || !_0x4b287a.includes(_0x3789df.typeId)) {
+        _0x24f21e.sendMessage(
+          LanguageManager.get(_0x24f21e, "plant.invalid_surface"),
+        );
+        return ![];
+      }
+      const _0x371192 = _0x3789df.location.y;
+      const _0x182259 = _0x3789df.typeId;
+      const _0x4306b5 = _0x3789df.location.x;
+      const _0xbeaec5 = _0x3789df.location.z;
+      const _0x2f9f66 = [
+        { x: 0x0, z: 0x0 },
+        { x: -1, z: 0x0 },
+        { x: -2, z: 0x0 },
+        { x: 0x0, z: -1 },
+        { x: -1, z: -1 },
+        { x: -2, z: -1 },
+      ];
+      let _0x1ff3aa = ![];
+      let _0x1e8f17 = { x: 0x0, y: 0x0, z: 0x0 };
+      for (const _0x257a24 of _0x2f9f66) {
+        const _0x338701 = _0x4306b5 + _0x257a24.x;
+        const _0x2d0263 = _0xbeaec5 + _0x257a24.z;
+        let _0x1bc1ef = !![];
+        for (let _0x3a794e = 0; _0x3a794e < 3; _0x3a794e++) {
+          for (let _0x193b2f = 0; _0x193b2f < 2; _0x193b2f++) {
+            const _0x2f5662 = _0x24f21e.dimension.getBlock({
+              x: _0x338701 + _0x3a794e,
+              y: _0x371192,
+              z: _0x2d0263 + _0x193b2f,
+            });
+            if (_0x2f5662?.["typeId"] !== _0x182259) {
+              _0x1bc1ef = ![];
+              break;
+            }
+          }
+          if (!_0x1bc1ef) break;
+        }
+        if (_0x1bc1ef) {
+          _0x1ff3aa = !![];
+          _0x1e8f17 = {
+            x: _0x338701 + 1.5,
+            y: _0x371192 + 2,
+            z: _0x2d0263 + 1,
+          };
+          break;
+        }
+      }
+      if (!_0x1ff3aa) {
+        _0x24f21e.sendMessage(
+          LanguageManager.get(_0x24f21e, "plant.no_foundation"),
+        );
+        return ![];
+      }
+      const _0x5be511 = {
+        location: _0x1e8f17,
+        maxDistance: 1.8,
+        families: ["plant"],
+      };
+      const _0x5f5321 = _0x24f21e.dimension.getEntities(_0x5be511);
+      if (_0x5f5321.length > 0) {
+        _0x24f21e.sendMessage(
+          LanguageManager.get(_0x24f21e, "plant.space_occupied"),
+        );
+        return ![];
+      }
+      system.run(() => {
+        _0x24f21e.dimension.spawnEntity(_0x39b0e2.entityId, _0x1e8f17);
+        _0x24f21e.playSound("dig.grass");
+        _0x2effe5.addScore(_0x24f21e.scoreboardIdentity, -_0x39b0e2.cost);
+        _0x24f21e.startItemCooldown(
+          _0x39b0e2.cooldownCategory,
+          _0x39b0e2.cooldownTicks,
+        );
+      });
+      return !![];
+    } catch (_0x46dd1b) {
+      console.error("[PvZ] Error in placePlant: " + _0x46dd1b);
+    }
+    return ![];
+  }
+}

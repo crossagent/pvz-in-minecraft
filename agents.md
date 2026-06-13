@@ -136,3 +136,7 @@ graph TD
   import { world, system } from "@minecraft/server";
   ```
 - **File Naming**: Use `snake_case` for all resource/behavior files, directories, and identifiers. Use `camelCase` for JavaScript variables and functions.
+- **No Code Obfuscation / Use Clean Code**: All JavaScript scripts in the behavior pack have been fully deobfuscated and formatted. Agents must maintain this readability. Do not introduce minified, obfuscated, or hex/unicode-escaped strings (like `\uXXXX`) in any script file. All API calls, property names, and variables must use clear, standard JavaScript naming.
+- **Safe Event Subscriptions**: The Bedrock Scripting API is subject to breaking changes and experimental flags. Always wrap event subscriptions (e.g., `world.afterEvents.*.subscribe`) in try-catch blocks or use a `safeSubscribe` helper to prevent a single missing/beta API from crashing script initialization.
+- **Multi-Path Deployments**: Bedrock clients load behavior packs from various locations depending on setup (e.g., client `development_behavior_packs`, dedicated server folders, and world-internal `minecraftWorlds/<world>/behavior_packs`). Updates must be synced to all applicable paths to ensure the client runs the latest version.
+

@@ -1,1 +1,101 @@
-import{world}from"@minecraft/server";import{MessageFormData,ActionFormData}from"@minecraft/server-ui";import{LanguageManager}from"./LanguageManager.js";import{MenuManager}from"./MenuManager.js";const PLANT_HEALTH_KEY="htlaeHtnalPwohs".split("").reverse().join("");const ZOMBIE_HEALTH_KEY="htlaeHeibmoZwohs".split("").reverse().join("");const LANGUAGE_KEY="egaugnaLreyalp".split("").reverse().join("");const INTERACT_KEY="\u0068\u0061\u0073\u0049\u006e\u0074\u0065\u0072\u0061\u0063\u0074\u0065\u0064\u0057\u0069\u0074\u0068\u0053\u0074\u0065\u0076\u0065";const DIALOGUE_KEY="\u0073\u0068\u006f\u0077\u0044\u0069\u0061\u006c\u006f\u0067\u0075\u0065";export class SettingsManager{static["\u0069\u006e\u0069\u0074\u0069\u0061\u006c\u0069\u007a\u0065\u0053\u0065\u0074\u0074\u0069\u006e\u0067\u0073"](){if(world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](PLANT_HEALTH_KEY)===undefined){world['setDynamicProperty'](PLANT_HEALTH_KEY,!![]);}if(world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](ZOMBIE_HEALTH_KEY)===undefined){world['setDynamicProperty'](ZOMBIE_HEALTH_KEY,!![]);}if(world['getDynamicProperty'](LANGUAGE_KEY)===undefined){world['setDynamicProperty'](LANGUAGE_KEY,"\u0065\u006e");}if(world['getDynamicProperty'](DIALOGUE_KEY)===undefined){world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](DIALOGUE_KEY,!![]);}}static["\u0069\u006e\u0069\u0074\u0069\u0061\u006c\u0069\u007a\u0065\u0050\u006c\u0061\u0079\u0065\u0072\u0053\u0065\u0074\u0074\u0069\u006e\u0067\u0073"](_0x52b087){if(_0x52b087["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](LANGUAGE_KEY)===undefined){_0x52b087['setDynamicProperty'](LANGUAGE_KEY,"\u0065\u006e");}if(_0x52b087["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](INTERACT_KEY)===undefined){_0x52b087['setDynamicProperty'](INTERACT_KEY,![]);}}static["\u0067\u0065\u0074\u0053\u0068\u006f\u0077\u0050\u006c\u0061\u006e\u0074\u0048\u0065\u0061\u006c\u0074\u0068"](){return world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](PLANT_HEALTH_KEY)??!![];}static["htlaeHtnalPelggot".split("").reverse().join("")](){const _0x3f737d=this["\u0067\u0065\u0074\u0053\u0068\u006f\u0077\u0050\u006c\u0061\u006e\u0074\u0048\u0065\u0061\u006c\u0074\u0068"]();world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](PLANT_HEALTH_KEY,!_0x3f737d);}static["htlaeHeibmoZwohSteg".split("").reverse().join("")](){return world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](ZOMBIE_HEALTH_KEY)??!![];}static["htlaeHeibmoZelggot".split("").reverse().join("")](){const _0x43bade=this['getShowZombieHealth']();world['setDynamicProperty'](ZOMBIE_HEALTH_KEY,!_0x43bade);}static["\u0067\u0065\u0074\u0053\u0068\u006f\u0077\u0044\u0069\u0061\u006c\u006f\u0067\u0075\u0065"](){return world["\u0067\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](DIALOGUE_KEY)??!![];}static["\u0074\u006f\u0067\u0067\u006c\u0065\u0053\u0068\u006f\u0077\u0044\u0069\u0061\u006c\u006f\u0067\u0075\u0065"](){const _0x75cf0a=this["\u0067\u0065\u0074\u0053\u0068\u006f\u0077\u0044\u0069\u0061\u006c\u006f\u0067\u0075\u0065"]();world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"](DIALOGUE_KEY,!_0x75cf0a);}static["\u0073\u0068\u006f\u0077\u0052\u0065\u0073\u0065\u0074\u0043\u006f\u006e\u0066\u0069\u0072\u006d\u0061\u0074\u0069\u006f\u006e"](_0x487be1){const _0x52639a=new MessageFormData()["\u0074\u0069\u0074\u006c\u0065"](LanguageManager["\u0067\u0065\u0074"](_0x487be1,"\u0072\u0065\u0073\u0065\u0074\u002e\u0063\u006f\u006e\u0066\u0069\u0072\u006d\u002e\u0074\u0069\u0074\u006c\u0065"))["\u0062\u006f\u0064\u0079"](LanguageManager["\u0067\u0065\u0074"](_0x487be1,"ydob.mrifnoc.teser".split("").reverse().join("")))["\u0062\u0075\u0074\u0074\u006f\u006e\u0032"](LanguageManager['get'](_0x487be1,"\u0072\u0065\u0073\u0065\u0074\u002e\u0063\u006f\u006e\u0066\u0069\u0072\u006d\u002e\u0079\u0065\u0073"))["\u0062\u0075\u0074\u0074\u006f\u006e\u0031"](LanguageManager["\u0067\u0065\u0074"](_0x487be1,"\u0072\u0065\u0073\u0065\u0074\u002e\u0063\u006f\u006e\u0066\u0069\u0072\u006d\u002e\u006e\u006f"));_0x52639a['show'](_0x487be1)["\u0074\u0068\u0065\u006e"](_0x1cbaf4=>{if(_0x1cbaf4["\u0073\u0065\u006c\u0065\u0063\u0074\u0069\u006f\u006e"]===(0x6ab65^0x6ab64)){world["\u0073\u0065\u0074\u0044\u0079\u006e\u0061\u006d\u0069\u0063\u0050\u0072\u006f\u0070\u0065\u0072\u0074\u0079"]("sleveLdetelpmoc".split("").reverse().join(""),"\u005b\u005d");for(const _0x5202c4 of world["\u0067\u0065\u0074\u0041\u006c\u006c\u0050\u006c\u0061\u0079\u0065\u0072\u0073"]()){_0x5202c4['setDynamicProperty'](INTERACT_KEY,![]);}_0x487be1['sendMessage'](LanguageManager['get'](_0x487be1,"sseccus.teser".split("").reverse().join("")));}else{_0x487be1['sendMessage'](LanguageManager["\u0067\u0065\u0074"](_0x487be1,"dellecnac.teser".split("").reverse().join("")));}});}static["\u0073\u0068\u006f\u0077\u004c\u0061\u006e\u0067\u0075\u0061\u0067\u0065\u0053\u0065\u006c\u0065\u0063\u0074\u0069\u006f\u006e"](_0xb5699e){const _0x4280ae=new ActionFormData();_0x4280ae["\u0074\u0069\u0074\u006c\u0065"](LanguageManager["\u0067\u0065\u0074"](_0xb5699e,"egaugnal.sgnittes.unem".split("").reverse().join(""),''));const _0x3b76a9=LanguageManager["\u0067\u0065\u0074\u0041\u0076\u0061\u0069\u006c\u0061\u0062\u006c\u0065\u004c\u0061\u006e\u0067\u0075\u0061\u0067\u0065\u0073"]();_0x3b76a9['forEach'](_0x1aa8fa=>{_0x4280ae["\u0062\u0075\u0074\u0074\u006f\u006e"](_0x1aa8fa["\u006e\u0061\u006d\u0065"]);});_0x4280ae["\u0073\u0068\u006f\u0077"](_0xb5699e)["\u0074\u0068\u0065\u006e"](_0x1e546d=>{if(_0x1e546d["\u0063\u0061\u006e\u0063\u0065\u006c\u0065\u0064"]){MenuManager['showMainMenu'](_0xb5699e,LanguageManager["\u0067\u0065\u0074"](_0xb5699e,"sgnittes.yrogetac.unem".split("").reverse().join("")));return;};const _0x3eef50=_0x3b76a9[_0x1e546d['selection']];if(_0x3eef50){LanguageManager["\u0073\u0065\u0074\u004c\u0061\u006e\u0067\u0075\u0061\u0067\u0065"](_0xb5699e,_0x3eef50['code']);}MenuManager['showMainMenu'](_0xb5699e,LanguageManager['get'](_0xb5699e,"\u006d\u0065\u006e\u0075\u002e\u0063\u0061\u0074\u0065\u0067\u006f\u0072\u0079\u002e\u0073\u0065\u0074\u0074\u0069\u006e\u0067\u0073"));});}}
+import { world } from "@minecraft/server";
+import { MessageFormData, ActionFormData } from "@minecraft/server-ui";
+import { LanguageManager } from "./LanguageManager.js";
+import { MenuManager } from "./MenuManager.js";
+const PLANT_HEALTH_KEY = "showPlantHealth";
+const ZOMBIE_HEALTH_KEY = "showZombieHealth";
+const LANGUAGE_KEY = "playerLanguage";
+const INTERACT_KEY = "hasInteractedWithSteve";
+const DIALOGUE_KEY = "showDialogue";
+export class SettingsManager {
+  static initializeSettings() {
+    if (world.getDynamicProperty(PLANT_HEALTH_KEY) === undefined) {
+      world.setDynamicProperty(PLANT_HEALTH_KEY, !![]);
+    }
+    if (world.getDynamicProperty(ZOMBIE_HEALTH_KEY) === undefined) {
+      world.setDynamicProperty(ZOMBIE_HEALTH_KEY, !![]);
+    }
+    if (world.getDynamicProperty(LANGUAGE_KEY) === undefined) {
+      world.setDynamicProperty(LANGUAGE_KEY, "en");
+    }
+    if (world.getDynamicProperty(DIALOGUE_KEY) === undefined) {
+      world.setDynamicProperty(DIALOGUE_KEY, !![]);
+    }
+  }
+  static initializePlayerSettings(_0x52b087) {
+    if (_0x52b087.getDynamicProperty(LANGUAGE_KEY) === undefined) {
+      _0x52b087.setDynamicProperty(LANGUAGE_KEY, "en");
+    }
+    if (_0x52b087.getDynamicProperty(INTERACT_KEY) === undefined) {
+      _0x52b087.setDynamicProperty(INTERACT_KEY, ![]);
+    }
+  }
+  static getShowPlantHealth() {
+    return world.getDynamicProperty(PLANT_HEALTH_KEY) ?? !![];
+  }
+  static togglePlantHealth() {
+    const _0x3f737d = this.getShowPlantHealth();
+    world.setDynamicProperty(PLANT_HEALTH_KEY, !_0x3f737d);
+  }
+  static getShowZombieHealth() {
+    return world.getDynamicProperty(ZOMBIE_HEALTH_KEY) ?? !![];
+  }
+  static toggleZombieHealth() {
+    const _0x43bade = this.getShowZombieHealth();
+    world.setDynamicProperty(ZOMBIE_HEALTH_KEY, !_0x43bade);
+  }
+  static getShowDialogue() {
+    return world.getDynamicProperty(DIALOGUE_KEY) ?? !![];
+  }
+  static toggleShowDialogue() {
+    const _0x75cf0a = this.getShowDialogue();
+    world.setDynamicProperty(DIALOGUE_KEY, !_0x75cf0a);
+  }
+  static showResetConfirmation(_0x487be1) {
+    const _0x52639a = new MessageFormData()
+      ["title"](LanguageManager.get(_0x487be1, "reset.confirm.title"))
+      ["body"](LanguageManager.get(_0x487be1, "reset.confirm.body"))
+      ["button2"](LanguageManager.get(_0x487be1, "reset.confirm.yes"))
+      ["button1"](LanguageManager.get(_0x487be1, "reset.confirm.no"));
+    _0x52639a.show(_0x487be1)["then"]((_0x1cbaf4) => {
+      if (_0x1cbaf4.selection === 1) {
+        world.setDynamicProperty("completedLevels", "[]");
+        for (const _0x5202c4 of world.getAllPlayers()) {
+          _0x5202c4.setDynamicProperty(INTERACT_KEY, ![]);
+        }
+        _0x487be1.sendMessage(LanguageManager.get(_0x487be1, "reset.success"));
+      } else {
+        _0x487be1.sendMessage(
+          LanguageManager.get(_0x487be1, "reset.cancelled"),
+        );
+      }
+    });
+  }
+  static showLanguageSelection(_0xb5699e) {
+    const _0x4280ae = new ActionFormData();
+    _0x4280ae.title(
+      LanguageManager.get(_0xb5699e, "menu.settings.language", ""),
+    );
+    const _0x3b76a9 = LanguageManager.getAvailableLanguages();
+    _0x3b76a9.forEach((_0x1aa8fa) => {
+      _0x4280ae.button(_0x1aa8fa.name);
+    });
+    _0x4280ae.show(_0xb5699e)["then"]((_0x1e546d) => {
+      if (_0x1e546d.canceled) {
+        MenuManager.showMainMenu(
+          _0xb5699e,
+          LanguageManager.get(_0xb5699e, "menu.category.settings"),
+        );
+        return;
+      }
+      const _0x3eef50 = _0x3b76a9[_0x1e546d.selection];
+      if (_0x3eef50) {
+        LanguageManager.setLanguage(_0xb5699e, _0x3eef50.code);
+      }
+      MenuManager.showMainMenu(
+        _0xb5699e,
+        LanguageManager.get(_0xb5699e, "menu.category.settings"),
+      );
+    });
+  }
+}

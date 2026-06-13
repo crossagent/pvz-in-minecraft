@@ -1,1 +1,52 @@
-import{world,system,ItemStack}from"@minecraft/server";import{ActionFormData}from"@minecraft/server-ui";import{LanguageManager}from"./LanguageManager.js";export class ShopManager{static["\u0073\u0068\u006f\u0070\u0049\u0074\u0065\u006d\u0073"]=[{'nameKey':"\u0070\u006c\u0061\u006e\u0074\u002e\u0070\u0065\u0061\u0073\u0068\u006f\u006f\u0074\u0065\u0072\u002e\u006e\u0061\u006d\u0065","\u0069\u0074\u0065\u006d\u0049\u0064":'bn:plant_2',"\u0063\u006f\u0073\u0074":0x64},{"\u006e\u0061\u006d\u0065\u004b\u0065\u0079":"\u0070\u006c\u0061\u006e\u0074\u002e\u0077\u0061\u006c\u006c\u006e\u0075\u0074\u002e\u006e\u0061\u006d\u0065","\u0069\u0074\u0065\u006d\u0049\u0064":'bn:plant_1','cost':0x32},{"\u006e\u0061\u006d\u0065\u004b\u0065\u0079":"\u0070\u006c\u0061\u006e\u0074\u002e\u0063\u0068\u0065\u0072\u0072\u0079\u005f\u0062\u006f\u006d\u0062\u002e\u006e\u0061\u006d\u0065",'itemId':"\u0062\u006e\u003a\u0070\u006c\u0061\u006e\u0074\u005f\u0033","\u0063\u006f\u0073\u0074":0x96},{"\u006e\u0061\u006d\u0065\u004b\u0065\u0079":'plant.big_walnut.name',"\u0069\u0074\u0065\u006d\u0049\u0064":"\u0062\u006e\u003a\u0070\u006c\u0061\u006e\u0074\u005f\u0034",'cost':0x7d},{"\u006e\u0061\u006d\u0065\u004b\u0065\u0079":"\u0070\u006c\u0061\u006e\u0074\u002e\u0070\u006f\u0074\u0061\u0074\u006f\u005f\u006d\u0069\u006e\u0065\u002e\u006e\u0061\u006d\u0065","\u0069\u0074\u0065\u006d\u0049\u0064":'bn:plant_5',"\u0063\u006f\u0073\u0074":0x19},{'nameKey':'plant.snow_pea.name',"\u0069\u0074\u0065\u006d\u0049\u0064":"\u0062\u006e\u003a\u0070\u006c\u0061\u006e\u0074\u005f\u0036","\u0063\u006f\u0073\u0074":0xaf}];static["\u0073\u0068\u006f\u0077\u0053\u0068\u006f\u0070"](_0x163177){const _0x493871=world["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064"]["\u0067\u0065\u0074\u004f\u0062\u006a\u0065\u0063\u0074\u0069\u0076\u0065"]("nellop".split("").reverse().join(""));const _0x15b107=_0x493871?.["erocSteg".split("").reverse().join("")](_0x163177['scoreboardIdentity'])??0x1dad8^0x1dad8;const _0x14efd5=new ActionFormData()['title'](LanguageManager["\u0067\u0065\u0074"](_0x163177,"\u0073\u0068\u006f\u0070\u002e\u0074\u0069\u0074\u006c\u0065"))["\u0062\u006f\u0064\u0079"](LanguageManager["\u0067\u0065\u0074"](_0x163177,"ydob.pohs".split("").reverse().join(""),_0x15b107));for(const _0x1ff33f of this["\u0073\u0068\u006f\u0070\u0049\u0074\u0065\u006d\u0073"]){const _0x71ec48=LanguageManager["\u0067\u0065\u0074"](_0x163177,_0x1ff33f["\u006e\u0061\u006d\u0065\u004b\u0065\u0079"]);_0x14efd5['button'](LanguageManager['get'](_0x163177,"\u0073\u0068\u006f\u0070\u002e\u0069\u0074\u0065\u006d\u005f\u0062\u0075\u0074\u0074\u006f\u006e",_0x71ec48,_0x1ff33f['cost']));}_0x14efd5['show'](_0x163177)['then'](_0x57ef42=>{if(_0x57ef42['canceled'])return;const _0x4c03db=this["\u0073\u0068\u006f\u0070\u0049\u0074\u0065\u006d\u0073"][_0x57ef42["\u0073\u0065\u006c\u0065\u0063\u0074\u0069\u006f\u006e"]];if(!_0x4c03db)return;if(_0x15b107>=_0x4c03db["\u0063\u006f\u0073\u0074"]){_0x493871["\u0061\u0064\u0064\u0053\u0063\u006f\u0072\u0065"](_0x163177['scoreboardIdentity'],-_0x4c03db["\u0063\u006f\u0073\u0074"]);const _0x4555c7=new ItemStack(_0x4c03db['itemId'],0x54b5b^0x54b5a);_0x163177['getComponent']("\u0069\u006e\u0076\u0065\u006e\u0074\u006f\u0072\u0079")["\u0063\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072"]['addItem'](_0x4555c7);const _0x396701=LanguageManager['get'](_0x163177,_0x4c03db['nameKey']);_0x163177['sendMessage'](LanguageManager["\u0067\u0065\u0074"](_0x163177,"\u0073\u0068\u006f\u0070\u002e\u0070\u0075\u0072\u0063\u0068\u0061\u0073\u0065\u005f\u0073\u0075\u0063\u0063\u0065\u0073\u0073",_0x396701));_0x163177["\u0070\u006c\u0061\u0079\u0053\u006f\u0075\u006e\u0064"]("pulevel.modnar".split("").reverse().join(""));}else{_0x163177["\u0073\u0065\u006e\u0064\u004d\u0065\u0073\u0073\u0061\u0067\u0065"](LanguageManager['get'](_0x163177,"\u0073\u0068\u006f\u0070\u002e\u006e\u006f\u0074\u005f\u0065\u006e\u006f\u0075\u0067\u0068\u005f\u0070\u006f\u006c\u006c\u0065\u006e"));_0x163177["\u0070\u006c\u0061\u0079\u0053\u006f\u0075\u006e\u0064"]("ssab.eton".split("").reverse().join(""));}});}}
+import { world, system, ItemStack } from "@minecraft/server";
+import { ActionFormData } from "@minecraft/server-ui";
+import { LanguageManager } from "./LanguageManager.js";
+export class ShopManager {
+  static shopItems = [
+    { nameKey: "plant.peashooter.name", itemId: "bn:plant_2", cost: 0x64 },
+    { nameKey: "plant.wallnut.name", itemId: "bn:plant_1", cost: 0x32 },
+    { nameKey: "plant.cherry_bomb.name", itemId: "bn:plant_3", cost: 0x96 },
+    { nameKey: "plant.big_walnut.name", itemId: "bn:plant_4", cost: 0x7d },
+    { nameKey: "plant.potato_mine.name", itemId: "bn:plant_5", cost: 0x19 },
+    { nameKey: "plant.snow_pea.name", itemId: "bn:plant_6", cost: 0xaf },
+  ];
+  static showShop(_0x163177) {
+    const _0x493871 = world.scoreboard.getObjective("pollen");
+    const _0x15b107 =
+      _0x493871?.["getScore"](_0x163177.scoreboardIdentity) ?? 0;
+    const _0x14efd5 = new ActionFormData()
+      ["title"](LanguageManager.get(_0x163177, "shop.title"))
+      ["body"](LanguageManager.get(_0x163177, "shop.body", _0x15b107));
+    for (const _0x1ff33f of this.shopItems) {
+      const _0x71ec48 = LanguageManager.get(_0x163177, _0x1ff33f.nameKey);
+      _0x14efd5.button(
+        LanguageManager.get(
+          _0x163177,
+          "shop.item_button",
+          _0x71ec48,
+          _0x1ff33f.cost,
+        ),
+      );
+    }
+    _0x14efd5.show(_0x163177)["then"]((_0x57ef42) => {
+      if (_0x57ef42.canceled) return;
+      const _0x4c03db = this.shopItems[_0x57ef42.selection];
+      if (!_0x4c03db) return;
+      if (_0x15b107 >= _0x4c03db.cost) {
+        _0x493871.addScore(_0x163177.scoreboardIdentity, -_0x4c03db.cost);
+        const _0x4555c7 = new ItemStack(_0x4c03db.itemId, 1);
+        _0x163177.getComponent("inventory")["container"]["addItem"](_0x4555c7);
+        const _0x396701 = LanguageManager.get(_0x163177, _0x4c03db.nameKey);
+        _0x163177.sendMessage(
+          LanguageManager.get(_0x163177, "shop.purchase_success", _0x396701),
+        );
+        _0x163177.playSound("random.levelup");
+      } else {
+        _0x163177.sendMessage(
+          LanguageManager.get(_0x163177, "shop.not_enough_pollen"),
+        );
+        _0x163177.playSound("note.bass");
+      }
+    });
+  }
+}

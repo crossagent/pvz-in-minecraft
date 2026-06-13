@@ -6,12 +6,12 @@
 		]
 	},
 	"header": {
-		"name": "pack.name",
-		"description": "pack.description",
+		"name": "PvZ Resource Pack",
+		"description": "Plants vs Zombies Resource Pack",
 		"min_engine_version": [
 			1,
-			26,
-			21
+			20,
+			0
 		],
 		"uuid": "1daccff2-4b9f-4bbd-8c2b-6156e4cbca5d",
 		"version": [
@@ -24,16 +24,6 @@
 		{
 			"type": "resources",
 			"uuid": "6e5c930f-c55d-4396-aafc-29c57487dbda",
-			"version": [
-				1,
-				0,
-				0
-			]
-		}
-	],
-	"dependencies": [
-		{
-			"uuid": "4389a98d-c504-4ee3-a12c-81be1f8f7f21",
 			"version": [
 				1,
 				0,

@@ -1,1 +1,12 @@
-import{world,DisplaySlotId}from"@minecraft/server";export class ScoreboardManager{static["\u0069\u006e\u0069\u0074\u0069\u0061\u006c\u0069\u007a\u0065\u0053\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064\u0073"](){world['scoreboard']["\u0063\u006c\u0065\u0061\u0072\u004f\u0062\u006a\u0065\u0063\u0074\u0069\u0076\u0065\u0041\u0074\u0044\u0069\u0073\u0070\u006c\u0061\u0079\u0053\u006c\u006f\u0074"](DisplaySlotId["\u0053\u0069\u0064\u0065\u0062\u0061\u0072"]);this['addScoreboard']("nellop".split("").reverse().join(""),"\u00a7\u0065\u0050\u006f\u006c\u006c\u0065\u006e");this['addScoreboard']("stniop".split("").reverse().join(""),"stnioPa\xA7".split("").reverse().join(""));}static["\u0061\u0064\u0064\u0053\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064"](_0x29049c,_0x28aac5){world["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064"]["\u0067\u0065\u0074\u004f\u0062\u006a\u0065\u0063\u0074\u0069\u0076\u0065"](_0x29049c)??world["\u0073\u0063\u006f\u0072\u0065\u0062\u006f\u0061\u0072\u0064"]["\u0061\u0064\u0064\u004f\u0062\u006a\u0065\u0063\u0074\u0069\u0076\u0065"](_0x29049c,_0x28aac5);}}
+import { world, DisplaySlotId } from "@minecraft/server";
+export class ScoreboardManager {
+  static initializeScoreboards() {
+    world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.Sidebar);
+    this.addScoreboard("pollen", "§ePollen");
+    this.addScoreboard("points", "§aPoints");
+  }
+  static addScoreboard(_0x29049c, _0x28aac5) {
+    world.scoreboard.getObjective(_0x29049c) ??
+      world.scoreboard.addObjective(_0x29049c, _0x28aac5);
+  }
+}
