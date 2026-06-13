@@ -85,7 +85,7 @@ foreach ($serverVer in $serverApiVersions) {
             Update-Manifest -serverVersion $serverVer -uiVersion $uiVer
             
             # 2. Deploy updated packs
-            & "d:\MyProject\minecraft_mod\.agent\skills\deploy.ps1" | Out-Null
+            & "d:\MyProject\minecraft_mod\deployment\local\deploy.ps1" | Out-Null
             
             # 3. Start server redirecting output to a file
             $safeServerVer = $serverVer.Replace(".", "_")
