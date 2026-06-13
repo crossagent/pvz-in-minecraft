@@ -24,7 +24,7 @@ system.run(() => {
   GameManager.initialize();
   PlantManager.initialize();
 
-  world.afterEvents.worldInitialize.subscribe(() => {
+  world.afterEvents.worldLoad.subscribe(() => {
     GameManager.resumeGameOnLoad();
   });
 
