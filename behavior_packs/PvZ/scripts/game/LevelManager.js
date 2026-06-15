@@ -114,10 +114,11 @@ export class LevelManager {
       for (const sbName of level.scoreboardsToReset) {
         const scoreboard = world.scoreboard.getObjective(sbName);
         if (scoreboard) {
+          const scoreTarget = player.scoreboardIdentity ?? player;
           if (sbName === "pollen") {
-            scoreboard.setScore(player, level.startingPollen ?? 0);
+            scoreboard.setScore(scoreTarget, level.startingPollen ?? 0);
           } else {
-            scoreboard.setScore(player, 0);
+            scoreboard.setScore(scoreTarget, 0);
           }
         }
       }

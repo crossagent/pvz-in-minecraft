@@ -50,6 +50,10 @@ export class TutorialManager {
   static onTick() {
     const player = world.getAllPlayers()[0];
     if (!player) return;
+    this.updatePlayer(player);
+  }
+
+  static updatePlayer(player) {
     const state = this.getTutorialState(player);
     const pollenCount =
       world.scoreboard
