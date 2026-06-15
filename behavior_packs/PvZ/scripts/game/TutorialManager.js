@@ -174,7 +174,7 @@ export class TutorialManager {
   }
 
   static spawnPollen(dimension, pos) {
-    dimension.spawnEntity("bn:pollen", pos);
+    PlantManager.spawnPollen(dimension, pos);
   }
 
   static getTutorialState(player) {

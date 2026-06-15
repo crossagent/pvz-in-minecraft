@@ -2,6 +2,7 @@ import { world, system } from "@minecraft/server";
 import * as rg from "@minecraft/server-gametest";
 import { CutsceneManager } from "../game/CutsceneManager.js";
 import { LevelManager } from "../game/LevelManager.js";
+import { PlantManager } from "../game/PlantManager.js";
 import { levelData } from "../levels.js";
 
 const TEST_NAME = "PvZTests:sanity_check";
@@ -75,6 +76,14 @@ function clearGameTestLevelState() {
   world.setDynamicProperty("nextPollenSpawnTick", 0);
   world.setDynamicProperty("nextZombieSpawnTick", 0);
   world.setDynamicProperty("nextWaveStartTick", 0);
+
+  for (const entity of world.getDimension("overworld").getEntities({
+    type: "bn:pollen",
+  })) {
+    try {
+      entity.remove();
+    } catch (err) {}
+  }
 }
 
 // Register a basic PvZ sanity test
@@ -123,6 +132,20 @@ rg.register("PvZTests", "sanity_check", (test) => {
       }
       if (!world.getDynamicProperty("gameActive")) {
         throw new Error("Level start did not activate gameplay.");
+      }
+
+      const pollenObjective = world.scoreboard.getObjective("pollen");
+      pollenObjective?.setScore(fakePlayer.scoreboardIdentity, 0);
+      const pollen = PlantManager.spawnPollen(fakePlayer.dimension, {
+        x: 0,
+        y: 80,
+        z: 0,
+      });
+      if (!PlantManager.collectPollenEntity(fakePlayer, pollen)) {
+        throw new Error("Pollen collection helper returned false.");
+      }
+      if ((pollenObjective?.getScore(fakePlayer.scoreboardIdentity) ?? 0) < 25) {
+        throw new Error("Pollen collection did not add score.");
       }
 
       clearGameTestLevelState();

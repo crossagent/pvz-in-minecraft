@@ -142,7 +142,7 @@ export class LevelManager {
         const spawnZ = center.z + dist * Math.sin(angle);
         const spawnPos = { x: spawnX, y: center.y, z: spawnZ };
 
-        world.getDimension("overworld").spawnEntity("bn:pollen", spawnPos);
+        PlantManager.spawnPollen(world.getDimension("overworld"), spawnPos);
         const nextTick = currentTick + config.spawnInterval * 20;
         world.setDynamicProperty("nextPollenSpawnTick", nextTick);
       }

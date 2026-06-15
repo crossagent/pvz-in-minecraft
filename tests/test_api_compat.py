@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 
@@ -31,3 +32,10 @@ def test_current_gametest_command_syntax():
 
     assert "gametest runall" not in content
     assert "`gametest run ${TEST_NAME}`" in content
+
+
+def test_legacy_function_tick_is_disabled():
+    tick_json = WORKSPACE_ROOT / "behavior_packs" / "PvZ" / "functions" / "tick.json"
+    content = json.loads(tick_json.read_text(encoding="utf-8"))
+
+    assert content["values"] == []

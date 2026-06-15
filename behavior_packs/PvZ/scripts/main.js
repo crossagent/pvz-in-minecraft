@@ -87,7 +87,7 @@ system.run(() => {
         });
       }
       if (hitEntity.typeId === "bn:pollen") {
-        system.run(() => PlantManager.collectPollen(player));
+        system.run(() => PlantManager.collectPollenEntity(player, hitEntity));
       }
       GameManager.handleUnlockedPlantCollection(hitEntity);
     }
@@ -148,6 +148,7 @@ system.runInterval(() => {
   for (const player of allPlayers) {
     if (gameActive || tutorialActive) {
       PlayerManager.handleLookingAt(player);
+      PlantManager.collectNearbyPollen(player);
     }
     if (player.hasTag("collect")) {
       const collected = PlantManager.collectPollen(player);

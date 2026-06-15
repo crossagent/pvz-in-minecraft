@@ -3,6 +3,9 @@ import { LanguageManager } from "./LanguageManager.js";
 
 const laneCooldowns = new Map();
 const LANE_COOLDOWN_DURATION = 13;
+const POLLEN_SCORE_VALUE = 25;
+const POLLEN_PICKUP_RADIUS = 1.35;
+const POLLEN_SLOW_FALLING_TICKS = 20 * 60;
 
 export class PlantManager {
   static initialize() {
@@ -102,33 +105,81 @@ export class PlantManager {
     ],
   ]);
 
+  static spawnPollen(dimension, location) {
+    const pollen = dimension.spawnEntity("bn:pollen", location);
+    try {
+      pollen.addEffect("slow_falling", POLLEN_SLOW_FALLING_TICKS, {
+        amplifier: 20,
+        showParticles: false,
+      });
+    } catch (err) {
+      console.warn(`[PvZ] Failed to apply slow falling to pollen: ${err}`);
+    }
+    return pollen;
+  }
+
+  static collectPollenEntity(player, pollenEntity) {
+    if (!pollenEntity || pollenEntity.typeId !== "bn:pollen") {
+      return false;
+    }
+
+    try {
+      if (pollenEntity.hasTag("pvz_collected")) {
+        return false;
+      }
+      pollenEntity.addTag("pvz_collected");
+      pollenEntity.remove();
+      world.scoreboard
+        .getObjective("pollen")
+        ?.addScore(player.scoreboardIdentity, POLLEN_SCORE_VALUE);
+      player.playSound("sun.pickup", { volume: 0.8, pitch: 1.5 });
+      return true;
+    } catch (err) {
+      console.warn(`[PvZ] Error collecting pollen entity: ${err}`);
+      return false;
+    }
+  }
+
+  static collectNearbyPollen(player) {
+    try {
+      const query = {
+        location: player.location,
+        maxDistance: POLLEN_PICKUP_RADIUS,
+        type: "bn:pollen",
+      };
+      const foundEntities = player.dimension.getEntities(query);
+      let collected = false;
+      for (const pollenEntity of foundEntities) {
+        collected = this.collectPollenEntity(player, pollenEntity) || collected;
+      }
+      return collected;
+    } catch (err) {
+      console.warn(`[PvZ] Error collecting nearby pollen: ${err}`);
+    }
+    return false;
+  }
+
   static collectPollen(player) {
     try {
       const raycastResult = player.getBlockFromViewDirection({
         maxDistance: 150,
       });
-      if (!raycastResult) return false;
-      const query = {
-        location: raycastResult.block.location,
-        maxDistance: 2,
-        type: "bn:pollen",
-      };
-      const foundEntities = player.dimension.getEntities(query);
-      if (foundEntities.length > 0) {
-        const pollenEntity = foundEntities[0];
-        system.run(() => {
-          pollenEntity.remove();
-          world.scoreboard
-            .getObjective("pollen")
-            ?.addScore(player.scoreboardIdentity, 25);
-          player.playSound("sun.pickup", { volume: 0.8, pitch: 1.5 });
-        });
-        return true;
+      if (raycastResult) {
+        const query = {
+          location: raycastResult.block.location,
+          maxDistance: 2.5,
+          type: "bn:pollen",
+        };
+        const foundEntities = player.dimension.getEntities(query);
+        if (foundEntities.length > 0) {
+          return this.collectPollenEntity(player, foundEntities[0]);
+        }
       }
+      return this.collectNearbyPollen(player);
     } catch (err) {
-      print(`[PvZ] Error collecting pollen: ${err}`);
+      console.warn(`[PvZ] Error collecting pollen: ${err}`);
+      return false;
     }
-    return false;
   }
 
   static updatePlants() {
