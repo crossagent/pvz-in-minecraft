@@ -247,6 +247,7 @@ const GAME_STATE_KEYS = [
   "gameActive",
   "tutorialActive",
   "awaitingPlantCollection",
+  "unlockedPlantId",
   "currentLevelId",
   "currentWave",
   "zombiesKilledThisWave",
@@ -328,47 +329,7 @@ function ensureLobbyReady(player) {
 }
 
 function resetRuntimeState() {
-  world.setDynamicProperty("gameActive", false);
-  world.setDynamicProperty("tutorialActive", false);
-  world.setDynamicProperty("awaitingPlantCollection", false);
-  world.setDynamicProperty("currentLevelId", "");
-  world.setDynamicProperty("currentWave", 0);
-  world.setDynamicProperty("zombiesKilledThisWave", 0);
-  world.setDynamicProperty("zombiesSpawnedThisWave", 0);
-  world.setDynamicProperty("nextPollenSpawnTick", 0);
-  world.setDynamicProperty("nextZombieSpawnTick", 0);
-  world.setDynamicProperty("nextWaveStartTick", 0);
-  world.setDynamicProperty("waveSpawnDeck", "[]");
-  world.setDynamicProperty("waveLocationDeck", "[]");
-}
-
-function clearRuntimeEntities() {
-  const runtimeEntityPrefixes = [
-    "bn:plant_",
-    "bn:pollen",
-    "bn:lawnmower",
-    "bn:zombie",
-    "bn:projectile_",
-    "bn:cherry_tnt",
-    "bn:wallnut",
-    "bn:potato_mine",
-    "bn:snow_pea",
-    "bn:sunflower",
-    "bn:peashooter",
-  ];
-
-  for (const entity of world.getDimension("overworld").getEntities()) {
-    if (
-      runtimeEntityPrefixes.some(
-        (prefix) =>
-          entity.typeId.startsWith(prefix) || entity.typeId === prefix,
-      )
-    ) {
-      try {
-        entity.remove();
-      } catch (err) {}
-    }
-  }
+  LevelManager.resetActiveRun();
 }
 
 function getStateSummary() {
@@ -406,7 +367,6 @@ if (scriptEventReceive) {
     const players = world.getAllPlayers();
     if (event.id === "pvz:reset_lobby") {
       resetRuntimeState();
-      clearRuntimeEntities();
     }
 
     for (const player of players) {

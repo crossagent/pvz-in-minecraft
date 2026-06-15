@@ -6,10 +6,25 @@ import { AudioManager } from "./AudioManager.js";
 import { TutorialManager } from "./TutorialManager.js";
 import { LanguageManager } from "./LanguageManager.js";
 
+const RUNTIME_ENTITY_PREFIXES = [
+  "bn:plant_",
+  "bn:pollen",
+  "bn:lawnmower",
+  "bn:zombie",
+  "bn:projectile_",
+  "bn:cherry_tnt",
+  "bn:wallnut",
+  "bn:potato_mine",
+  "bn:snow_pea",
+  "bn:sunflower",
+  "bn:peashooter",
+];
+
 function setLevelRuntimeState(levelId, isActive) {
   world.setDynamicProperty("gameActive", isActive);
   world.setDynamicProperty("tutorialActive", false);
   world.setDynamicProperty("awaitingPlantCollection", false);
+  world.setDynamicProperty("unlockedPlantId", "");
   world.setDynamicProperty("currentLevelId", levelId);
   world.setDynamicProperty("currentWave", 0);
   world.setDynamicProperty("zombiesKilledThisWave", 0);
@@ -25,7 +40,27 @@ function rollbackLevelStart() {
   setLevelRuntimeState("", false);
 }
 
+function clearRuntimeEntities() {
+  for (const entity of world.getDimension("overworld").getEntities()) {
+    if (
+      RUNTIME_ENTITY_PREFIXES.some(
+        (prefix) =>
+          entity.typeId.startsWith(prefix) || entity.typeId === prefix,
+      )
+    ) {
+      try {
+        entity.remove();
+      } catch (err) {}
+    }
+  }
+}
+
 export class LevelManager {
+  static resetActiveRun() {
+    rollbackLevelStart();
+    clearRuntimeEntities();
+  }
+
   static async startLevel(player, levelId) {
     const level = levelData.get(levelId);
     if (!level) {
@@ -36,6 +71,7 @@ export class LevelManager {
     }
 
     try {
+      this.resetActiveRun();
       PlantManager.resetCooldowns();
       setLevelRuntimeState(levelId, false);
 
@@ -97,7 +133,7 @@ export class LevelManager {
         this.startLevelGameplay(player, levelId);
       }
     } catch (err) {
-      rollbackLevelStart();
+      this.resetActiveRun();
       try {
         player.camera.clear();
         player.runCommand("inputpermission set @s camera enabled");

@@ -119,15 +119,6 @@ export class MenuManager {
   }
 
   static handleLevelSelection(player, response) {
-    const gameActive = world.getDynamicProperty("gameActive");
-    if (gameActive) {
-      player.sendMessage(LanguageManager.get(player, "menu.level.in_progress"));
-      player.sendMessage(
-        "[PvZ] Use /scriptevent pvz:reset_lobby to reset the current run.",
-      );
-      return;
-    }
-
     const levelKeys = Array.from(levelData.keys());
     const selectedLevel = levelKeys[response.selection];
     if (!selectedLevel) {
@@ -144,7 +135,18 @@ export class MenuManager {
       response.selection === 0 || completedLevels.includes(prevLevelId);
 
     if (isUnlocked) {
-      LevelManager.startLevel(player, selectedLevel).catch((err) => {
+      const hasActiveRun =
+        world.getDynamicProperty("gameActive") ||
+        world.getDynamicProperty("tutorialActive") ||
+        world.getDynamicProperty("awaitingPlantCollection") ||
+        world.getDynamicProperty("currentLevelId");
+
+      if (hasActiveRun) {
+        player.sendMessage("[PvZ] Restarting the current run.");
+        LevelManager.resetActiveRun();
+      }
+
+      return LevelManager.startLevel(player, selectedLevel).catch((err) => {
         console.error(`[PvZ] Failed to start ${selectedLevel}: ${err}`);
         player.sendMessage(`[PvZ] Failed to start ${selectedLevel}: ${err}`);
       });

@@ -2,6 +2,7 @@ import { world, system } from "@minecraft/server";
 import * as rg from "@minecraft/server-gametest";
 import { CutsceneManager } from "../game/CutsceneManager.js";
 import { LevelManager } from "../game/LevelManager.js";
+import { MenuManager } from "../game/MenuManager.js";
 import { PlantManager } from "../game/PlantManager.js";
 import { levelData } from "../levels.js";
 
@@ -72,6 +73,8 @@ function clearGameTestLevelState() {
   levelData.delete(TEST_LEVEL_ID);
   world.setDynamicProperty("gameActive", false);
   world.setDynamicProperty("tutorialActive", false);
+  world.setDynamicProperty("awaitingPlantCollection", false);
+  world.setDynamicProperty("unlockedPlantId", "");
   world.setDynamicProperty("currentLevelId", "");
   world.setDynamicProperty("nextPollenSpawnTick", 0);
   world.setDynamicProperty("nextZombieSpawnTick", 0);
@@ -146,6 +149,35 @@ rg.register("PvZTests", "sanity_check", (test) => {
       }
       if ((pollenObjective?.getScore(fakePlayer.scoreboardIdentity) ?? 0) < 25) {
         throw new Error("Pollen collection did not add score.");
+      }
+
+      fakePlayer.teleportLocation = null;
+      fakePlayer.messages = [];
+      world.setDynamicProperty("gameActive", true);
+      world.setDynamicProperty("tutorialActive", true);
+      world.setDynamicProperty("currentLevelId", "level1");
+
+      const levelKeys = Array.from(levelData.keys());
+      const testLevelSelection = levelKeys.indexOf(TEST_LEVEL_ID);
+      const previousLevelId = levelKeys[testLevelSelection - 1];
+      world.setDynamicProperty(
+        "completedLevels",
+        JSON.stringify([previousLevelId]),
+      );
+
+      return MenuManager.handleLevelSelection(fakePlayer, {
+        selection: testLevelSelection,
+      });
+    })
+    .then(() => {
+      if (!fakePlayer.messages.includes("[PvZ] Restarting the current run.")) {
+        throw new Error("Menu did not report restart for an active run.");
+      }
+      if (!fakePlayer.teleportLocation) {
+        throw new Error("Menu restart did not start the selected level.");
+      }
+      if (world.getDynamicProperty("currentLevelId") !== TEST_LEVEL_ID) {
+        throw new Error("Menu restart did not switch to the selected level.");
       }
 
       clearGameTestLevelState();
