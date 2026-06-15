@@ -78,6 +78,12 @@ export class TutorialManager {
         if (pollenCount > 0) {
           this.setTutorialState(player, TutorialState.COLLECT_MORE_POLLEN);
           player.playSound("random.orb");
+          player.onScreenDisplay.setTitle("§eSun collected!", {
+            subtitle: `§7Sun: §e${pollenCount} / ${PEASHOOTER_COST}`,
+            fadeInDuration: 5,
+            stayDuration: 35,
+            fadeOutDuration: 10,
+          });
           for (const pos of this.secondPollenLocations) {
             this.spawnPollen(player.dimension, pos);
           }
@@ -107,6 +113,12 @@ export class TutorialManager {
           player.playSound("random.orb");
           const peashooterItem = new ItemStack("bn:plant_2", 1);
           player.getComponent("inventory").container.addItem(peashooterItem);
+          player.onScreenDisplay.setTitle("§aPeashooter ready!", {
+            subtitle: "§7Use it on a valid tile.",
+            fadeInDuration: 5,
+            stayDuration: 60,
+            fadeOutDuration: 10,
+          });
         }
         break;
       case TutorialState.PLACE_FIRST_PEASHOOTER:
@@ -143,6 +155,12 @@ export class TutorialManager {
         if (pollenCount >= PEASHOOTER_COST) {
           this.setTutorialState(player, TutorialState.PLACE_SECOND_PEASHOOTER);
           player.playSound("random.orb");
+          player.onScreenDisplay.setTitle("§aSecond Peashooter ready!", {
+            subtitle: "§7Plant it to begin the zombie waves.",
+            fadeInDuration: 5,
+            stayDuration: 60,
+            fadeOutDuration: 10,
+          });
         }
         break;
       case TutorialState.PLACE_SECOND_PEASHOOTER:

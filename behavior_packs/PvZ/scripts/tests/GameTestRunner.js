@@ -1,4 +1,4 @@
-import { world, system } from "@minecraft/server";
+import { world, system, DisplaySlotId } from "@minecraft/server";
 import * as rg from "@minecraft/server-gametest";
 import { CutsceneManager } from "../game/CutsceneManager.js";
 import { LevelManager } from "../game/LevelManager.js";
@@ -14,10 +14,14 @@ const TEST_LEVEL_ID = "gametest_level_start";
 function createFakePlayer() {
   const commands = [];
   const cameraCalls = [];
+  const actionBars = [];
+  const titles = [];
 
-  return {
+  const fakePlayer = {
     commands,
     cameraCalls,
+    actionBars,
+    titles,
     location: { x: 0, y: 80, z: 0 },
     dimension: world.getDimension("overworld"),
     scoreboardIdentity: "PvZGameTestFakePlayer",
@@ -54,6 +58,14 @@ function createFakePlayer() {
       this.messages.push(message);
     },
     playSound() {},
+    onScreenDisplay: {
+      setActionBar(message) {
+        actionBars.push(message);
+      },
+      setTitle(title, options) {
+        titles.push({ title, options });
+      },
+    },
     getDynamicProperty() {
       return undefined;
     },
@@ -67,6 +79,8 @@ function createFakePlayer() {
       },
     },
   };
+
+  return fakePlayer;
 }
 
 function clearGameTestLevelState() {
@@ -95,9 +109,16 @@ rg.register("PvZTests", "sanity_check", (test) => {
   try {
     const dimension = world.getDimension("overworld");
     dimension.runCommand("summon bn:crazy_steve 0 80 0");
+    const sidebar = world.scoreboard.getObjectiveAtDisplaySlot(
+      DisplaySlotId.Sidebar,
+    );
+    const sidebarObjectiveId = sidebar?.id ?? sidebar?.objective?.id;
+    if (sidebarObjectiveId !== "pollen") {
+      throw new Error(`Expected pollen sidebar, got ${sidebarObjectiveId}`);
+    }
   } catch (e) {
-    console.warn(`[PvZ Test Runner] ${TEST_NAME} FAILED: Crazy Dave failed to spawn: ${e}`);
-    test.fail(`Crazy Dave failed to spawn: ${e}`);
+    console.warn(`[PvZ Test Runner] ${TEST_NAME} FAILED: Initial sanity check failed: ${e}`);
+    test.fail(`Initial sanity check failed: ${e}`);
     return;
   }
 
@@ -149,6 +170,9 @@ rg.register("PvZTests", "sanity_check", (test) => {
       }
       if ((pollenObjective?.getScore(fakePlayer.scoreboardIdentity) ?? 0) < 25) {
         throw new Error("Pollen collection did not add score.");
+      }
+      if (!fakePlayer.actionBars.some((text) => text.includes("Sun:"))) {
+        throw new Error("Pollen collection did not update actionbar.");
       }
 
       fakePlayer.teleportLocation = null;

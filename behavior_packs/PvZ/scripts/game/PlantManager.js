@@ -129,10 +129,12 @@ export class PlantManager {
       }
       pollenEntity.addTag("pvz_collected");
       pollenEntity.remove();
-      world.scoreboard
-        .getObjective("pollen")
-        ?.addScore(player.scoreboardIdentity, POLLEN_SCORE_VALUE);
+      const pollenObjective = world.scoreboard.getObjective("pollen");
+      pollenObjective?.addScore(player.scoreboardIdentity, POLLEN_SCORE_VALUE);
+      const currentPollen =
+        pollenObjective?.getScore(player.scoreboardIdentity) ?? 0;
       player.playSound("sun.pickup", { volume: 0.8, pitch: 1.5 });
+      player.onScreenDisplay.setActionBar(`§eSun: ${currentPollen}`);
       return true;
     } catch (err) {
       console.warn(`[PvZ] Error collecting pollen entity: ${err}`);

@@ -32,23 +32,12 @@ system.run(() => {
     const { player, initialSpawn } = eventData;
     SettingsManager.initializePlayerSettings(player);
     system.run(() => {
+      restoreVisibleHud(player);
       ensureLobbyReady(player);
     });
     if (initialSpawn) {
       system.run(() => {
-        try {
-          player.onScreenDisplay.setHudVisibility(HudVisibility.Hide, [
-            HudElement.Health,
-            HudElement.Hunger,
-            HudElement.Armor,
-            HudElement.StatusEffects,
-            HudElement.ProgressBar,
-          ]);
-        } catch (err) {
-          console.warn(
-            `Could not hide HUD elements for ${player.name}: ${err}`,
-          );
-        }
+        restoreVisibleHud(player);
       });
     }
   });
@@ -147,6 +136,7 @@ system.runInterval(() => {
   const allPlayers = world.getAllPlayers();
   for (const player of allPlayers) {
     if (gameActive || tutorialActive) {
+      restoreVisibleHud(player);
       PlayerManager.handleLookingAt(player);
       PlantManager.collectNearbyPollen(player);
     }
@@ -314,6 +304,19 @@ function recoverLobbyControls(player) {
   try {
     player.runCommand("inputpermission set @s camera enabled");
     player.runCommand("inputpermission set @s movement enabled");
+  } catch (err) {}
+  restoreVisibleHud(player);
+}
+
+function restoreVisibleHud(player) {
+  try {
+    player.onScreenDisplay.setHudVisibility(HudVisibility.Reset, [
+      HudElement.Health,
+      HudElement.Hunger,
+      HudElement.Armor,
+      HudElement.StatusEffects,
+      HudElement.ProgressBar,
+    ]);
   } catch (err) {}
 }
 
