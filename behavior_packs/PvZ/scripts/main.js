@@ -25,6 +25,10 @@ system.run(() => {
   PlantManager.initialize();
 
   world.afterEvents.worldLoad.subscribe(() => {
+    if (world.getAllPlayers().length === 0 && hasActiveRuntimeState()) {
+      resetRuntimeState();
+      return;
+    }
     GameManager.resumeGameOnLoad();
   });
 
@@ -104,12 +108,24 @@ system.run(() => {
   });
 });
 
+let noPlayerStartupResetDone = false;
+
 system.runInterval(() => {
   const gameActive = world.getDynamicProperty("gameActive");
   const tutorialActive = world.getDynamicProperty("tutorialActive");
   const awaitingPlantCollection = world.getDynamicProperty(
     "awaitingPlantCollection",
   );
+  const allPlayers = world.getAllPlayers();
+
+  if (allPlayers.length === 0) {
+    if (!noPlayerStartupResetDone && hasActiveRuntimeState()) {
+      resetRuntimeState();
+    }
+    noPlayerStartupResetDone = true;
+    return;
+  }
+  noPlayerStartupResetDone = true;
 
   if (gameActive) {
     GameManager.onTick();
@@ -133,7 +149,6 @@ system.runInterval(() => {
     PlantManager.updatePlants();
   }
 
-  const allPlayers = world.getAllPlayers();
   for (const player of allPlayers) {
     if (gameActive || tutorialActive) {
       restoreVisibleHud(player);
@@ -278,6 +293,16 @@ function isLobbyState() {
     return !unlockedPlantId;
   }
   return true;
+}
+
+function hasActiveRuntimeState() {
+  return Boolean(
+    world.getDynamicProperty("gameActive") ||
+      world.getDynamicProperty("tutorialActive") ||
+      world.getDynamicProperty("awaitingPlantCollection") ||
+      world.getDynamicProperty("currentLevelId") ||
+      world.getDynamicProperty("unlockedPlantId"),
+  );
 }
 
 function ensureMenuItem(player) {
