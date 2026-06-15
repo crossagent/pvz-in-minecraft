@@ -172,6 +172,7 @@ graph TD
   ```javascript
   import { world, system } from "@minecraft/server";
   ```
+- **Current API Target Only**: This project targets the current Bedrock client/BDS stack documented in Section 4 (`1.26.21.1`, `@minecraft/server` `2.7.0`, `@minecraft/server-ui` `2.0.0`). Do not add old-version compatibility branches or legacy API fallbacks unless the user explicitly asks for them.
 - **File Naming**: Use `snake_case` for all resource/behavior files, directories, and identifiers. Use `camelCase` for JavaScript variables and functions.
 - **No Code Obfuscation / Use Clean Code**: All JavaScript scripts in the behavior pack have been fully deobfuscated and formatted. Agents must maintain this readability. Do not introduce minified, obfuscated, or hex/unicode-escaped strings (like `\uXXXX`) in any script file. All API calls, property names, and variables must use clear, standard JavaScript naming.
 - **Safe Event Subscriptions**: The Bedrock Scripting API is subject to breaking changes and experimental flags. Always wrap event subscriptions (e.g., `world.afterEvents.*.subscribe`) in try-catch blocks or use a `safeSubscribe` helper to prevent a single missing/beta API from crashing script initialization.

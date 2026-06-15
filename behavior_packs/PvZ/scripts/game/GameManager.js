@@ -224,7 +224,7 @@ export class GameManager {
         const pollenScoreboard = world.scoreboard.getObjective("pollen");
 
         if (isWin) {
-          player.runCommandAsync(
+          player.runCommand(
             `playsound victory.jingle @s ${lobbySpawn.x} ${lobbySpawn.y} ${lobbySpawn.z}`,
           );
         }

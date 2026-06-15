@@ -17,8 +17,8 @@ export class CutsceneManager {
 
   static playStartCutscene(player, points) {
     return new Promise((resolve) => {
-      player.runCommandAsync("inputpermission set @s camera disabled");
-      player.runCommandAsync("inputpermission set @s movement disabled");
+      player.runCommand("inputpermission set @s camera disabled");
+      player.runCommand("inputpermission set @s movement disabled");
       player.camera.setCamera("minecraft:free", {
         location: player.getHeadLocation(),
         rotation: player.getRotation(),
@@ -27,8 +27,8 @@ export class CutsceneManager {
       const playPoint = (index) => {
         if (index >= points.length) {
           player.camera.clear();
-          player.runCommandAsync("inputpermission set @s camera enabled");
-          player.runCommandAsync("inputpermission set @s movement enabled");
+          player.runCommand("inputpermission set @s camera enabled");
+          player.runCommand("inputpermission set @s movement enabled");
           resolve();
           return;
         }

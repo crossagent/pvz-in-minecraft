@@ -79,7 +79,7 @@ system.run(() => {
       if (hitEntity.typeId === "bn:crazy_steve") {
         system.run(() => {
           player.setDynamicProperty("hasInteractedWithSteve", true);
-          player.runCommandAsync("playsound cd.talk");
+          player.runCommand("playsound cd.talk");
           MenuManager.showMainMenu(
             player,
             LanguageManager.get(player, "menu.category.levels"),
@@ -105,7 +105,7 @@ system.run(() => {
     if (target.typeId === "bn:crazy_steve") {
       system.run(() => {
         player.setDynamicProperty("hasInteractedWithSteve", true);
-        player.runCommandAsync("playsound cd.talk");
+        player.runCommand("playsound cd.talk");
         MenuManager.showMainMenu(
           player,
           LanguageManager.get(player, "menu.category.levels"),
@@ -310,8 +310,8 @@ function recoverLobbyControls(player) {
     player.camera.clear();
   } catch (err) {}
   try {
-    player.runCommandAsync("inputpermission set @s camera enabled");
-    player.runCommandAsync("inputpermission set @s movement enabled");
+    player.runCommand("inputpermission set @s camera enabled");
+    player.runCommand("inputpermission set @s movement enabled");
   } catch (err) {}
 }
 
@@ -453,7 +453,7 @@ world.afterEvents.playerSpawn.subscribe((eventData) => {
           console.error(
             `Could not get inventory for player ${player.name}. Trying command fallback.`,
           );
-          player.runCommandAsync(`give @s ${ITEM_ID_1} 1`);
+          player.runCommand(`give @s ${ITEM_ID_1} 1`);
         }
         player.addTag(TAG_TO_CHECK);
       }

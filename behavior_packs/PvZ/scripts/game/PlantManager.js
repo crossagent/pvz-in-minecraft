@@ -184,7 +184,7 @@ export class PlantManager {
             shootConfig.projectile,
             spawnPos,
           );
-          plant.runCommandAsync("playanimation @s animation.plant_2.attack");
+          plant.runCommand("playanimation @s animation.plant_2.attack");
 
           const direction = {
             x: zombie.location.x - plant.location.x,

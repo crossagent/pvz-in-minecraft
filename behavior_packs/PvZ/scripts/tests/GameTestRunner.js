@@ -1,9 +1,38 @@
 import { world, system } from "@minecraft/server";
 import * as rg from "@minecraft/server-gametest";
+import { CutsceneManager } from "../game/CutsceneManager.js";
 
 const TEST_NAME = "PvZTests:sanity_check";
 const TEST_RUN_COMMAND = `gametest run ${TEST_NAME}`;
 const TEST_STRUCTURE = "PvZTests:sanity_check";
+
+function createFakePlayer() {
+  const commands = [];
+  const cameraCalls = [];
+
+  return {
+    commands,
+    cameraCalls,
+    location: { x: 0, y: 80, z: 0 },
+    getHeadLocation() {
+      return { x: 0, y: 81.6, z: 0 };
+    },
+    getRotation() {
+      return { x: 0, y: 0 };
+    },
+    runCommand(command) {
+      commands.push(command);
+    },
+    camera: {
+      setCamera(cameraPreset, options) {
+        cameraCalls.push({ cameraPreset, options });
+      },
+      clear() {
+        cameraCalls.push({ clear: true });
+      },
+    },
+  };
+}
 
 // Register a basic PvZ sanity test
 rg.register("PvZTests", "sanity_check", (test) => {
@@ -17,8 +46,28 @@ rg.register("PvZTests", "sanity_check", (test) => {
     return;
   }
 
-  console.warn(`[PvZ Test Runner] ${TEST_NAME} PASSED`);
-  test.succeed();
+  const fakePlayer = createFakePlayer();
+
+  CutsceneManager.playStartCutscene(fakePlayer, [])
+    .then(() => {
+      const commandLog = fakePlayer.commands.join("\n");
+      if (!commandLog.includes("inputpermission set @s camera disabled")) {
+        throw new Error("Cutscene did not disable camera input.");
+      }
+      if (!commandLog.includes("inputpermission set @s camera enabled")) {
+        throw new Error("Cutscene did not restore camera input.");
+      }
+      if (fakePlayer.cameraCalls.length < 2) {
+        throw new Error("Cutscene did not exercise camera set/clear calls.");
+      }
+
+      console.warn(`[PvZ Test Runner] ${TEST_NAME} PASSED`);
+      test.succeed();
+    })
+    .catch((e) => {
+      console.warn(`[PvZ Test Runner] ${TEST_NAME} FAILED: ${e}`);
+      test.fail(`Sanity check failed: ${e}`);
+    });
 })
 .structureName(TEST_STRUCTURE);
 
