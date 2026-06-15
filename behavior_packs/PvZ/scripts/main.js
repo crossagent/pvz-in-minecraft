@@ -17,7 +17,6 @@ import { LanguageManager } from "./game/LanguageManager.js";
 import { DialogueManager } from "./game/DialogueManager.js";
 import { TutorialManager } from "./game/TutorialManager.js";
 import { LevelManager } from "./game/LevelManager.js";
-import "./tests/GameTestRunner.js";
 
 system.run(() => {
   ScoreboardManager.initializeScoreboards();

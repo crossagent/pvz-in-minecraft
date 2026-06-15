@@ -39,6 +39,50 @@ function Stop-ServerProcess {
     }
 }
 
+function Enable-GameTestInDeployedPack {
+    param ([string]$serverPath)
+
+    $deployedPackPath = Join-Path $serverPath "development_behavior_packs/PvZ"
+    $manifestPath = Join-Path $deployedPackPath "manifest.json"
+    $mainScriptPath = Join-Path $deployedPackPath "scripts/main.js"
+    $testImport = 'import "./tests/GameTestRunner.js";'
+
+    if (-not (Test-Path $manifestPath)) {
+        throw "Deployed PvZ manifest not found at $manifestPath"
+    }
+    if (-not (Test-Path $mainScriptPath)) {
+        throw "Deployed PvZ main script not found at $mainScriptPath"
+    }
+
+    $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
+    $dependencies = @($manifest.dependencies)
+    $hasGameTestDependency = $false
+    foreach ($dependency in $dependencies) {
+        if ($dependency.module_name -eq "@minecraft/server-gametest") {
+            $hasGameTestDependency = $true
+            $dependency.version = "1.0.0-beta"
+            break
+        }
+    }
+
+    if (-not $hasGameTestDependency) {
+        $dependencies += [PSCustomObject]@{
+            module_name = "@minecraft/server-gametest"
+            version = "1.0.0-beta"
+        }
+        $manifest.dependencies = $dependencies
+        $manifest | ConvertTo-Json -Depth 20 | Out-File -FilePath $manifestPath -Encoding utf8
+    }
+
+    $mainScript = Get-Content $mainScriptPath -Raw
+    if ($mainScript -notmatch [regex]::Escape($testImport)) {
+        $mainScript = $mainScript -replace '(?m)(^import .+;\r?\n)(?!import )', "`$1$testImport`r`n"
+        $mainScript | Out-File -FilePath $mainScriptPath -Encoding utf8
+    }
+
+    Write-Host "Enabled GameTest runner in deployed BDS behavior pack." -ForegroundColor Green
+}
+
 $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Path # tests/
 $rootPath = Split-Path -Parent $scriptPath                    # workspace root
 $envFile = Join-Path $rootPath ".env"
@@ -74,6 +118,7 @@ if ($deployExitCode -ne 0) {
     Write-Error "Server deployment failed."
     exit 1
 }
+Enable-GameTestInDeployedPack -serverPath $serverPath
 
 # Define log files
 $logPath = Join-Path $scriptPath "server_stdout.log"

@@ -68,36 +68,73 @@ AI agents must adhere to the standard Bedrock Add-on workspace structure:
 
 ```text
 minecraft_mod/
-├── .minecraft/                # Local testing environment links (optional)
-├── behavior_packs/
-│   └── MyModBP/
-│       ├── manifest.json      # BP Manifest with dependency to RP
-│       ├── entities/          # Entity behavior JSONs
-│       ├── blocks/            # Custom block behaviors
-│       ├── items/             # Custom item behaviors
-│       ├── recipes/           # Crafting recipes
-│       ├── loot_tables/       # Drop tables
-│       └── scripts/           # Bedrock Scripting API files (JS/TS)
-│           └── main.js
-└── resource_packs/
-    └── MyModRP/
-        ├── manifest.json      # RP Manifest
-        ├── pack_icon.png      # Mod Icon
-        ├── client_entities/   # Client entity setup
-        ├── models/
-        │   └── entity/        # Custom 3D Bedrock Geometry (JSON)
-        ├── textures/
-        │   ├── blocks/
-        │   ├── items/
-        │   ├── terrain_texture.json
-        │   └── item_texture.json
-        └── texts/
-            └── en_US.lang     # Localization file
+|-- behavior_packs/
+|   `-- PvZ/
+|       |-- manifest.json      # BP manifest
+|       |-- entities/          # Entity behavior JSONs
+|       |-- blocks/            # Custom block behaviors
+|       |-- items/             # Custom item behaviors
+|       |-- loot_tables/       # Drop tables
+|       |-- structures/        # Level and GameTest structures
+|       `-- scripts/           # Bedrock Scripting API files
+|           `-- main.js
+|-- resource_packs/
+|   `-- PvZ/
+|       |-- manifest.json      # RP manifest
+|       |-- pack_icon.png      # Pack icon
+|       |-- entity/            # Client entity setup
+|       |-- models/
+|       |   `-- entity/        # Custom Bedrock geometry JSON
+|       |-- textures/
+|       |   |-- blocks/
+|       |   |-- items/
+|       |   |-- terrain_texture.json
+|       |   `-- item_texture.json
+|       `-- texts/
+|           `-- en_US.lang     # Localization file
+|-- deployment/
+|   `-- local/                 # Client and BDS deploy/test scripts
+`-- tests/                     # Python checks and GameTest harness
 ```
 
 ---
 
-## 4. Workflows & Collaboration Protocol
+## 4. Current Debugging Environment
+
+This project is normally played and debugged through the local Minecraft Bedrock client, not through the bundled Bedrock Dedicated Server.
+
+### Primary client world
+
+- Client data root: `C:\Users\zxy19\AppData\Roaming\Minecraft Bedrock\Users\Shared\games\com.mojang`
+- Active local world folder: `minecraftWorlds\pvz_world`
+- In-game world name: `Plants vs Zombies BedrockEdition`
+- Active Behavior Pack UUID: `4389a98d-c504-4ee3-a12c-81be1f8f7f21`
+- Active Resource Pack UUID: `1daccff2-4b9f-4bbd-8c2b-6156e4cbca5d`
+
+### Deployment rule for local play
+
+When the user says they are testing in the client, deploy to both of these locations:
+
+```text
+C:\Users\zxy19\AppData\Roaming\Minecraft Bedrock\Users\Shared\games\com.mojang\development_behavior_packs\PvZ
+C:\Users\zxy19\AppData\Roaming\Minecraft Bedrock\Users\Shared\games\com.mojang\development_resource_packs\PvZ
+C:\Users\zxy19\AppData\Roaming\Minecraft Bedrock\Users\Shared\games\com.mojang\minecraftWorlds\pvz_world\behavior_packs\PvZ
+C:\Users\zxy19\AppData\Roaming\Minecraft Bedrock\Users\Shared\games\com.mojang\minecraftWorlds\pvz_world\resource_packs\PvZ
+```
+
+The world-internal pack copies can shadow or lag behind the `development_*_packs` copies. If the world has `behavior_packs\PvZ` or `resource_packs\PvZ`, update those copies too; otherwise the client can reload cleanly with no visible changes.
+
+Use `deployment/local/deploy_client.ps1` for this sync. After syncing packs into a local world, `/reload` may not be enough; the reliable loop is to exit the world and re-enter it, or fully restart the Minecraft client.
+
+### Dedicated server usage
+
+The bundled server at `D:\MyProject\minecraft_mod\bedrock-server` is a headless validation environment for automated GameTest and API loading checks. It is not the user's normal play session unless the user explicitly says they are connecting to that dedicated server.
+
+Use `deployment/local/deploy.ps1` and `tests/run_gametest.ps1` for BDS validation. Passing BDS tests proves script/module loading, but it does not prove the client world has received the latest pack files. GameTest code must not be imported by the normal client `scripts/main.js`; `tests/run_gametest.ps1` injects the GameTest runner only into the deployed BDS copy.
+
+---
+
+## 5. Workflows & Collaboration Protocol
 
 ```mermaid
 graph TD
@@ -114,8 +151,8 @@ graph TD
 
 1. **Step 1 (Ingestion)**: The **Architect** receives the user's prompt (e.g., "Add a fire-breathing dragon mount").
 2. **Step 2 (Planning)**: The **Architect** determines the needed files:
-   - Entity behavior file (`behavior_packs/MyModBP/entities/dragon.json`).
-   - Client entity file (`resource_packs/MyModRP/client_entities/dragon.json`).
+   - Entity behavior file (`behavior_packs/PvZ/entities/dragon.json`).
+   - Client entity file (`resource_packs/PvZ/entity/dragon.json`).
    - Geometry and texture mappings.
    - Script event handler for mounting and fire-breathing.
 3. **Step 3 (Delegation)**:
@@ -126,7 +163,7 @@ graph TD
 
 ---
 
-## 5. Development Guidelines & Rules for Agents
+## 6. Development Guidelines & Rules for Agents
 
 - **UUID Generation**: Always generate fresh, unique UUIDs for manifests (`version 2` or `version 4`). Never duplicate UUIDs from other templates.
 - **Minification**: Keep JSON human-readable (with indentation) to allow easier debugging and code review.
@@ -138,5 +175,4 @@ graph TD
 - **File Naming**: Use `snake_case` for all resource/behavior files, directories, and identifiers. Use `camelCase` for JavaScript variables and functions.
 - **No Code Obfuscation / Use Clean Code**: All JavaScript scripts in the behavior pack have been fully deobfuscated and formatted. Agents must maintain this readability. Do not introduce minified, obfuscated, or hex/unicode-escaped strings (like `\uXXXX`) in any script file. All API calls, property names, and variables must use clear, standard JavaScript naming.
 - **Safe Event Subscriptions**: The Bedrock Scripting API is subject to breaking changes and experimental flags. Always wrap event subscriptions (e.g., `world.afterEvents.*.subscribe`) in try-catch blocks or use a `safeSubscribe` helper to prevent a single missing/beta API from crashing script initialization.
-- **Multi-Path Deployments**: Bedrock clients load behavior packs from various locations depending on setup (e.g., client `development_behavior_packs`, dedicated server folders, and world-internal `minecraftWorlds/<world>/behavior_packs`). Updates must be synced to all applicable paths to ensure the client runs the latest version.
-
+- **Multi-Path Deployments**: Bedrock clients load packs from several locations. For this project, local play must sync the client `development_*_packs` and the active world's internal `minecraftWorlds/pvz_world/*_packs` copies as described in Section 4. BDS deployment is separate and only covers the headless server test environment.
