@@ -6,6 +6,25 @@ import { AudioManager } from "./AudioManager.js";
 import { TutorialManager } from "./TutorialManager.js";
 import { LanguageManager } from "./LanguageManager.js";
 
+function setLevelRuntimeState(levelId, isActive) {
+  world.setDynamicProperty("gameActive", isActive);
+  world.setDynamicProperty("tutorialActive", false);
+  world.setDynamicProperty("awaitingPlantCollection", false);
+  world.setDynamicProperty("currentLevelId", levelId);
+  world.setDynamicProperty("currentWave", 0);
+  world.setDynamicProperty("zombiesKilledThisWave", 0);
+  world.setDynamicProperty("zombiesSpawnedThisWave", 0);
+  world.setDynamicProperty("nextPollenSpawnTick", 0);
+  world.setDynamicProperty("nextZombieSpawnTick", 0);
+  world.setDynamicProperty("nextWaveStartTick", 0);
+  world.setDynamicProperty("waveSpawnDeck", "[]");
+  world.setDynamicProperty("waveLocationDeck", "[]");
+}
+
+function rollbackLevelStart() {
+  setLevelRuntimeState("", false);
+}
+
 export class LevelManager {
   static async startLevel(player, levelId) {
     const level = levelData.get(levelId);
@@ -16,69 +35,77 @@ export class LevelManager {
       return;
     }
 
-    PlantManager.resetCooldowns();
-    world.setDynamicProperty("gameActive", true);
-    world.setDynamicProperty("currentLevelId", levelId);
-    world.setDynamicProperty("currentWave", 0);
-    world.setDynamicProperty("zombiesKilledThisWave", 0);
-    world.setDynamicProperty("zombiesSpawnedThisWave", 0);
-    world.setDynamicProperty("nextWaveStartTick", 0);
-    world.setDynamicProperty("waveSpawnDeck", "[]");
-    world.setDynamicProperty("waveLocationDeck", "[]");
+    try {
+      PlantManager.resetCooldowns();
+      setLevelRuntimeState(levelId, false);
 
-    player.teleport(level.playerStartLocation, {
-      rotation: { x: 0, y: 0 },
-    });
+      player.teleport(level.playerStartLocation, {
+        dimension: player.dimension,
+        rotation: { x: 0, y: 0 },
+      });
 
-    if (level.structure && level.structure.name && level.structure.location) {
-      try {
-        world.structureManager.place(
-          level.structure.name,
-          player.dimension,
-          level.structure.location,
-        );
-      } catch (err) {
-        console.error(
-          `Failed to place structure '${level.structure.name}': ${err}`,
-        );
-      }
-    }
-
-    for (const mowerPos of level.lawnmowers) {
-      player.dimension.spawnEntity("bn:lawnmower", mowerPos);
-    }
-
-    if (level.cutscene && level.cutscene.length > 0) {
-      await CutsceneManager.playStartCutscene(player, level.cutscene);
-    }
-
-    const inventory = player.getComponent("inventory").container;
-    inventory.clearAll();
-    for (const startItem of level.startItems) {
-      const itemStack = new ItemStack(startItem.typeId, startItem.amount);
-      inventory.setItem(startItem.slot, itemStack);
-    }
-
-    for (const sbName of level.scoreboardsToReset) {
-      const scoreboard = world.scoreboard.getObjective(sbName);
-      if (scoreboard) {
-        if (sbName === "pollen") {
-          scoreboard.setScore(player, level.startingPollen ?? 0);
-        } else {
-          scoreboard.setScore(player, 0);
+      if (level.structure && level.structure.name && level.structure.location) {
+        try {
+          world.structureManager.place(
+            level.structure.name,
+            player.dimension,
+            level.structure.location,
+          );
+        } catch (err) {
+          console.error(
+            `Failed to place structure '${level.structure.name}': ${err}`,
+          );
         }
       }
-    }
 
-    const levelNameText = LanguageManager.get(player, level.name);
-    player.sendMessage(
-      LanguageManager.get(player, "game.level_start", levelNameText),
-    );
+      for (const mowerPos of level.lawnmowers) {
+        player.dimension.spawnEntity("bn:lawnmower", mowerPos);
+      }
 
-    if (level.isTutorial) {
-      TutorialManager.startTutorial(player, level);
-    } else {
-      this.startLevelGameplay(player, levelId);
+      world.setDynamicProperty("gameActive", true);
+
+      if (level.cutscene && level.cutscene.length > 0) {
+        await CutsceneManager.playStartCutscene(player, level.cutscene);
+      }
+
+      const inventory = player.getComponent("inventory").container;
+      inventory.clearAll();
+      for (const startItem of level.startItems) {
+        const itemStack = new ItemStack(startItem.typeId, startItem.amount);
+        inventory.setItem(startItem.slot, itemStack);
+      }
+
+      for (const sbName of level.scoreboardsToReset) {
+        const scoreboard = world.scoreboard.getObjective(sbName);
+        if (scoreboard) {
+          if (sbName === "pollen") {
+            scoreboard.setScore(player, level.startingPollen ?? 0);
+          } else {
+            scoreboard.setScore(player, 0);
+          }
+        }
+      }
+
+      const levelNameText = LanguageManager.get(player, level.name);
+      player.sendMessage(
+        LanguageManager.get(player, "game.level_start", levelNameText),
+      );
+
+      if (level.isTutorial) {
+        TutorialManager.startTutorial(player, level);
+      } else {
+        this.startLevelGameplay(player, levelId);
+      }
+    } catch (err) {
+      rollbackLevelStart();
+      try {
+        player.camera.clear();
+        player.runCommand("inputpermission set @s camera enabled");
+        player.runCommand("inputpermission set @s movement enabled");
+      } catch (recoveryErr) {
+        console.warn(`[PvZ] Failed to recover player controls: ${recoveryErr}`);
+      }
+      throw err;
     }
   }
 

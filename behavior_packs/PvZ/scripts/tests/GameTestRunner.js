@@ -1,10 +1,13 @@
 import { world, system } from "@minecraft/server";
 import * as rg from "@minecraft/server-gametest";
 import { CutsceneManager } from "../game/CutsceneManager.js";
+import { LevelManager } from "../game/LevelManager.js";
+import { levelData } from "../levels.js";
 
 const TEST_NAME = "PvZTests:sanity_check";
 const TEST_RUN_COMMAND = `gametest run ${TEST_NAME}`;
 const TEST_STRUCTURE = "PvZTests:sanity_check";
+const TEST_LEVEL_ID = "gametest_level_start";
 
 function createFakePlayer() {
   const commands = [];
@@ -14,6 +17,11 @@ function createFakePlayer() {
     commands,
     cameraCalls,
     location: { x: 0, y: 80, z: 0 },
+    dimension: world.getDimension("overworld"),
+    scoreboardIdentity: "PvZGameTestFakePlayer",
+    messages: [],
+    teleportLocation: null,
+    teleportOptions: null,
     getHeadLocation() {
       return { x: 0, y: 81.6, z: 0 };
     },
@@ -23,6 +31,31 @@ function createFakePlayer() {
     runCommand(command) {
       commands.push(command);
     },
+    teleport(location, options) {
+      this.teleportLocation = location;
+      this.teleportOptions = options;
+      this.location = location;
+    },
+    getComponent(componentId) {
+      if (componentId !== "inventory") {
+        return undefined;
+      }
+      return {
+        container: {
+          clearAll() {},
+          setItem() {},
+          addItem() {},
+        },
+      };
+    },
+    sendMessage(message) {
+      this.messages.push(message);
+    },
+    playSound() {},
+    getDynamicProperty() {
+      return undefined;
+    },
+    setDynamicProperty() {},
     camera: {
       setCamera(cameraPreset, options) {
         cameraCalls.push({ cameraPreset, options });
@@ -32,6 +65,16 @@ function createFakePlayer() {
       },
     },
   };
+}
+
+function clearGameTestLevelState() {
+  levelData.delete(TEST_LEVEL_ID);
+  world.setDynamicProperty("gameActive", false);
+  world.setDynamicProperty("tutorialActive", false);
+  world.setDynamicProperty("currentLevelId", "");
+  world.setDynamicProperty("nextPollenSpawnTick", 0);
+  world.setDynamicProperty("nextZombieSpawnTick", 0);
+  world.setDynamicProperty("nextWaveStartTick", 0);
 }
 
 // Register a basic PvZ sanity test
@@ -61,10 +104,33 @@ rg.register("PvZTests", "sanity_check", (test) => {
         throw new Error("Cutscene did not exercise camera set/clear calls.");
       }
 
+      levelData.set(TEST_LEVEL_ID, {
+        name: "level.1.name",
+        playerStartLocation: { x: 1, y: 80, z: 1 },
+        lawnmowers: [],
+        startItems: [],
+        scoreboardsToReset: [],
+      });
+
+      return LevelManager.startLevel(fakePlayer, TEST_LEVEL_ID);
+    })
+    .then(() => {
+      if (!fakePlayer.teleportLocation) {
+        throw new Error("Level start did not teleport the player.");
+      }
+      if (world.getDynamicProperty("currentLevelId") !== TEST_LEVEL_ID) {
+        throw new Error("Level start did not set currentLevelId.");
+      }
+      if (!world.getDynamicProperty("gameActive")) {
+        throw new Error("Level start did not activate gameplay.");
+      }
+
+      clearGameTestLevelState();
       console.warn(`[PvZ Test Runner] ${TEST_NAME} PASSED`);
       test.succeed();
     })
     .catch((e) => {
+      clearGameTestLevelState();
       console.warn(`[PvZ Test Runner] ${TEST_NAME} FAILED: ${e}`);
       test.fail(`Sanity check failed: ${e}`);
     });

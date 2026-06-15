@@ -91,7 +91,7 @@ export class MenuManager {
     );
 
     form.show(player, activeTab).then((response) => {
-      if (response.canceled) return;
+      if (!response || response.canceled) return;
       const levelsCategory = LanguageManager.get(
         player,
         "menu.category.levels",
@@ -127,7 +127,11 @@ export class MenuManager {
 
     const levelKeys = Array.from(levelData.keys());
     const selectedLevel = levelKeys[response.selection];
-    if (!selectedLevel) return;
+    if (!selectedLevel) {
+      player.sendMessage(`[PvZ] Invalid level selection: ${response.selection}`);
+      console.warn(`[PvZ] Invalid level selection: ${response.selection}`);
+      return;
+    }
 
     const completedLevelsProp =
       world.getDynamicProperty("completedLevels") || "[]";
@@ -137,7 +141,10 @@ export class MenuManager {
       response.selection === 0 || completedLevels.includes(prevLevelId);
 
     if (isUnlocked) {
-      LevelManager.startLevel(player, selectedLevel);
+      LevelManager.startLevel(player, selectedLevel).catch((err) => {
+        console.error(`[PvZ] Failed to start ${selectedLevel}: ${err}`);
+        player.sendMessage(`[PvZ] Failed to start ${selectedLevel}: ${err}`);
+      });
     } else {
       player.sendMessage(LanguageManager.get(player, "menu.level.locked"));
     }
