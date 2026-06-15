@@ -132,6 +132,65 @@ The bundled server at `D:\MyProject\minecraft_mod\bedrock-server` is a headless 
 
 Use `deployment/local/deploy.ps1` and `tests/run_gametest.ps1` for BDS validation. Passing BDS tests proves script/module loading, but it does not prove the client world has received the latest pack files. GameTest code must not be imported by the normal client `scripts/main.js`; `tests/run_gametest.ps1` injects the GameTest runner only into the deployed BDS copy.
 
+### Local BDS release workflow
+
+This workflow is the standard way to publish the current development version to the user's local Bedrock Dedicated Server for PC/mobile client testing. It is a local-server release flow, not a public distribution/package release flow.
+
+Use it when the user wants the PC to host the game and a PC/mobile Bedrock client to connect over LAN.
+
+1. Stop any running BDS process before changing worlds or packs:
+   ```powershell
+   Get-Process bedrock_server -ErrorAction SilentlyContinue | Stop-Process -Force
+   ```
+2. Ensure BDS is pointed at the real PvZ world, not the default test world. In `bedrock-server/server.properties`:
+   ```properties
+   level-name=pvz_world
+   server-port=19132
+   server-portv6=19133
+   texturepack-required=true
+   ```
+3. If the BDS world copy is missing or stale, exit the client world first, then mirror the client world into the server:
+   ```powershell
+   $source = "C:\Users\zxy19\AppData\Roaming\Minecraft Bedrock\Users\Shared\games\com.mojang\minecraftWorlds\pvz_world"
+   $target = "D:\MyProject\minecraft_mod\bedrock-server\worlds\pvz_world"
+   robocopy $source $target /MIR
+   ```
+   Do this only when intentionally refreshing the server world from the client world. It overwrites the BDS world copy.
+4. Run validation before serving the version:
+   ```powershell
+   python -m pytest -q
+   powershell -NoProfile -ExecutionPolicy Bypass -File "D:\MyProject\minecraft_mod\tests\run_gametest.ps1"
+   ```
+5. After GameTest, always redeploy the normal play pack to BDS. `run_gametest.ps1` injects `scripts/tests/GameTestRunner.js` into the deployed BDS copy, so this step removes the test-only import from the server pack:
+   ```powershell
+   powershell -NoProfile -ExecutionPolicy Bypass -File "D:\MyProject\minecraft_mod\deployment\local\deploy.ps1"
+   ```
+6. Start BDS from `D:\MyProject\minecraft_mod\bedrock-server` and capture logs:
+   ```powershell
+   $serverPath = "D:\MyProject\minecraft_mod\bedrock-server"
+   $stdout = "D:\MyProject\minecraft_mod\scratch\bds_play_stdout.log"
+   $stderr = "D:\MyProject\minecraft_mod\scratch\bds_play_stderr.log"
+   Start-Process -FilePath "$serverPath\bedrock_server.exe" -WorkingDirectory $serverPath -WindowStyle Hidden -RedirectStandardOutput $stdout -RedirectStandardError $stderr
+   ```
+7. Verify before telling the user to connect:
+   - `bedrock_server.exe` is running.
+   - `Get-NetUDPEndpoint -LocalPort 19132` shows BDS listening on `0.0.0.0:19132`.
+   - `scratch\bds_play_stdout.log` or the visible server console says `Level Name: pvz_world`.
+   - The deployed BDS `scripts/main.js` does not import `GameTestRunner.js`.
+   - The log has no `[Scripting] [error]` or `LocationInUnloadedChunkError`.
+8. The LAN client connection target is the PC's WLAN IPv4 address and port `19132`, for example:
+   ```text
+   192.168.209.233:19132
+   ```
+
+Important guardrails:
+
+- Do not use `Bedrock level` for local server play. That world is only a default/test world and can contain GameTest residue such as `PvZGameTestFakePlayer`.
+- Do not leave the GameTest-injected BDS pack running for play sessions. Always run `deployment/local/deploy.ps1` after `tests/run_gametest.ps1`.
+- BDS can start with no connected players. Runtime logic must not keep advancing active game state or spawning entities while no players are online.
+- Firewall checks are part of local server release support. BDS uses UDP `19132`; if clients cannot connect, verify Windows Firewall rules for `D:\MyProject\minecraft_mod\bedrock-server\bedrock_server.exe` and UDP `19132`.
+- This workflow does not replace a public release flow. Public releases still need explicit version bumps, clean packaged BP/RP artifacts, changelog/release notes, and a separate install/upgrade path.
+
 ---
 
 ## 5. Workflows & Collaboration Protocol
