@@ -122,6 +122,9 @@ export class MenuManager {
     const gameActive = world.getDynamicProperty("gameActive");
     if (gameActive) {
       player.sendMessage(LanguageManager.get(player, "menu.level.in_progress"));
+      player.sendMessage(
+        "[PvZ] Use /scriptevent pvz:reset_lobby to reset the current run.",
+      );
       return;
     }
 

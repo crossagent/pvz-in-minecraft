@@ -342,6 +342,35 @@ function resetRuntimeState() {
   world.setDynamicProperty("waveLocationDeck", "[]");
 }
 
+function clearRuntimeEntities() {
+  const runtimeEntityPrefixes = [
+    "bn:plant_",
+    "bn:pollen",
+    "bn:lawnmower",
+    "bn:zombie",
+    "bn:projectile_",
+    "bn:cherry_tnt",
+    "bn:wallnut",
+    "bn:potato_mine",
+    "bn:snow_pea",
+    "bn:sunflower",
+    "bn:peashooter",
+  ];
+
+  for (const entity of world.getDimension("overworld").getEntities()) {
+    if (
+      runtimeEntityPrefixes.some(
+        (prefix) =>
+          entity.typeId.startsWith(prefix) || entity.typeId === prefix,
+      )
+    ) {
+      try {
+        entity.remove();
+      } catch (err) {}
+    }
+  }
+}
+
 function getStateSummary() {
   return GAME_STATE_KEYS.map((key) => {
     const value = world.getDynamicProperty(key);
@@ -377,6 +406,7 @@ if (scriptEventReceive) {
     const players = world.getAllPlayers();
     if (event.id === "pvz:reset_lobby") {
       resetRuntimeState();
+      clearRuntimeEntities();
     }
 
     for (const player of players) {
