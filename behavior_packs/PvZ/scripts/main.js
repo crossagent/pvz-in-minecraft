@@ -31,6 +31,9 @@ system.run(() => {
   world.afterEvents.playerSpawn.subscribe((eventData) => {
     const { player, initialSpawn } = eventData;
     SettingsManager.initializePlayerSettings(player);
+    system.run(() => {
+      ensureLobbyReady(player);
+    });
     if (initialSpawn) {
       system.run(() => {
         try {
@@ -57,13 +60,6 @@ system.run(() => {
     }
     system.run(() => {
       switch (itemStack?.typeId) {
-        case "minecraft:compass":
-          eventData.cancel = true;
-          MenuManager.showMainMenu(
-            player,
-            LanguageManager.get(player, "menu.category.settings"),
-          );
-          break;
         default:
           if (itemStack && PlantManager.handleItemUse(player, itemStack)) {
             eventData.cancel = true;
@@ -134,16 +130,12 @@ system.runInterval(() => {
     TutorialManager.onTick();
   }
 
-  if (!gameActive && !tutorialActive && !awaitingPlantCollection) {
+  if (isLobbyState()) {
+    if (gameActive || tutorialActive || awaitingPlantCollection) {
+      resetRuntimeState();
+    }
     for (const player of world.getAllPlayers()) {
-      const hasInteracted = player.getDynamicProperty("hasInteractedWithSteve");
-      if (!hasInteracted) {
-        player.onScreenDisplay.setActionBar(
-          LanguageManager.get(player, "misc.interact_prompt"),
-        );
-      } else {
-        player.onScreenDisplay.setActionBar("");
-      }
+      ensureLobbyReady(player);
     }
     return;
   }
@@ -249,9 +241,173 @@ const BOOKS = {
   ],
 };
 
+const MENU_ITEM_ID = "bn:shop";
+const GAME_STATE_KEYS = [
+  "gameActive",
+  "tutorialActive",
+  "awaitingPlantCollection",
+  "currentLevelId",
+  "currentWave",
+  "zombiesKilledThisWave",
+  "zombiesSpawnedThisWave",
+  "nextPollenSpawnTick",
+  "nextZombieSpawnTick",
+  "nextWaveStartTick",
+  "waveSpawnDeck",
+  "waveLocationDeck",
+];
+
+function hasItem(player, typeId) {
+  const inventory = player.getComponent("inventory");
+  const container = inventory?.container;
+  if (!container) return false;
+
+  for (let i = 0; i < container.size; i++) {
+    if (container.getItem(i)?.typeId === typeId) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isLobbyState() {
+  const gameActive = world.getDynamicProperty("gameActive");
+  const tutorialActive = world.getDynamicProperty("tutorialActive");
+  const awaitingPlantCollection = world.getDynamicProperty(
+    "awaitingPlantCollection",
+  );
+  const currentLevelId = world.getDynamicProperty("currentLevelId");
+  const unlockedPlantId = world.getDynamicProperty("unlockedPlantId");
+
+  if (gameActive || tutorialActive) {
+    return !currentLevelId;
+  }
+  if (awaitingPlantCollection) {
+    return !unlockedPlantId;
+  }
+  return true;
+}
+
+function ensureMenuItem(player) {
+  if (hasItem(player, MENU_ITEM_ID)) {
+    return;
+  }
+
+  const inventory = player.getComponent("inventory");
+  const container = inventory?.container;
+  if (container) {
+    const menuItem = new ItemStack(MENU_ITEM_ID, 1);
+    if (!container.getItem(8)) {
+      container.setItem(8, menuItem);
+    } else {
+      container.addItem(menuItem);
+    }
+  }
+}
+
+function recoverLobbyControls(player) {
+  try {
+    player.camera.clear();
+  } catch (err) {}
+  try {
+    player.runCommandAsync("inputpermission set @s camera enabled");
+    player.runCommandAsync("inputpermission set @s movement enabled");
+  } catch (err) {}
+}
+
+function ensureLobbyReady(player) {
+  if (!isLobbyState()) {
+    return;
+  }
+  recoverLobbyControls(player);
+  ensureMenuItem(player);
+  player.onScreenDisplay.setActionBar(
+    LanguageManager.get(player, "misc.interact_prompt"),
+  );
+}
+
+function resetRuntimeState() {
+  world.setDynamicProperty("gameActive", false);
+  world.setDynamicProperty("tutorialActive", false);
+  world.setDynamicProperty("awaitingPlantCollection", false);
+  world.setDynamicProperty("currentLevelId", "");
+  world.setDynamicProperty("currentWave", 0);
+  world.setDynamicProperty("zombiesKilledThisWave", 0);
+  world.setDynamicProperty("zombiesSpawnedThisWave", 0);
+  world.setDynamicProperty("nextPollenSpawnTick", 0);
+  world.setDynamicProperty("nextZombieSpawnTick", 0);
+  world.setDynamicProperty("nextWaveStartTick", 0);
+  world.setDynamicProperty("waveSpawnDeck", "[]");
+  world.setDynamicProperty("waveLocationDeck", "[]");
+}
+
+function getStateSummary() {
+  return GAME_STATE_KEYS.map((key) => {
+    const value = world.getDynamicProperty(key);
+    return `${key}=${value === undefined ? "undefined" : value}`;
+  }).join(", ");
+}
+
+function openMainMenu(player) {
+  recoverLobbyControls(player);
+  ensureMenuItem(player);
+  system.runTimeout(() => {
+    MenuManager.showMainMenu(
+      player,
+      LanguageManager.get(player, "menu.category.levels"),
+    );
+  }, 10);
+}
+
+const scriptEventReceive =
+  system.afterEvents?.scriptEventReceive ??
+  world.afterEvents?.scriptEventReceive;
+
+if (scriptEventReceive) {
+  scriptEventReceive.subscribe((event) => {
+    if (
+      event.id !== "pvz:debug" &&
+      event.id !== "pvz:reset_lobby" &&
+      event.id !== "pvz:menu"
+    ) {
+      return;
+    }
+
+    const players = world.getAllPlayers();
+    if (event.id === "pvz:reset_lobby") {
+      resetRuntimeState();
+    }
+
+    for (const player of players) {
+      recoverLobbyControls(player);
+      ensureMenuItem(player);
+      player.sendMessage(`[PvZ] ${getStateSummary()}`);
+      if (event.id === "pvz:reset_lobby") {
+        player.sendMessage("[PvZ] Lobby state reset. Opening the menu.");
+        openMainMenu(player);
+      }
+      if (event.id === "pvz:menu") {
+        player.sendMessage("[PvZ] Opening the menu.");
+        openMainMenu(player);
+      }
+    }
+  });
+}
+
 world.beforeEvents.itemUse.subscribe((eventData) => {
   const itemStack = eventData.itemStack;
   const player = eventData.source;
+  if (
+    itemStack?.typeId === MENU_ITEM_ID ||
+    itemStack?.typeId === "minecraft:compass"
+  ) {
+    eventData.cancel = true;
+    system.run(() => {
+      openMainMenu(player);
+    });
+    return;
+  }
+
   const equippable = player.getComponent("minecraft:equippable");
   const isSneaking = player.isSneaking;
 
